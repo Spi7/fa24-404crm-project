@@ -19,13 +19,13 @@
     database: the name of the database on the server? cse442_2024_fall_team_ak_db
     don't need to specify port or socket?
     */
-    $mysqli = new mysqli();
+    $mysqli = new mysqli("localhost", "", "", "cse442_2024_fall_team_ak_db");
     // Check connection
     if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
     }
-    $result = mysqli->query("SELECT MAX(USER_ID) FROM ACCOUNTS");
+    $result = mysqli->query("SELECT MAX(USER_ID) FROM cse442_2024_fall_team_ak_db.ACCOUNTS");
     $user_id = $result ++;
-    $mysqli->query("INSERT INTO ACCOUNTS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANG VALUES('$user_id', '$first_name', '$last_name', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language')");
+    $mysqli->query("INSERT INTO cse442_2024_fall_team_ak_db.ACCOUNTS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANG VALUES('$user_id', '$first_name', '$last_name', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language')");
 
 ?>

@@ -11,6 +11,6 @@
         die("Connection failed: " . $mysqli->connect_error);
     }
 
-    $mysqli->query("UPDATE ACCOUNTS SET PASSWORD='$new_password' WHERE EMAIL='$email'");
+    $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET PASSWORD='$new_password' WHERE EMAIL='$email'");
 
 ?>

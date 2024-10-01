@@ -18,7 +18,7 @@
         $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET PASSWORD='$new_password' WHERE EMAIL='$email'");
     }
     else{
-        echo "Passwords do not match"
+        http_response_code(400);
     }
 
 ?>

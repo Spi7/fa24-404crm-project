@@ -1,7 +1,8 @@
 <?php
 
     $email = $_POST['email'];
-    $new_password = hash('sha256', $_POST['new_password']);
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
 
     //user and password need to be someone's login credentials for the server?
     //safe to have that in our code?
@@ -11,6 +12,13 @@
         die("Connection failed: " . $mysqli->connect_error);
     }
 
-    $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET PASSWORD='$new_password' WHERE EMAIL='$email'");
+    //confirm passwords match
+    if(strcmp($new_password, $confirm_password) == 0){
+        $new_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET PASSWORD='$new_password' WHERE EMAIL='$email'");
+    }
+    else{
+        echo "Passwords do not match"
+    }
 
 ?>

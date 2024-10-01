@@ -3,7 +3,7 @@
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = strtolower($_POST['email']);
-    $password = password_hash('sha256', $_POST['password']); 
+    $password = $_POST['password']; 
     $nickname = $_POST['nickname'];
     $country = $_POST['country'];
     $timezone = $_POST['timezone'];
@@ -25,9 +25,10 @@
         die("Connection failed: " . $mysqli->connect_error);
     }
     if($_POST["confirmPassword"]!=$_POST["password"]){
-    $result = mysqli->query("SELECT MAX(USER_ID) FROM cse442_2024_fall_team_ak_db.ACCOUNTS");
-    $user_id = $result ++;
-    $mysqli->query("INSERT INTO cse442_2024_fall_team_ak_db.ACCOUNTS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANG VALUES('$user_id', '$first_name', '$last_name', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language')");    
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $result = mysqli->query("SELECT MAX(USER_ID) FROM cse442_2024_fall_team_ak_db.ACCOUNTS");
+        $user_id = $result ++;
+        $mysqli->query("INSERT INTO cse442_2024_fall_team_ak_db.ACCOUNTS(USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANG VALUES('$user_id', '$first_name', '$last_name', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language')");    
     } else {
         http_response_code(400);
     }

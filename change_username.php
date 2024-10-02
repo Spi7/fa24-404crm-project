@@ -1,14 +1,14 @@
 <?php
 
     $email = $_POST['email'];
-    $new_nickname = $_POST['new_nickname'];
+    $newNickname = $_POST['newNickname'];
 
-    $mysqli = new mysqli("localhost", "", "", "cse442_2024_fall_team_ak_db");
+    $mysqli = new mysqli("cattle", "jmlamann", "50307671", "cse442_2024_fall_team_ak_db");
     // Check connection
     if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
     }
 
-    $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET NICKNAME='$new_nickname' WHERE EMAIL='$email'");
+    $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET NICKNAME='$newNickname' WHERE EMAIL='$email'");
 
 ?>

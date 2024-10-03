@@ -23,6 +23,7 @@
             </div>
             <!-- Form for Change Username -->
             <form>
+                <input type="text" id="Email address" name="Email address" require placeholder="Confirm email">
                 <input type="text" id="username" name="username" required placeholder="New Username">
                 <br>
                 <!-- Button Group -->

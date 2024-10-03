@@ -19,6 +19,7 @@
                 header('Location: home.php');
                 $updateSessionTokenQuery="UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET SESSION_TOKEN='$session_token' WHERE email='$email'";
                 $result = $mysqli->query($updateSessionTokenQuery);
+                exit();
             } else{
                 echo "login unsucessful";
             }

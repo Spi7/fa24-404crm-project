@@ -26,6 +26,14 @@ body {
     text-align: center;
 }
 
+.change-username {
+    position: absolute;
+    left: 80px;
+    bottom: 30px;
+    display: block;
+    text-align: center;
+}
+
 h2 {
     color: rgba(0, 0, 0, 0.60);
     font-family: Roboto;

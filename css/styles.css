@@ -10,22 +10,13 @@ body {
 
 #login {
     background-color: white;
-    padding: 10px;
+    padding: 5px;
     border-radius:36px;
     box-shadow: 0px 4px 11.7px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 38.8px 0px rgba(0, 0, 0, 0.25);
     height: 90vh;
     width: 1440px;
     text-align: center;
 }
-
-.reset-password {
-    position: absolute;
-    left: 80px;
-    bottom: 60px;
-    display: block;
-    text-align: center;
-}
-
 .change-username {
     position: absolute;
     left: 80px;
@@ -72,12 +63,35 @@ input[type="password"] {
     line-height: normal;
 }
 
+.reset-password {
+    position: absolute;
+    left: 80px;
+    bottom: 60px;
+    display: block;
+    text-align: center;
+
+}
+
 button {
-    background: #3751FE;
+    display: inline-block;
+    background: #cbcbdc;
     box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.25);
     width: 129px;
     height: 54px;
     flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.button-group {
+    display: flex; /* Align buttons side by side */
+    justify-content: center; /* Center them in the form */
+}
+
+button:first-child {
+    margin-right: 100px
+}
+button:second-child {
+    margin-left: 100px
 }
 
 form {

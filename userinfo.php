@@ -25,67 +25,41 @@
         </div>
     </header>
 
-    <aside>
-        <div class="sidebar"> <!-- representing different functional block for main board -->
-            <!-- Calendar -->
-            <div class="sidebar calendar">
-                <img src="img/calendar-icon.png" alt="Calendar">
-                <p>Calendar</p>
-            </div>
+    <div class = "userinfo-container">
+        <?php include 'sidebar.php';?>
 
-            <!-- Chat -->
-            <div class="sidebar chat">
-                <img src="img/chat-icon.png" alt="Chat">
-                <p>Chat</p>
-            </div>
-
-            <!-- Projects -->
-            <div class="sidebar projects">
-                <img src="img/project-icon.png" alt="Projects">
-                <p>Projects</p>
-            </div>
-
-            <!-- Invoice -->
-            <div class="sidebar invoice">
-                <img src="img/invoice-icon.png" alt="Invoice">
-                <p>Invoice</p>
-            </div>
-        </div>
-</aside>
-
-<main>
-        <div class="profile-pic">
-                    <img src="img/user profile icon.png" alt="Profile Icon">
-                    <label>User</label>
-                    <label>Email:</label>
-        </div>
         <div class="profile-info">
-        <div >
-            <label>First Name</label>
-            <div class="rectangle"><?php echo $user["FIRST_NAME"] ?></div>
+            <div class="profile-pic">
+                <img src="img/user profile icon.png" alt="Profile Icon">
+                <label>User</label>
+                <label>Email:</label>
+            </div>
+            <div >
+                <label>First Name</label>
+                <div class="rectangle"><?php echo $user["FIRST_NAME"] ?></div>
+            </div>
+            <div >
+                <label>Last Name</label>
+                <div class="rectangle"><?php echo $user["LAST_NAME"] ?></div>
+            </div>
+            <div >
+                <label>Gender</label>
+                <div class="rectangle"><?php echo $user["GENDER"] ?></div>
+            </div>
+            <div >
+                <label>Country</label>
+                <div class="rectangle"><?php echo $user["COUNTRY"] ?></div>
+            </div>
+            <div >
+                <label>Language</label>
+                <div class="rectangle"><?php echo $user["LANGUAGE"] ?></div>
+            </div>
+            <div >
+                <label>Time Zone</label>
+                <div class="rectangle"><?php echo $user["TIMEZONE"] ?></div>
+            </div>
         </div>
-        <div >
-            <label>Last Name</label>
-            <div class="rectangle"><?php echo $user["LAST_NAME"] ?></div>
-        </div>
-        <div >
-            <label>Gender</label>
-            <div class="rectangle"><?php echo $user["GENDER"] ?></div>
-        </div>
-        <div >
-            <label>Country</label>
-            <div class="rectangle"><?php echo $user["COUNTRY"] ?></div>
-        </div>
-        <div >
-            <label>Language</label>
-            <div class="rectangle"><?php echo $user["LANGUAGE"] ?></div>
-        </div>
-        <div >
-            <label>Time Zone</label>
-            <div class="rectangle"><?php echo $user["TIMEZONE"] ?></div>
-        </div>
-        </div>
-    </main>
+    </div>
 
 </body>
 </html>

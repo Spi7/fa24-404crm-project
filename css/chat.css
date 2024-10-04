@@ -1,0 +1,155 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Contacts Section */
+.contacts {
+    width: 25%;
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.contacts h3 {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+#contact-list {
+    list-style: none;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+#contact-list li {
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#contact-list li:hover {
+    background-color: #ddd;
+}
+
+.add-contact-btn {
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.add-contact-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.contacts h3 a {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Make the link color inherit from the parent */
+}
+
+.contacts h3 {
+    display: flex; /* Make the heading a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.attach-btn {
+    background: white; /* Remove button background */
+    border-radius: 5px; /* Remove border */
+    border: 0.5px solid #ccc;
+    cursor: pointer; /* Change cursor to pointer */
+    margin-right: 10px; /* Space between attachment icon and send button */
+}
+
+.attach-icon {
+    width: 40px; /* Set width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Align vertically */
+}
+
+/* Chat Interface */
+.chat-interface {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.chat-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-header h3 {
+    font-size: 18px;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-message {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-message.sent {
+    background-color: #e0f7fa;
+    align-self: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    margin-top: 10px;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.send-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.send-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

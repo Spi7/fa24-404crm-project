@@ -16,7 +16,7 @@
                 <input type="text" placeholder="Search"> <!-- Search bar input field -->
                 <div class="profile-icon">
                     <!-- You can add an image or icon here for the user -->
-                    <a href=profile.html><img src="img/user profile icon.png" alt="Profile Icon"></a>
+                    <a href=userinfo.php><img src="img/user profile icon.png" alt="Profile Icon"></a>
                 </div>
             </div>
         </div>
@@ -32,12 +32,14 @@
             
             <!-- Chat -->
             <div class="dashboard-item chat">
-                <img src="img/chat-icon.png" alt="Chat">
-                <p>Chat</p>
+                <a href="chat.php">
+                    <img src="img/chat-icon.png" alt="Chat">
+                    <p>Chat</p>
+                </a>    
             </div>
             
             <!-- Projects -->
-            <div class="dashboard-item projects">
+            <div class="dashboard-item projects" onclick="navigateToProject()">
                 <img src="img/project-icon.png" alt="Projects">
                 <p>Projects</p>
             </div>
@@ -63,3 +65,9 @@
     </script>
 </body>
 </html>
+
+<script>
+    function navigateToProject() {
+        window.location.href = "project.php";
+    }
+</script>

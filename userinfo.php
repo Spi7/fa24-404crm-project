@@ -32,7 +32,7 @@
             <div class="profile-pic">
                 <img src="img/user profile icon.png" alt="Profile Icon">
                 <label>User</label>
-                <label>Email:</label>
+                <label>Email:<?php echo $user["FIRST_NAME"]?></label>
             </div>
             <div >
                 <label>First Name</label>
@@ -58,6 +58,8 @@
                 <label>Time Zone</label>
                 <div class="rectangle"><?php echo $user["TIMEZONE"] ?></div>
             </div>
+            <a href="username.php" class="change-username">Change Username</a>
+
         </div>
     </div>
 

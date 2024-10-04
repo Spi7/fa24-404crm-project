@@ -22,9 +22,8 @@
                 <h4>Please enter your new username below.</h4>
             </div>
             <!-- Form for Change Username -->
-            <form>
-                <input type="text" id="Email address" name="Email address" require placeholder="Confirm email">
-                <input type="text" id="username" name="username" required placeholder="New Username">
+            <form action="change_username.php" method="POST">
+                <input type="text" id="username" name="newNickname" required placeholder="New Username">
                 <br>
                 <!-- Button Group -->
                 <div class="button-group">

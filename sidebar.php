@@ -20,10 +20,12 @@
         </div>
 
         <!-- Calendar -->
-        <div class="sidebar calendar">
-            <img src="img/calendar-icon.png" alt="Calendar">
-            <p>Calendar</p>
-        </div>
+        <a href="calendar.php">
+            <div class="sidebar calendar">
+                <img src="img/calendar-icon.png" alt="Calendar">
+                <p>Calendar</p>
+            </div>
+        </a>
 
         <!-- Chat -->
         <div class="sidebar chat">

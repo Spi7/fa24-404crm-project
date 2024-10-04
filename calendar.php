@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ensure compatibility w/ older version of Internet Explorer -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes pg responsive, adjust its width based on device's secreen size -->
     <title>CRM Dashboard (404)</title> <!-- our title -->
-    <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/calendar.css"> <!-- Link to external CSS file -->
 </head>
 <body>
     <?php include 'sidebar.php'; ?>

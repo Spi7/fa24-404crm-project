@@ -115,3 +115,14 @@ header {
     width: 200px;
     height: auto;
 }
+
+.dashboard-item.chat a:focus {
+    outline: 2px solid #FF5733; /* Custom color */
+    outline-offset: 2px;
+    /* Optional: Add box-shadow to enhance focus visibility */
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.5);
+}
+
+.dashboard-item.chat a {
+    text-decoration: none; /* Remove the underline */
+}

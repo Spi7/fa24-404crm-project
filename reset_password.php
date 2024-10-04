@@ -15,7 +15,7 @@
     //confirm passwords match
     if(strcmp($newPassword, $confirmPassword) == 0){
         $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        $mysqli->query("UPDATE cse442_2024_fall_team_ak_db.ACCOUNTS SET PASSWORD='$newPassword' WHERE EMAIL='$email'");
+        $mysqli->query("UPDATE ACCOUNTS SET PASSWORD='$newPassword' WHERE EMAIL='$email'");
     }
     else{
         http_response_code(400);

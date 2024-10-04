@@ -25,28 +25,28 @@
     <div class="info-div">
         <form action="signup.php" method="post">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" placeholder="Enter your first name">
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
                 
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" placeholder="Enter your last name">
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
                 
             <label for="email">Email:</label>
-            <input type="text" id="email" placeholder="Enter your email">
+            <input type="text" id="email" name="email" placeholder="Enter your email">
             
             <label for="password">Password:</label>
-            <input type="text" id="password" placeholder="Enter your password">
+            <input type="text" id="password" name="password" placeholder="Enter your password">
                 
-            <label for="confirmPassword">Confirm password:</label>
+            <label for="confirmPassword" name="confirmPassword">Confirm password:</label>
             <input type="text" id="confirmPassword" placeholder="Enter your password">
 
             <label for="nickname">Nickname:</label>
-            <input type="text" id="nickname" placeholder="Enter your nickname">
+            <input type="text" id="nickname" name="nickname" placeholder="Enter your nickname">
 
             <label for="country">Country:</label>
-            <input type="text" id="country" placeholder="Enter your country">
+            <input type="text" id="country" name="country" placeholder="Enter your country">
 
             <label for="timezone">Timezone:</label>
-            <input type="text" id="timezone" placeholder="Enter your timezone">
+            <input type="text" id="timezone" name="timezone" placeholder="Enter your timezone">
 
             <label for="gender">Gender:</label>
             <select id="gender" name="gender">
@@ -56,7 +56,7 @@
             </select>
 
             <label for="language">Language:</label>
-            <input type="text" id="language" placeholder="Enter your language">
+            <input type="text" id="language" name="lang" placeholder="Enter your language">
 
             <button type="submit">Sign Up</button>
         </form>

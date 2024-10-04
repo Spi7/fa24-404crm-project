@@ -1,17 +1,13 @@
 <?php
-    $mysqli = new mysqli("localhost", "root", "", "users");
-    // Check connection
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
+    include('db_connection.php');
+    connectDB();
     if(isset($_COOKIE['SESSION_TOKEN'])) {
-        $query = "SELECT * FROM users.Accounts WHERE session_token='$_COOKIE[SESSION_TOKEN]'";
+        $query = "SELECT * FROM Accounts WHERE session_token='$_COOKIE[SESSION_TOKEN]'";
         $result = $mysqli->query(query: $query);
         if($result->num_rows == 1){
             $user = $result->fetch_assoc();
             array_splice($user,4,1); //remove password
-            array_splice($user,9,1); //remove token
-            echo json_encode($user);
+            array_splice($user,9,3); //remove tokens
         } else {
             echo "session token not found";
         }

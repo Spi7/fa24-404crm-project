@@ -39,7 +39,7 @@
             </div>
             
             <!-- Projects -->
-            <div class="dashboard-item projects">
+            <div class="dashboard-item projects" onclick="navigateToProject()">
                 <img src="img/project-icon.png" alt="Projects">
                 <p>Projects</p>
             </div>
@@ -65,3 +65,9 @@
     </script>
 </body>
 </html>
+
+<script>
+    function navigateToProject() {
+        window.location.href = "project.php";
+    }
+</script>

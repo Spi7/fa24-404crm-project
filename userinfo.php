@@ -30,6 +30,7 @@
 
         <div class="profile-info">
             <div class="profile-pic">
+                <button class="blue-button" onclick="window.location.href='username.php';">Change Username</button>
                 <img src="img/user profile icon.png" alt="Profile Icon">
                 <label>User</label>
                 <label>Email:<?php echo $user["FIRST_NAME"]?></label>
@@ -58,8 +59,6 @@
                 <label>Time Zone</label>
                 <div class="rectangle"><?php echo $user["TIMEZONE"] ?></div>
             </div>
-            <a href="username.php" class="change-username">Change Username</a>
-
         </div>
     </div>
 

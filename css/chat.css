@@ -153,3 +153,9 @@ body {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+/* new to be commited to git  */
+.mobile-back-btn {
+    display: none;
+}
+

@@ -26,8 +26,10 @@
         <div class="dashboard-grid"> <!-- representing different functional block for main board -->
             <!-- Calendar -->
             <div class="dashboard-item calendar">
-                <img src="img/calendar-icon.png" alt="Calendar">
-                <p>Calendar</p>
+                <a href="calendar.php">
+                    <img src="img/calendar-icon.png" alt="Calendar">
+                    <p>Calendar</p>
+                </a>
             </div>
             
             <!-- Chat -->

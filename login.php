@@ -1,7 +1,7 @@
 <?php
     include('db_connection.php');
     connectDB();
-    
+
     $errorString = "login unsucessful <a href='login.html'>back to login</a>";
     $email = strtolower($_POST['email']);
     $password = $_POST['password'];

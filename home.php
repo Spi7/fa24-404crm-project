@@ -60,7 +60,9 @@
     <script>
         function logout(){
             document.cookie=""
-            location.href="login.html"
+            // location.pathname="/CSE442/2024-Fall/ubit/login.html"
+            location.pathname="login.html"
+
         }
     </script>
 </body>

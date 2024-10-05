@@ -1,22 +1,27 @@
 <?php
 include('db_connection.php');
 connectDB();
-ini_set("display_errors","On");
+
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
 if (isset($_POST["email"])) {
     $email = strtolower(string: $_POST["email"]);
     // //if body contains email we are at stage 1 of reset
     
     $reset_token = bin2hex(string: random_bytes(length: 32));
-    $result = $mysqli->query("SELECT * FROM accounts WHERE email='$email'");
+    $result = $mysqli->query("SELECT user_id FROM accounts WHERE email='$email'");
     if ($result->num_rows > 0) {
         $mysqli->query("UPDATE accounts SET reset_token='$reset_token' WHERE email='$email'");
         $expTime = time() + 900; //give user 15 minutes to update password
-        $mysqli->query("UPDATE accounts SET RESET_TOKEN_EXP='$expTime' WHERE email='$email'");
+        $mysqli->query(query: "UPDATE accounts SET RESET_TOKEN_EXP='$expTime' WHERE email='$email'");
         echo "STEP2";
+        $message="your reset token is: ".$reset_token." and will expire in 15 minutes";
+        mail($_POST["email"],"404 crm reset token", $message);
     } else {
         echo "email not found";
     }
-    // mail($_["email"],"404 crm reset token", "your reset token is: "+$reset_token+" and will expire in 15 minutes","From: passwordreset@cse442tnf");
+    
 } else if (isset($_POST["token"]) && isset($_POST["password"]) && $_POST["password"] == $_POST["confirmPassword"]) {
     $reset_token = $_POST["token"];
     $query = "SELECT reset_token_exp FROM accounts WHERE reset_token='$reset_token'";

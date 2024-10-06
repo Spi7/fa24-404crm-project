@@ -23,15 +23,11 @@
     if($_POST["confirmPassword"]!=$_POST["password"]){
         $password = password_hash($password, PASSWORD_DEFAULT);
         $session_token = bin2hex(random_bytes(32));
-        $result = $mysqli->query("SELECT MAX(USER_ID) as max FROM accounts");
+        $result = $mysqli->query("SELECT MAX(USER_ID) as max FROM ACCOUNTS");
         $user_id = $result->fetch_assoc()["max"]+1;
-<<<<<<< HEAD
-        $mysqli->query("INSERT INTO ACCOUNTS (USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANG, SESSION_TOKEN, RESET_TOKEN, RESET_TOKEN_EXP) VALUES ('$user_id', '$firstName', '$lastName', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language', '$session_token' ,'',0)");
-=======
-        $mysqli->query("INSERT INTO accounts (USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANGUAGE, SESSION_TOKEN, RESET_TOKEN, RESET_TOKEN_EXP) VALUES ('$user_id', '$firstName', '$lastName', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language', '$session_token' ,'',0)");
->>>>>>> 3b3a42e7dded18eddbb5eb88619edfb85aec8787
+        $mysqli->query("INSERT INTO ACCOUNTS (USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, NICKNAME, COUNTRY, TIMEZONE, GENDER, LANGUAGE, SESSION_TOKEN, RESET_TOKEN, RESET_TOKEN_EXP) VALUES ('$user_id', '$firstName', '$lastName', '$email', '$password', '$nickname', '$country', '$timezone', '$gender', '$language', '$session_token' ,'',0)");
         setcookie("SESSION_TOKEN",$session_token,  time()+86400,"/");//86400    seconds in a day
-        header('Location: home.php');
+        header('Location: home-page/home.php');
         exit();
     } else {
         http_response_code(400);

@@ -1,8 +1,8 @@
 <?php
-    include('db_connection.php');
+    include('../db_connection.php');
     connectDB();
     if(isset($_COOKIE['SESSION_TOKEN'])) {
-        $query = "SELECT * FROM accounts WHERE session_token='$_COOKIE[SESSION_TOKEN]'";
+        $query = "SELECT * FROM ACCOUNTS WHERE session_token='$_COOKIE[SESSION_TOKEN]'";
         $result = $mysqli->query(query: $query);
         if($result->num_rows == 1){
             $user = $result->fetch_assoc();

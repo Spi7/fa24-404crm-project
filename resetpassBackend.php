@@ -10,11 +10,11 @@ if (isset($_POST["email"])) {
     // //if body contains email we are at stage 1 of reset
     
     $reset_token = bin2hex(string: random_bytes(length: 32));
-    $result = $mysqli->query("SELECT user_id FROM accounts WHERE email='$email'");
+    $result = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE EMAIL='$email'");
     if ($result->num_rows > 0) {
-        $mysqli->query("UPDATE accounts SET reset_token='$reset_token' WHERE email='$email'");
+        $mysqli->query("UPDATE ACCOUNTS SET RESET_TOKEN='$reset_token' WHERE EMAIL='$email'");
         $expTime = time() + 900; //give user 15 minutes to update password
-        $mysqli->query(query: "UPDATE accounts SET RESET_TOKEN_EXP='$expTime' WHERE email='$email'");
+        $mysqli->query(query: "UPDATE ACCOUNTS SET RESET_TOKEN_EXP='$expTime' WHERE EMAIL='$email'");
         echo "STEP2";
         $message="your reset token is: ".$reset_token." and will expire in 15 minutes";
         mail($_POST["email"],"404 crm reset token", $message);
@@ -24,14 +24,14 @@ if (isset($_POST["email"])) {
     
 } else if (isset($_POST["token"]) && isset($_POST["password"]) && $_POST["password"] == $_POST["confirmPassword"]) {
     $reset_token = $_POST["token"];
-    $query = "SELECT reset_token_exp FROM accounts WHERE reset_token='$reset_token'";
+    $query = "SELECT reset_token_exp FROM ACCOUNTS WHERE RESET_TOKEN='$reset_token'";
     $result = $mysqli->query($query);
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         if ($user["reset_token_exp"] > time()) {
             $newPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $mysqli->query("UPDATE accounts SET password='$newPassword' WHERE reset_token='$reset_token'");
-            $mysqli->query(query: "UPDATE accounts SET reset_token_exp=0 WHERE reset_token='$reset_token'");
+            $mysqli->query("UPDATE ACCOUNTS SET PASSWORD='$newPassword' WHERE RESET_TOKEN='$reset_token'");
+            $mysqli->query(query: "UPDATE ACCOUNTS SET RESET_TOKEN_EXP=0 WHERE RESET_TOKEN='$reset_token'");
             echo "DONE";
         } else {
             echo "Expired token";
@@ -58,4 +58,3 @@ don't need to specify port or socket?
 */
 
 // Check connection
-

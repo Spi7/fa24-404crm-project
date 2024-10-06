@@ -37,9 +37,12 @@ body {
     list-style: none;
     flex-grow: 1;
     padding: 10px;
+    overflow-y: auto;
 }
 
 #contact-list li {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
     padding: 10px;
     background-color: #f0f0f0;
     margin-bottom: 5px;
@@ -49,6 +52,22 @@ body {
 
 #contact-list li:hover {
     background-color: #ddd;
+}
+
+.profile-pic {
+    width: 40px; /* Set desired width */
+    height: 40px; /* Set desired height */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.contact-nickname {
+    font-weight: bold; /* Make nickname bold */
+    margin-right: 5px; /* Space between nickname and email */
+}
+
+.contact-email {
+    color: #666; /* Lighter color for email */
 }
 
 .add-contact-btn {
@@ -154,8 +173,6 @@ body {
     cursor: not-allowed;
 }
 
-/* new to be commited to git  */
 .mobile-back-btn {
     display: none;
 }
-

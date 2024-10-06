@@ -49,12 +49,14 @@
             }
             let formData = new FormData();
             formData.append('email', email);
+            //"/CSE442/2024-Fall/ubit/resetpassBackend.php"
             fetch("resetpassBackend.php",{
                 body:formData,
                 method:"post"
             }).then(res=>res.text())
             .then(text=>{
                 if(text=="STEP2"){
+                    // location="/CSE442/2024-Fall/ubit/resetpassStep2.php"
                     location="resetpassStep2.php"
                 }else{
                 document.querySelector("#error").innerHTML=text

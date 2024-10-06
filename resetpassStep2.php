@@ -53,14 +53,16 @@
                 formData.append('token', token);
                 formData.append('password',newPass)
                 formData.append('confirmPassword',newPass)
-
-                fetch("/resetpassBackend.php", {
+                ///CSE442/2024-Fall/ubit/resetpassBackend.php
+                fetch("resetpassBackend.php", {
                     body: formData,
                     method: "post"
                 }).then(res => res.text())
                     .then(text => {
                         if (text == "DONE") {
-                            location = "/login.html"
+                            // location = "/CSE442/2024-Fall/ubit/login.html"
+                            location = "login.html"
+
                         } else {
                             document.querySelector("#error").innerHTML = text
                         }

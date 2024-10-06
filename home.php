@@ -25,9 +25,17 @@
     <main>
         <div class="dashboard-grid"> <!-- representing different functional block for main board -->
             <!-- Calendar -->
+<<<<<<< HEAD
             <div class="dashboard-item calendar" onclick="navigateToCalendar()">
                 <img src="img/calendar-icon.png" alt="Calendar">
                 <p>Calendar</p>
+=======
+            <div class="dashboard-item calendar">
+                <a href="calendar.php">
+                    <img src="img/calendar-icon.png" alt="Calendar">
+                    <p>Calendar</p>
+                </a>
+>>>>>>> 3b3a42e7dded18eddbb5eb88619edfb85aec8787
             </div>
             
             <!-- Chat -->
@@ -58,7 +66,9 @@
     <script>
         function logout(){
             document.cookie=""
-            location.href="login.html"
+            // location.pathname="/CSE442/2024-Fall/ubit/login.html"
+            location.pathname="login.html"
+
         }
     </script>
 </body>

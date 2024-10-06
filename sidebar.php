@@ -21,8 +21,10 @@
 
         <!-- Calendar -->
         <div class="sidebar calendar">
-            <img src="img/calendar-icon.png" alt="Calendar">
-            <p>Calendar</p>
+            <a href="calendar.php">
+                <img src="img/calendar-icon.png" alt="Calendar">
+                <p>Calendar</p>
+            </a>
         </div>
 
         <!-- Chat -->
@@ -35,14 +37,18 @@
 
         <!-- Projects -->
         <div class="sidebar projects">
-            <img src="img/project-icon.png" alt="Projects">
-            <p>Projects</p>
+            <a href="project.php">
+                <img src="img/project-icon.png" alt="Projects">
+                <p>Projects</p>
+            </a>
         </div>
 
         <!-- Invoice -->
         <div class="sidebar invoice">
-            <img src="img/invoice-icon.png" alt="Invoice">
-            <p>Invoice</p>
+            <a href="invoice.php">
+                <img src="img/invoice-icon.png" alt="Invoice">
+                <p>Invoice</p>
+            </a>    
         </div>
     </div>
 </aside>

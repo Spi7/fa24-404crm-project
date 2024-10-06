@@ -25,17 +25,15 @@
     <main>
         <div class="dashboard-grid"> <!-- representing different functional block for main board -->
             <!-- Calendar -->
-            <div class="dashboard-item calendar">
+            <div class="dashboard-item calendar" onclick="navigateToCalendar()">
                 <img src="img/calendar-icon.png" alt="Calendar">
                 <p>Calendar</p>
             </div>
             
             <!-- Chat -->
-            <div class="dashboard-item chat">
-                <a href="chat.php">
-                    <img src="img/chat-icon.png" alt="Chat">
-                    <p>Chat</p>
-                </a>    
+            <div class="dashboard-item chat" onclick="navigateToChat()">
+                <img src="img/chat-icon.png" alt="Chat">
+                <p>Chat</p>  
             </div>
             
             <!-- Projects -->
@@ -45,7 +43,7 @@
             </div>
             
             <!-- Invoice -->
-            <div class="dashboard-item invoice">
+            <div class="dashboard-item invoice" onclick="navigateToInvoice()">
                 <img src="img/invoice-icon.png" alt="Invoice">
                 <p>Invoice</p>
             </div>
@@ -66,8 +64,21 @@
 </body>
 </html>
 
+<!-- JavaScript code below, link to each item -->
 <script>
     function navigateToProject() {
         window.location.href = "project.php";
+    }
+
+    function navigateToChat() {
+        window.location.href = "chat.php";
+    }
+
+    function navigateToCalendar() {
+        window.location.href = "calendar.php";
+    }
+
+    function navigateToInvoice() {
+        window.location.href = "invoice.php";
     }
 </script>

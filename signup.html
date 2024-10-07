@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ensure compatibility w/ older version of Internet Explorer -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes pg responsive, adjust its width based on device's secreen size -->
+    <title>CRM Dashboard (404)</title> <!-- our title -->
+    <link rel="stylesheet" href="css/signup.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <header>
+        <div class="header-div">
+            <div class='image-header'>
+                <img src="img/404 not found.png" alt="404 Not Found">
+            </div> 
+            <div class="welcome-message">
+                <h1>404 Not Found Application</h1>
+                <h2>Welcome! Please register your account</h2>
+            </div>
+            <div class='image-header'>
+                <img src="img/404 not found.png" alt="404 Not Found">
+            </div> 
+        </div>
+    </header>
+    <div class="info-div">
+        <form action="signup.php" method="post">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
+                
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
+                
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email">
+            
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" placeholder="Enter your password">
+                
+            <label for="confirmPassword" name="confirmPassword">Confirm password:</label>
+            <input type="text" id="confirmPassword" placeholder="Enter your password">
+
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" placeholder="Enter your nickname">
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" placeholder="Enter your country">
+
+            <label for="timezone">Timezone:</label>
+            <input type="text" id="timezone" name="timezone" placeholder="Enter your timezone">
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="" disabled selected>Select a gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label for="language">Language:</label>
+            <input type="text" id="language" name="lang" placeholder="Enter your language">
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>

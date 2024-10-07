@@ -11,14 +11,18 @@
     <!-- Login Section -->
     <section id="login" class="page">
         <h2>404 Not Found Application</h2>
-        <img src="Images/404 not found Abous Us.jpg" alt="404 Not Found Logo">
+        <img src="img/404 not found Abous Us.jpg" alt="404 Not Found Logo">
         <h6>Welcome back! Please login to your account</h6> 
+        <a href="resetpass.php" class="reset-password">Forgot Password</a> <!--Forgot/Reset Password -->
         <form action="login.php" method="POST">
             <input type="text" id="email" name="email" required placeholder="Email Address">
             <br>
             <input type="password" id="password" name="password" required placeholder="Password">
             <br>
-            <button type="submit">Login</button>
+            <div class="button-group">
+                <button type="submit">Login</button>
+                <button type="button" onclick="window.location.href='signup.html'">Sign Up</button>
+            </div>
         </form>
     </section>
 </body>

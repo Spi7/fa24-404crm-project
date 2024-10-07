@@ -1,14 +1,12 @@
 <?php
+    include('db_connection.php');
+    connectDB();
+    
+    $errorString = "login unsucessful <a href='login.html'>back to login</a>";
     $email = strtolower($_POST['email']);
     $password = $_POST['password'];
-
-    $mysqli = new mysqli("localhost", "root", "", "users");
-    // Check connection
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
     if(isset($_POST['email'])) {
-        $query = "SELECT password FROM users.Accounts WHERE email='$email'";
+        $query = "SELECT password FROM ACCOUNTS WHERE email='$email'";
         $result = $mysqli->query(query: $query);
         if($result->num_rows == 1){
             $row=$result->fetch_assoc();
@@ -16,15 +14,14 @@
             if (password_verify($password, $dbPassword))    {
                 $session_token = bin2hex(random_bytes(32));
                 setcookie("SESSION_TOKEN",$session_token,  time()+86400,"/");//86400    seconds in a day
-                header('Location: home.php');
-                $updateSessionTokenQuery="UPDATE users.accounts SET SESSION_TOKEN='$session_token' WHERE email='$email'";
-                $result = $mysqli->query($updateSessionTokenQuery);
+                $mysqli->query("UPDATE ACCOUNTS SET SESSION_TOKEN='$session_token' WHERE email='$email'");
+                header(header: 'Location: home-page/home.php');
             } else{
-                echo "login unsucessful";
+                echo $errorString;
+                exit();
             }
         }
     }else{
-        echo "login unsucessful";
+        echo $errorString;
     }
-    // echo password_hash("testpassword", PASSWORD_DEFAULT);
 ?>

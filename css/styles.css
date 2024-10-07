@@ -10,11 +10,12 @@ body {
 
 #login {
     background-color: white;
-    padding: 10px;
+    padding: 5px;
     border-radius:36px;
     box-shadow: 0px 4px 11.7px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 38.8px 0px rgba(0, 0, 0, 0.25);
     height: 90vh;
-    width: 1440px;
+    width: 95%;
+    max-width: 1440px;
     text-align: center;
 }
 
@@ -56,16 +57,99 @@ input[type="password"] {
     line-height: normal;
 }
 
+.reset-password,
+.change-username {
+    position: absolute;
+    left: 80px;
+    display: block;
+    text-align: center;
+
+}
+
+.reset-password {
+    bottom: 60px;
+}
+
+.change-username {
+    bottom: 30px;
+}
+
 button {
-    background: #3751FE;
+    display: inline-block;
+    background: #cbcbdc;
     box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.25);
     width: 129px;
     height: 54px;
     flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.button-group {
+    display: flex; /* Align buttons side by side */
+    justify-content: center; /* Center them in the form */
+}
+
+button:first-child {
+    margin-right: 100px
+}
+button:second-child {
+    margin-left: 100px
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* Phone-Specific Media Queries */
+@media (max-width: 600px) {
+    #login {
+        width: 100%; /* Take full width on phone screens */
+        padding: 15px; /* Reduce padding for better spacing */
+    }
+    
+    h2 {
+        font-size: 28px; /* Smaller title size */
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 60%; /* Full width inputs on mobile */
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+
+    button {
+        width: 100px; /* Smaller button size for mobile */
+        height: 45px;
+        margin: 5px 0; /* Adjust margin for vertical alignment */
+    }
+
+    .reset-password,
+    .change-username {
+        position: absolute;
+        bottom: 30px;
+        display: inline-block; /* Make sure both elements are block-level */
+        transform: scale(0.75); /* Scale the size down */
+        padding: 5px; /* Add some padding */
+        box-sizing: border-box; /* Ensure padding doesn't affect the element size */
+    }
+
+    .reset-password {
+        left: 10px; /* Positioned on the left */
+        text-align: center;
+    }
+
+    .change-username {
+        right: 10px; /* Positioned on the far right side of the page */
+        text-align: right;
+        padding-right: 10px; /* Add spacing for text on the right */
+    }
+
+    .button-group {
+        flex-direction: row; /* Stack buttons vertically */
+        align-items: center; /* Center buttons */
+    }
+
+    /* Latest version style of login, minor box reponsive issue on change_username, other than that eveyrthing fits mobile implementation*/
 }

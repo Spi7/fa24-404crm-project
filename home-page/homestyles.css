@@ -53,18 +53,17 @@ header {
     object-fit: cover;
 }
 
-/* Main Sidebar Grid */
-.sidebar {
-    width: 250px;
-    height: 23vh;
-    grid-template-rows: repeat(4, 1fr);
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex: 1;
+/* Main Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 40px;
+    padding: 40px;
+    max-width: 1000px;
+    margin: 40px auto;
 }
-img{
-    width: 80px;
-}
+
 .dashboard-item {
     display: flex;
     flex-direction: column;
@@ -107,32 +106,23 @@ img{
     background-color: #fff9c4;
 }
 
-.profile-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 150px);
-    gap: 20px;
-    width: 80%;
-    max-width: 800px;
-    margin-left: 500px;
+.logo-404 {
+    text-align: center;
+    margin-top: 50px;
 }
 
-.rectangle {
-    background-color: #fff;
-    border: 2px solid black;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    height: 50px;
+.logo-404 img {
+    width: 200px;
+    height: auto;
 }
 
-.profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 500px;
-    margin-bottom: 50px;
+.dashboard-item.chat a:focus {
+    outline: 2px solid #FF5733; /* Custom color */
+    outline-offset: 2px;
+    /* Optional: Add box-shadow to enhance focus visibility */
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.5);
+}
+
+.dashboard-item.chat a {
+    text-decoration: none; /* Remove the underline */
 }

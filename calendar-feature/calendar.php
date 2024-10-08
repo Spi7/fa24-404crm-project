@@ -13,8 +13,10 @@
     <header>
         <div class='image-header'>
             <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
-        </div> 
+        </div>
+        <button id="pev" onClick="previousMonth()"> < </button>
         <h1 class="month">October 2024</h1>
+        <button id="next" onClick="nextMonth()"> > </button>
         <div class='image-header'>
             <a href="addevent.html">
                 <img src="../img/add icon.png" alt="Add Note">
@@ -70,5 +72,6 @@
         </div>
     </div>
 </div>
+<script src="./calendar.js"></script>
 </body>
 </html>

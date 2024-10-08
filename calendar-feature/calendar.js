@@ -12,6 +12,7 @@ function nextMonth() {
         current_year = current_year + 1;
     }
     current_month = (current_month + 1) % 12;
+    updateCalendar(current_month, current_year);
 }
 
 // navigate to previous month
@@ -23,6 +24,7 @@ function previousMonth() {
     else{
         current_month = current_month - 1;
     }
+    updateCalendar(current_month, current_year);
 }
 
 // navigate to specific date
@@ -30,4 +32,9 @@ function setDate(day, month, year){
     current_day = day;
     current_month = month;
     current_year = year;
+    updateCalendar(current_month, current_year);
+}
+
+function updateCalendar(month, year){
+
 }

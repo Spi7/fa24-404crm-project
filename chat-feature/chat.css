@@ -135,13 +135,29 @@ body {
 }
 
 .chat-message {
-    padding: 10px;
-    margin-bottom: 10px;
+    display: flex; 
+    align-items: flex-start;
+    margin-bottom: 20px; 
 }
 
 .chat-message.sent {
-    background-color: #e0f7fa;
     align-self: flex-end;
+}
+
+.message-profile-pic {
+    width: 30px;
+    height: 30px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+.message-content {
+    max-width: 40%; /* Limit message width to 50% */
+    word-wrap: break-word;
+    padding: 8px; /* Padding around message text */
+    border-radius: 8px;
+    display: inline-block; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
 }
 
 .chat-input {

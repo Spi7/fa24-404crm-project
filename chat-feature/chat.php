@@ -55,6 +55,9 @@
         <!-- Chat Section -->
         <div class="chat-interface">
             <div class="chat-header">
+                <div class="mobile-back-btn">
+                    <button type="button" onclick="window.history.back()">← Back</button>
+                </div>
                 <h3 id="chat-header-text">Select a contact to start chatting</h3>
             </div>
             <div class="chat-messages" id="chat-messages">

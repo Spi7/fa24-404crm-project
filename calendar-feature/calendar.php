@@ -5,23 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ensure compatibility w/ older version of Internet Explorer -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes pg responsive, adjust its width based on device's secreen size -->
     <title>CRM Dashboard (404)</title> <!-- our title -->
-    <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/calendar.css"> <!-- Link to external CSS file -->
 </head>
 <body>
-    <?php include '../sidebar.php'; ?>
+    <?php include 'sidebar.php'; ?>
     <div class="main-container">
     <header>
         <div class='image-header'>
-            <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
+            <img src="img/sunny cloud.webp" alt="Sunny Cloud">
+        </div> 
+        <button id="prev-month">Prev</button>
+        <div class="current-date">
+            <h1 class="month" id="month">October 2024</h1>
+            <?php $currentDate = date("F j, Y"); 
+            echo "<h1>Today's Date: $currentDate</h1>";?>
         </div>
-        <button id="pev" onClick="previousMonth()"> < </button>
-        <h1 class="month">October 2024</h1>
-        <button id="next" onClick="nextMonth()"> > </button>
+        <button id="next-month">Next</button>
+        <script src='calendar.js'></script>
         <div class='image-header'>
             <a href="addevent.html">
-                <img src="../img/add icon.png" alt="Add Note">
+                <img src="img/add icon.png" alt="Add Note">
             </a>
-        </div>
+        </div> 
     </header>
     <div class="calendar">
         <div class="days-row">
@@ -33,7 +38,7 @@
             <div class="day">Friday</div>
             <div class="day">Saturday</div>
         </div>
-        <div class="calendar-grid">
+        <div class="calendar-grid" id="calendar-grid">
             <div class="day-box">29</div>
             <div class="day-box">30</div>
             <div class="day-box">1</div>
@@ -70,28 +75,7 @@
             <div class="day-box">1</div>
             <div class="day-box">2</div>
         </div>
-        <div class="footer-container-calendar">
-        <label for="month">Change Month/Year: </label>
-                    <!-- Dropdowns to select a specific month and year -->
-                    <select id="month" onchange="setDate()">
-                        <option value=0>Jan</option>
-                        <option value=1>Feb</option>
-                        <option value=2>Mar</option>
-                        <option value=3>Apr</option>
-                        <option value=4>May</option>
-                        <option value=5>Jun</option>
-                        <option value=6>Jul</option>
-                        <option value=7>Aug</option>
-                        <option value=8>Sep</option>
-                        <option value=9>Oct</option>
-                        <option value=10>Nov</option>
-                        <option value=11>Dec</option>
-                    </select>
-                    <!-- Dropdown to select a specific year -->
-                    <select id="year" onchange="setDate()"></select>
-        </div>
     </div>
 </div>
-<script src="./calendar.js"></script>
 </body>
 </html>

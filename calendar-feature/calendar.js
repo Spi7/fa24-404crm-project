@@ -6,6 +6,20 @@ let current_year = date.getYear();
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+// populate years for year selection
+function createYears(start, end) {
+    let years = "";
+    for (let year = start; year <= end; year++) {
+        years += "<option value='" +
+            year + "'>" + year + "</option>";
+    }
+    return years;
+}
+
+// arbitrary range, consider changing later
+createYear = createYears(1974, 2074);
+document.getElementById("year").innerHTML = createYear;
+
 // navigate to the next month
 function nextMonth() {
     if(current_month == 11){
@@ -28,10 +42,9 @@ function previousMonth() {
 }
 
 // navigate to specific date
-function setDate(day, month, year){
-    current_day = day;
-    current_month = month;
-    current_year = year;
+function setDate(){
+    current_month = parseInt(selectMonth.value);
+    current_year = parseInt(selectYear.value);
     updateCalendar(current_month, current_year);
 }
 

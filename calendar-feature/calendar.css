@@ -39,6 +39,12 @@ header {
 
 .month {
     text-align: center;
+    font-size: 30px;
+}
+
+.current-date {
+    display: table-column;
+    font-size: 0.5em;
 }
 
 .calendar {
@@ -86,19 +92,4 @@ header {
     font-size: 16px;
     font-weight: bold;
     color: #333;
-}
-
-.footer-container-calendar {
-    margin-top: 1em;
-    border-top: 1px solid #dadada;
-    padding: 10px 0;
-}
-
-.footer-container-calendar select {
-    cursor: pointer;
-    background: #ffffff;
-    color: #585858;
-    border: 1px solid #bfc5c5;
-    border-radius: 3px;
-    padding: 5px 1em;
 }

@@ -15,8 +15,9 @@ const monthDays = {
 
 const months = Object.keys(monthDays);
 
+document.getElementById('set-date').addEventListener('click', () => selectDate());
 document.getElementById('prev-month').addEventListener('click', () => prevMonth());
-document.getElementById('next-month').addEventListener('click', () => nextMonth());  
+document.getElementById('next-month').addEventListener('click', () => nextMonth());
 
 function prevMonth() {
     let monthText = document.querySelector('h1.month').textContent;
@@ -167,4 +168,79 @@ function nextMonth() {
     }
 
     document.querySelector('h1.month').textContent = nextMonth + " " + year;
+}
+
+function selectDate() {
+
+    let dateInput = document.getElementById('select-date').value;
+    let dateEntered = new Date(dateInput);
+
+    let month = dateEntered.getMonth();
+    let year = dateEntered.getFullYear();
+    let prevMonthIndex = month;
+
+
+    let prevMonth = months[prevMonthIndex];
+    let daysInPrevMonth = monthDays[prevMonth];
+
+    let twoPrevMonth;
+    if (prevMonthIndex == 0){
+        twoPrevMonth = months[11]
+    }
+    else{
+        twoPrevMonth = months[prevMonthIndex-1]
+    }
+    twoPrevMonthDays = monthDays[twoPrevMonth];
+
+    if (prevMonth === 'February' && (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0))) {
+        daysInPrevMonth++;
+    }
+
+    const calendarGrid = document.getElementById('calendar-grid');
+
+    while (calendarGrid.firstChild) {
+        calendarGrid.removeChild(calendarGrid.firstChild);
+    }
+
+    const currentMonthIndex = months.indexOf(month);
+    let firstDayOfCurrentMonth = new Date(year, prevMonthIndex, 1);
+    let firstDayIndex = firstDayOfCurrentMonth.getDay(); 
+
+    for (let i = twoPrevMonthDays - firstDayIndex; i < twoPrevMonthDays; i++) {
+        let newDayBox = document.createElement('div');
+        newDayBox.className = 'day-box';
+        newDayBox.textContent = i + 1; 
+        calendarGrid.appendChild(newDayBox);
+    }
+
+    for (let i = 1; i <= daysInPrevMonth; i++) {
+        let newDayBox = document.createElement('div');
+        newDayBox.className = 'day-box';
+        newDayBox.textContent = i;
+        calendarGrid.appendChild(newDayBox);
+    }
+
+    let nextMonthIndex = (prevMonthIndex + 1) % 12; 
+    let daysInNextMonth = monthDays[months[nextMonthIndex]];
+
+    if (months[nextMonthIndex] === 'February' && (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0))) {
+        daysInNextMonth++;
+    }
+
+    let maxLength = 35;
+    calendarGrid.style.gridTemplateRows = 'repeat(5, 1fr)';
+    if(calendarGrid.children.length > 35){
+        maxLength = 42;
+        calendarGrid.style.gridTemplateRows = 'repeat(6, 1fr)';
+    }
+
+    for (let i = 1; calendarGrid.children.length < maxLength; i++) {
+        let newDayBox = document.createElement('div');
+        newDayBox.className = 'day-box';
+        newDayBox.textContent = i; 
+        calendarGrid.appendChild(newDayBox);
+    }
+
+    document.querySelector('h1.month').textContent = prevMonth + " " + year;
+
 }

@@ -13,14 +13,21 @@
 }
 
 .chat-interface {
-    display: none; /* Initially hidden */
-    width: 100%;
+    display: none;
     flex-direction: column;
+    width: 100%;
     background-color: #fff;
+    height: 100vh; /* Full height of the viewport */
+    overflow-y: auto; /* Enable scrolling */
+}
+
+.chat-messages {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 10px;
 }
 
 .mobile-back-btn {
-    display: block;
+    display: flex;
     font-size: 24px;
     padding: 10px;
     cursor: pointer;

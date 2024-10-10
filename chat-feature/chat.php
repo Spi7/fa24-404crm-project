@@ -43,6 +43,7 @@ if ($sessionToken) {
     <title>Chat Server</title>
     <link rel="stylesheet" href="chat.css">
     <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <script src="deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
     <script>
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
         function loadMobileCSS() {

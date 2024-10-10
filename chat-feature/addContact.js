@@ -4,7 +4,7 @@
 function addNewContact() {
     let contactList = document.getElementById('contact-list');
     let newContactEmail = prompt("Enter contact email:"); // Prompt for email input
-    
+
     // Validate email format
     if (newContactEmail && validateEmail(newContactEmail)) {
         console.log('Adding contact:', newContactEmail); // Log the email being added
@@ -26,22 +26,23 @@ function addNewContact() {
             // Handle the response from the server
             if (data.status === 'success') {
                 const profilePic = '../img/user profile icon.png'; // Default profile picture
-                const nickname = data.nickname; // Default nickname as the email prefix
+                const nickname = data.nickname; // nickname fetch by data from ajax
 
                 let listItem = document.createElement('li');
                 listItem.innerHTML = `
                     <img src="${profilePic}" alt="${nickname}" class="profile-pic" />
                     <span class="contact-nickname">${nickname}</span>
                     <span class="contact-email">${newContactEmail}</span>
+                    <button class="delete-contact-btn" onclick="deleteContact('${newContactEmail}')">X</button>
                 `;
-                    
+                
                 // Set onclick event to open chat
                 listItem.onclick = function() {
                     openChat(nickname); // Open chat on click
                 };
-                    
+                
                 contactList.appendChild(listItem); // Add the contact to the list
-                alert(data.message); // Show success message
+                // alert(data.message); // Show success message
             } else {
                 alert(data.message); // Show error message
             }
@@ -53,7 +54,7 @@ function addNewContact() {
     } else {
         alert('Please enter a valid email address.');
     }
-}    
+}
 
 // Function to validate email format (simple regex) --> later on, fetch it from database to validate if the user exist
 function validateEmail(email) {

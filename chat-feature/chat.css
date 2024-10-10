@@ -83,6 +83,13 @@ body {
     background-color: #0056b3;
 }
 
+.delete-contact-btn {
+    margin-left: auto; /* Push the button to the far right */
+    background: none;
+    border: none; 
+    color: #888888;;
+    cursor: pointer;
+}
 
 .contacts h3 a {
     text-decoration: none; /* Remove underline from the link */

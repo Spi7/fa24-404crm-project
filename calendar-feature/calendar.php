@@ -21,13 +21,17 @@
             echo "<h1>Today's Date: $currentDate</h1>";?>
         </div>
         <button id="next-month">Next</button>
-        <script src='calendar.js'></script>
         <div class='image-header'>
             <a href="addevent.html">
                 <img src="img/add icon.png" alt="Add Note">
             </a>
         </div> 
     </header>
+    <div>
+        <input type="date" id="select-date">
+        <button id="set-date">Set Date</button>
+        <script src='calendar.js'></script>
+    </div>
     <div class="calendar">
         <div class="days-row">
             <div class="day">Sunday</div>
@@ -77,5 +81,6 @@
         </div>
     </div>
 </div>
+<script src='calendar.js'></script>
 </body>
 </html>

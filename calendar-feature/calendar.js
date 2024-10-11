@@ -18,6 +18,7 @@ const months = Object.keys(monthDays);
 document.getElementById('set-date').addEventListener('click', () => selectDate());
 document.getElementById('prev-month').addEventListener('click', () => prevMonth());
 document.getElementById('next-month').addEventListener('click', () => nextMonth());
+document.addEventListener('DOMContentLoaded', highlightCurrDay);
 
 function prevMonth() {
     let monthText = document.querySelector('h1.month').textContent;
@@ -93,6 +94,7 @@ function prevMonth() {
     }
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
+    highlightCurrDay();
 }
 
 function nextMonth() {
@@ -168,6 +170,7 @@ function nextMonth() {
     }
 
     document.querySelector('h1.month').textContent = nextMonth + " " + year;
+    highlightCurrDay();
 }
 
 function selectDate() {
@@ -242,5 +245,25 @@ function selectDate() {
     }
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
+    highlightCurrDay();
+}
 
+function highlightCurrDay(){
+    let currDate = new Date();
+    let currYear = currDate.getFullYear();
+    let currMonth = currDate.getMonth();
+    let currDay = currDate.getDate();
+
+    let monthText = document.querySelector('h1.month').textContent;
+    let [month, year] = monthText.split(' ');
+    monthIndex = months.indexOf(month);
+    if(Number(year) == currYear && currMonth == monthIndex){
+        const calendarGrid = document.getElementById('calendar-grid');
+        const dayboxes = calendarGrid.querySelectorAll('.day-box');
+        dayboxes.forEach(daybox => {
+            if(Number(daybox.textContent.trim()) == currDay){
+                daybox.style.backgroundColor = 'yellow';
+            }
+        });
+    }
 }

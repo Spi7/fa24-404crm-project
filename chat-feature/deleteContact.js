@@ -1,4 +1,5 @@
 function deleteContact(contactEmail) {
+    let noContactsMessage = document.getElementById('no-contacts-message');
     if (confirm('Are you sure you want to delete this contact?')) {
         fetch('delete_contact_backend.php', {
             method: 'POST',
@@ -17,6 +18,10 @@ function deleteContact(contactEmail) {
                 );
                 if (contactItem) {
                     contactItem.remove(); // Remove the contact item from the list
+                }
+                //when last contact is removed from the list, no contacts found would appear in the list again
+                if (contactList.children.length === 1) {
+                    noContactsMessage.style.display = 'block';
                 }
                 disableChat();
                 // alert('Contact deleted successfully.');

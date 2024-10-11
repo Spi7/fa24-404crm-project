@@ -93,7 +93,7 @@ if ($sessionToken) {
                         </li>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <li>No contacts found.</li>
+                    <li id="no-contacts-message">No contacts found.</li>
                 <?php endif; ?>
             </ul>
             <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>

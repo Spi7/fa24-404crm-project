@@ -3,6 +3,7 @@
 // Validate email format
 function addNewContact() {
     let contactList = document.getElementById('contact-list');
+    let noContactsMessage = document.getElementById('no-contacts-message'); // no contact found message
     let newContactEmail = prompt("Enter contact email:"); // Prompt for email input
 
     // Validate email format
@@ -27,6 +28,10 @@ function addNewContact() {
             if (data.status === 'success') {
                 const profilePic = '../img/user profile icon.png'; // Default profile picture
                 const nickname = data.nickname; // nickname fetch by data from ajax
+
+                if (noContactsMessage) {
+                    noContactsMessage.style.display = 'none'; // Hide the no contact found message
+                }
 
                 let listItem = document.createElement('li');
                 listItem.innerHTML = `

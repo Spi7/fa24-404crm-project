@@ -18,11 +18,32 @@ function deleteContact(contactEmail) {
                 if (contactItem) {
                     contactItem.remove(); // Remove the contact item from the list
                 }
+                disableChat();
                 // alert('Contact deleted successfully.');
             } else {
                 alert('Error deleting contact: ' + data.message);
             }
         })
         .catch(error => console.error('Error:', error));
+    }
+}
+
+function disableChat() {
+    // Disable message input
+    const messageInput = document.getElementById('message-input');
+    if (messageInput) {
+        messageInput.disabled = true;
+    }
+
+    // Disable send button
+    const sendButton = document.querySelector('.send-btn');
+    if (sendButton) {
+        sendButton.disabled = true;
+    }
+
+    // Update chat header to reflect disabled state
+    const chatHeaderText = document.getElementById('chat-header-text');
+    if (chatHeaderText) {
+        chatHeaderText.textContent = "Select a contact to start chatting";
     }
 }

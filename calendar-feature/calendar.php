@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ensure compatibility w/ older version of Internet Explorer -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes pg responsive, adjust its width based on device's secreen size -->
     <title>CRM Dashboard (404)</title> <!-- our title -->
-    <link rel="stylesheet" href="css/calendar.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php include '../sidebar.php'; ?>
     <div class="main-container">
     <header>
         <div class='image-header'>
-            <img src="img/sunny cloud.webp" alt="Sunny Cloud">
+            <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
         </div> 
         <button id="prev-month">Prev</button>
         <div class="current-date">
@@ -24,7 +24,7 @@
         <button id="next-month">Next</button>
         <div class='image-header'>
             <a href="addevent.html">
-                <img src="img/add icon.png" alt="Add Note">
+                <img src="../img/add icon.png" alt="Add Note">
             </a>
         </div> 
     </header>

@@ -30,7 +30,7 @@
 .sidebar.chat { background-color: #e0f7fa; }
 .sidebar.projects { background-color: #f1f8e9; }
 .sidebar.invoice { background-color: #fff9c4; }
-.profile { background-color: #FFDAB9; }
+.sidebar.profile { background-color: #FFDAB9; }
 
 .sidebar a {
     display: flex; /* Make anchor a flex container */

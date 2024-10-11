@@ -70,6 +70,24 @@ header {
     border-right: 1px solid #ccc;
 }
 
+.day-abbr {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .day-abbr {
+        display: block;
+        flex: 1; 
+        padding: 10px;
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+    }
+    
+    .day {
+        display: none;
+    }
+}
+
 .day:last-child {
     border-right: none; 
 }

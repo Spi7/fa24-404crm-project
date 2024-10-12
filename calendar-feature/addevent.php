@@ -12,7 +12,7 @@
             $event_start = $_POST["start-time"];
             $event_end = $_POST["end-time"];
             $frequency = $_POST["repeat"];
-            $all_day = $_POST["all-day"];
+            $all_day = isset($_POST["all-day"]);
             $title = $_POST["event-title"]:
             $description = $_POST["event-description"];
             $color = $_POST["color"];

@@ -9,11 +9,14 @@
             $user_id = $row["USER_ID"];
             $result = $mysqli->query("SELECT MAX(EVENT_ID) as max FROM ACCOUNTS");
             $event_id = $result->fetch_assoc()["max"]+1;
-            $event_date = $_POST["EVENT_DATE"];
-            $frequency = $_POST["repeat"]
+            $event_start = $_POST["start-time"];
+            $event_end = $_POST["end-time"];
+            $frequency = $_POST["repeat"];
+            $all_day = $_POST["all-day"];
             $title = $_POST["event-title"]:
             $description = $_POST["event-description"];
-            $mysqli->query("INSERT INTO CALENDARS(EVENT_ID, USER_ID, EVENT_DATE, FREQUENCY, TITLE, DESCRIPTION) VALUES('$event_id', '$user_id', '$event_date', '$frequency', '$title', '$description')");
+            $color = $_POST["color"];
+            $mysqli->query("INSERT INTO CALENDARS(EVENT_ID, USER_ID, EVENT_START, FREQUENCY, TITLE, EVENT_DESCRIPTION, EVENT_END, COLOR, ALL_DAY) VALUES('$event_id', '$user_id', '$event_date', '$frequency', '$title', '$description', '$event_end', '$color', '$all_day')");
         } else {
             echo "session token not found";
         }

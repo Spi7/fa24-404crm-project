@@ -24,12 +24,15 @@ function deleteContact(contactEmail) {
                     noContactsMessage.style.display = 'block';
                 }
                 disableChat();
-                // alert('Contact deleted successfully.');
+                //at this point the contact should already be removed from the contactlist
             } else {
                 alert('Error deleting contact: ' + data.message);
             }
         })
         .catch(error => console.error('Error:', error));
+    }
+    if (window.innerWidth <= 768) {
+        window.location.href = "chat.php";
     }
 }
 

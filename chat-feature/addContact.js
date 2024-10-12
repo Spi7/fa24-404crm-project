@@ -74,9 +74,6 @@ function openChat(contactName) {
         // For mobile: Show chat interface and hide contact list
         document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
     }
-    else {
-        document.querySelector('.contacts').style.display = 'block'; //Desktop
-    }
     // For desktop: Keep the existing behavior
     document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
     document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;

@@ -16,7 +16,7 @@
             $title = $_POST["event-title"]:
             $description = $_POST["event-description"];
             $color = $_POST["color"];
-            $mysqli->query("INSERT INTO CALENDARS(EVENT_ID, USER_ID, EVENT_START, FREQUENCY, TITLE, EVENT_DESCRIPTION, EVENT_END, COLOR, ALL_DAY) VALUES('$event_id', '$user_id', '$event_start', '$frequency', '$title', '$description', '$event_end', '$color', '$all_day')");
+            $mysqli->query("INSERT INTO CALENDARS (EVENT_ID, USER_ID, EVENT_START, FREQUENCY, TITLE, EVENT_DESCRIPTION, EVENT_END, COLOR, ALL_DAY) VALUES('$event_id', '$user_id', '$event_start', '$frequency', '$title', '$description', '$event_end', '$color', '$all_day')");
         } else {
             echo "session token not found";
         }

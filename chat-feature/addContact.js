@@ -47,9 +47,8 @@ function addNewContact() {
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
-                // alert(data.message); // Show success message
             } else {
-                alert(data.message); // Show error message
+                alert(data.message); // Show error message if it's added unsuccessfully
             }
         })
         .catch(error => {
@@ -67,14 +66,19 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+let isChatOpen = false; //keep track chat UI for mobile
 // Function to open chat with the selected contact
 function openChat(contactName) {
+    isChatOpen = true;
     if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
         // For mobile: Show chat interface and hide contact list
-        document.querySelector('.contacts').style.display = 'none'; // Hide contacts
-        document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
+        document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
+    }
+    else {
+        document.querySelector('.contacts').style.display = 'block'; //Desktop
     }
     // For desktop: Keep the existing behavior
+    document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
     document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;
     document.getElementById('message-input').disabled = false;
     document.querySelector('.send-btn').disabled = false;
@@ -85,6 +89,25 @@ function openChat(contactName) {
             sendMessage();
         }
     });
+}
+
+function goBack() {
+    if (window.innerWidth <= 768) { // Mobile behavior
+        if (isChatOpen) {
+            // If in chat, go back to contacts
+            isChatOpen = false;
+            window.location.href = "chat.php";
+        } else {
+            // If in contacts, navigate back in history
+            window.history.back();
+        }
+    } 
+}
+
+function showContacts() {
+    isChatOpen = false;
+    document.querySelector('.contacts').style.display = 'block'; // Show contacts
+    document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
 }
 
 // Function to send a message

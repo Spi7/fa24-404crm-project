@@ -47,25 +47,19 @@ if ($sessionToken) {
     <script>
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
         function loadMobileCSS() {
+            var sidebar = document.querySelector('.sidebar');
             if (window.innerWidth <= 600) {
-                // Create a link element for mobile CSS
-                var mobileCss = document.createElement('link');
-                mobileCss.rel = 'stylesheet';
-                mobileCss.href = 'chat-mobile.css'; // Your mobile CSS file path
-
-                // Append it to the head
-                document.head.appendChild(mobileCss);
-
                 // Hide the sidebar for mobile screens
-                var sidebar = document.querySelector('.sidebar');
                 if (sidebar) {
                     sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
                 }
             }
+            else {
+                sidebar.style.display = 'block';
+            }
         }
         // Run this when the page loads
         window.onload = loadMobileCSS;
-
         // Also check when the window is resized (optional)
         window.onresize = loadMobileCSS;
     </script>
@@ -103,7 +97,7 @@ if ($sessionToken) {
         <div class="chat-interface">
             <div class="chat-header">
                 <div class="mobile-back-btn">
-                    <button type="button" onclick="window.history.back()">← Back</button>
+                    <button type="button" onclick="goBack()">← Back</button>
                 </div>
                 <h3 id="chat-header-text">Select a contact to start chatting</h3>
             </div>

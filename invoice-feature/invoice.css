@@ -2,13 +2,16 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #d4e3fc, #ffefe5);
     color: #333;
-    margin: 0;
     height: 100vh; 
-    display: flex; 
 }
-
+#centerWrapper{
+    display: flex;
+}
+#homeButton{
+    width: 48px;
+}
 /* clear borders and outline */
-fieldset,.deleteItemButton,#addItemButton{
+fieldset,.deleteItemButton,#addItemButton,#submitButton{
  border:none;
  outline:none;
 }
@@ -22,6 +25,7 @@ h1{
     text-align: center;
 }
 .main-container{
+    display: flex; 
     margin: 0 auto;
 }
 /* 
@@ -34,7 +38,11 @@ nice add button
 }
 
 fieldset{
+    padding: 2px;
     border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .deleteItemButton{
@@ -52,17 +60,20 @@ fieldset{
     width: 20%;
 }
 
-#addItemButton,button[type="submit"]{
+#addItemButton,#submitButton{
     padding: 8px;
     border-radius: 8px;
     background: #7af;
     border: 1px solid;
 }
 button[type="submit"]{
-    margin: 0 auto;
+    margin: 4px auto;
 }
-.quantityInput,.priceInput{
-    width: 50px;
+.quantityInput{
+    width: 35px;
+}
+.priceInput{
+    width: 45px;
 }
 input,textarea{
     background: #f9f9f9;
@@ -72,17 +83,22 @@ input,textarea{
     border-radius: 8px;
     outline: 0;
 }
+input[name="invoiceName"], input[type="email"]{
+    width: 50%;
+    margin: 2px 8px;
+}
 #baAndDateWrapper{
     display: flex;
     justify-content: space-between;
 }
 #invoiceBAWrapper{
     text-align: center;
-    width: 25%;
+    width: 40%;
 }
 #dateWrapper{
-    text-align: center;
-    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 textarea[name="invoiceBA"]{
     resize: none;
@@ -91,4 +107,21 @@ textarea[name="invoiceBA"]{
 }
 #addButtonAndTotal{
     margin: 0 auto;
+}
+.descriptionInput{
+    width: 25%;
+}
+
+.errorText{
+    color: #f44;
+}
+#userNotFoundErr{
+    padding-left: 16px;
+    font-size: 16px;
+}
+.hide{
+    display: none;
+}
+#submitStatus{
+    text-align: center;
 }

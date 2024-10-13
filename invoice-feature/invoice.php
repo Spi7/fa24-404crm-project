@@ -1,3 +1,38 @@
+<?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
+if (count($_POST) > 0) {
+    header(header: 'Content-Type: application/json; charset=utf-8');
+    include "../db_connection.php";
+    connectDB();
+    $quantities = $_POST["quantity"];
+    $destEmail = strtolower($_POST["email"]);
+    $prices = $_POST["price"];
+    $descriptions = $_POST["description"];
+    $finalPrice = 0;
+
+    //check if user destination is in accounts db
+    $userEmailQuery = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE EMAIL='$destEmail'");
+    if (mysqli_num_rows($userEmailQuery) == 0) {
+        echo json_encode(array("error" => "EMAIL_NOT_FOUND"));//{"error":"EMAIL_NOT_FOUND"}
+        exit(0);
+    }
+    //get invoice id - max id + 1
+    $invoiceID = (int) $mysqli->query("SELECT MAX(INVOICE_ID) as max FROM INVOICES")->fetch_assoc()["max"] + 1;
+    //get sender - get user id where session token = the cookie variable
+    $senderID = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN='$_COOKIE[SESSION_TOKEN]'")->fetch_assoc()["USER_ID"];
+    //get dest id - already checked there is a row before
+    $destUserId = $userEmailQuery->fetch_assoc()["USER_ID"];
+    $mysqli->query(query: "INSERT INTO INVOICES VALUES ('$invoiceID','$senderID','$destUserId',now(),'$_POST[invoiceDueDate]','$_POST[invoiceBA]','$_POST[invoiceName]')");
+    for ($i = 0; $i < count(value: $quantities); $i++) {
+        $invoiceItemID = (int) $mysqli->query("SELECT MAX(ITEM_ID) as max FROM INVOICE_ITEMS")->fetch_assoc()["max"] + 1;
+        $mysqli->query("INSERT INTO INVOICE_ITEMS VALUES ('$invoiceItemID','$invoiceID','$quantities[$i]','$prices[$i]','$descriptions[$i]')");
+    }
+    echo json_encode(array("success" => "true"));
+    exit();//if post dont respond with page
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +47,27 @@
 </head>
 
 <body>
-    <?php include '../sidebar.php'; ?>
+<a href="../home-page/home.php">
+        <img id="homeButton" src="../img/home.png" alt="Home">
+        <p>Home</p>
+    </a>
+    <div id="centerWrapper">
     <div class="main-container">
-        <h1>Create a New Invoice</h1>
         <form action="invoice.php" method="post">
+            <h1>Create a New Invoice</h1>
             <label class="headerLabel">
                 Invoice Email Address<br>
                 <input name="email" type="email" placeholder="recipient@client.org">
+                <br>
+                <span id="userNotFoundErr" class="errorText hide">user not found<br></span>
+
             </label>
+            <label class="headerLabel">
+                Invoice name<br>
+                <input name="invoiceName" type="text">
+                <br>
+            </label>
+            <br>
             <br>
             <label for="items" class="headerLabel" id="invItemsLabel">
                 Invoice Items
@@ -27,7 +75,7 @@
 
             <section name="items" id="invoiceItems">
             </section>
-            <section style="text-align: center;">
+            <section style="text-align: center; margin: 8px 0;">
                 <button id="addItemButton" onclick="addItemToForm()" type="button">Add item</button>
                 <span id="invoicePriceDisplay">Total : ---</span>
             </section>
@@ -36,20 +84,19 @@
                     <textarea name="invoiceBA"></textarea>
                 </div>
                 <div id="dateWrapper">
-                    <label for="invoiceCreatedDate">Invoice Created Date</label>
-                    <br>
-                    <input name="invoiceCreatedDate"type="date">
-                    <br>
                     <label for="invoiceDueDate">Invoice Due Date</label>
                     <br>
                     <input name="invoiceDueDate" type="date">
                 </div>
             </section>
             <div style="text-align:center">
-                <button type="submit">Send Invoice</button>
+                <button id="submitButton" type="button" onclick="submitForm()">Send Invoice</button>
             </div>
+            <p id="submitStatus" class="errorText"></p>
         </form>
     </div>
+    </div>
+    <a href="./invoices.php">View Invoices</a>
     <template id="itemTemplate">
         <fieldset class="item">
             <!-- new inputs will all have the same names quantity/price/description this will result to the server receiving an array of values for each -->
@@ -58,7 +105,7 @@
             <input name="quantity[]" type="number" class="quantityInput">
             <label for="price">Price:</label>
             <input name="price[]" type="number" class="priceInput" step="any">
-            <label for="description">Description:</label>
+            <label for="description">desc:</label>
             <input name="description[]" type="text" class="descriptionInput">
             <button type="button" class="deleteItemButton">X</button>
         </fieldset>

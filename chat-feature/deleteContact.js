@@ -25,14 +25,14 @@ function deleteContact(contactEmail) {
                 }
                 disableChat();
                 //at this point the contact should already be removed from the contactlist
+                if (window.innerWidth <= 768) {
+                    window.location.href = "chat.php";
+                }
             } else {
                 alert('Error deleting contact: ' + data.message);
             }
         })
         .catch(error => console.error('Error:', error));
-    }
-    if (window.innerWidth <= 768) {
-        window.location.href = "chat.php";
     }
 }
 

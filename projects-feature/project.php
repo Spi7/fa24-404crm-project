@@ -5,31 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Management</title>
     <link rel="stylesheet" href="project.css"> <!-- Link to the external CSS file -->
-    <script>
-        // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
-        function loadMobileCSS() {
-            if (window.innerWidth <= 600) {
-                // Create a link element for mobile CSS
-                var mobileCss = document.createElement('link');
-                mobileCss.rel = 'stylesheet';
-                mobileCss.href = 'chat-mobile.css'; // Your mobile CSS file path
-
-                // Append it to the head
-                document.head.appendChild(mobileCss);
-
-                // Hide the sidebar for mobile screens
-                var sidebar = document.querySelector('.sidebar');
-                if (sidebar) {
-                    sidebar.style.display = 'none'; // Hide the sidebar for mobile
-                }
-            }
-        }
-        // Run this when the page loads
-        window.onload = loadMobileCSS;
-
-        // Also check when the window is resized (optional)
-        window.onresize = loadMobileCSS;
-    </script>
 </head>
 <body>
 

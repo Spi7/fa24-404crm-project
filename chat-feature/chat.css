@@ -83,6 +83,13 @@ body {
     background-color: #0056b3;
 }
 
+.delete-contact-btn {
+    margin-left: auto; /* Push the button to the far right */
+    background: none;
+    border: none; 
+    color: #888888;
+    cursor: pointer;
+}
 
 .contacts h3 a {
     text-decoration: none; /* Remove underline from the link */
@@ -110,7 +117,7 @@ body {
 
 /* Chat Interface */
 .chat-interface {
-    width: 55%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -191,4 +198,45 @@ body {
 
 .mobile-back-btn {
     display: none;
+}
+
+@media (max-width: 600px) {
+    .chat-container {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .contacts {
+        width: 100%;
+        border: none;
+        padding: 10px;
+        background-color: #fff;
+    }
+    
+    .chat-interface {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        height: 100vh; /* Full height of the viewport */
+        overflow-y: auto; /* Enable scrolling */
+    }
+    
+    .chat-messages {
+        flex-grow: 1; /* Take up remaining space */
+        padding: 10px;
+    }
+    
+    .mobile-back-btn {
+        display: flex;
+        font-size: 24px;
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .add-contact-btn {
+        width: 100%;
+        text-align: center;
+    }
 }

@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
+    color: #333;
+    height: 100vh; 
+}
+#centerWrapper{
+    display: flex;
+}
+#homeButton{
+    width: 48px;
+}
+/* clear borders and outline */
+fieldset,.deleteItemButton,#addItemButton,#submitButton{
+ border:none;
+ outline:none;
+}
+.sidebar {
+    width: 250px; 
+    height: 100vh; 
+    background-color: #f4f4f4; 
+}
+
+h1{
+    text-align: center;
+}
+.main-container{
+    display: flex; 
+    margin: 0 auto;
+}
+/* 
+no line around fieldset
+nice delete button
+nice add button
+*/
+.headerLabel{
+    font-size: 24px;
+}
+
+fieldset{
+    padding: 2px;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteItemButton{
+    background-color: #f44;
+    color:#fff;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;/*align x*/
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+.quantity{
+    width: 20%;
+}
+
+#addItemButton,#submitButton{
+    padding: 8px;
+    border-radius: 8px;
+    background: #7af;
+    border: 1px solid;
+}
+button[type="submit"]{
+    margin: 4px auto;
+}
+.quantityInput{
+    width: 35px;
+}
+.priceInput{
+    width: 45px;
+}
+input,textarea{
+    background: #f9f9f9;
+    border: 1px solid #222;
+    outline: none;
+    padding: 8px;
+    border-radius: 8px;
+    outline: 0;
+}
+input[name="invoiceName"], input[type="email"]{
+    width: 50%;
+    margin: 2px 8px;
+}
+#baAndDateWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+#invoiceBAWrapper{
+    text-align: center;
+    width: 40%;
+}
+#dateWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+textarea[name="invoiceBA"]{
+    resize: none;
+    width: 100%;
+    height: 10vh;
+}
+#addButtonAndTotal{
+    margin: 0 auto;
+}
+.descriptionInput{
+    width: 25%;
+}
+
+.errorText{
+    color: #f44;
+}
+#userNotFoundErr{
+    padding-left: 16px;
+    font-size: 16px;
+}
+.hide{
+    display: none;
+}
+#submitStatus{
+    text-align: center;
+}

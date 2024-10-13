@@ -8,8 +8,6 @@ function addNewContact() {
 
     // Validate email format
     if (newContactEmail && validateEmail(newContactEmail)) {
-        console.log('Adding contact:', newContactEmail); // Log the email being added
-
         fetch('add_contact_backend.php', {
             method: 'POST',
             headers: {
@@ -106,6 +104,7 @@ function showContacts() {
     document.querySelector('.contacts').style.display = 'block'; // Show contacts
     document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
 }
+
 
 // Function to send a message
 function sendMessage() {

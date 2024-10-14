@@ -7,12 +7,6 @@ body {
     display: flex; 
 }
 
-.sidebar {
-    width: 250px; 
-    height: 100vh; 
-    background-color: #f4f4f4; 
-}
-
 .main-container {
     display: flex;
     flex-direction: column; 
@@ -39,6 +33,12 @@ header {
 
 .month {
     text-align: center;
+    font-size: 30px;
+}
+
+.current-date {
+    display: table-column;
+    font-size: 0.5em;
 }
 
 .calendar {
@@ -62,6 +62,24 @@ header {
     padding: 10px;
     font-weight: bold;
     border-right: 1px solid #ccc;
+}
+
+.day-abbr {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .day-abbr {
+        display: block;
+        flex: 1; 
+        padding: 10px;
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+    }
+    
+    .day {
+        display: none;
+    }
 }
 
 .day:last-child {

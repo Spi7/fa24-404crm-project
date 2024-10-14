@@ -39,6 +39,12 @@ header {
 
 .month {
     text-align: center;
+    font-size: 30px;
+}
+
+.current-date {
+    display: table-column;
+    font-size: 0.5em;
 }
 
 .calendar {

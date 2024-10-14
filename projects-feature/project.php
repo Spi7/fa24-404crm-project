@@ -32,7 +32,10 @@
     </script>
 </head>
 <body>
-
+<a href="../home-page/home.php">
+        <img id="homeButton" src="../img/home.png" alt="Home">
+        <p>Home</p>
+    </a>
 <div class="container">
     <?php include '../sidebar.php'; ?> <!-- Including the sidebar.php file -->
     <div class="main-content">

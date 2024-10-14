@@ -6,7 +6,7 @@
     $email = strtolower($_POST['email']);
     $password = $_POST['password'];
     if(isset($_POST['email'])) {
-        $query = "SELECT password FROM ACCOUNTS WHERE email='$email'";
+        $query = "SELECT password FROM ACCOUNTS WHERE EMAIL='$email'";
         $result = $mysqli->query(query: $query);
         if($result->num_rows == 1){
             $row=$result->fetch_assoc();

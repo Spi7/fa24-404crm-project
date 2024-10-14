@@ -83,6 +83,13 @@ body {
     background-color: #0056b3;
 }
 
+.delete-contact-btn {
+    margin-left: auto; /* Push the button to the far right */
+    background: none;
+    border: none; 
+    color: #888888;
+    cursor: pointer;
+}
 
 .contacts h3 a {
     text-decoration: none; /* Remove underline from the link */
@@ -110,7 +117,7 @@ body {
 
 /* Chat Interface */
 .chat-interface {
-    width: 55%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -135,13 +142,29 @@ body {
 }
 
 .chat-message {
-    padding: 10px;
-    margin-bottom: 10px;
+    display: flex; 
+    align-items: flex-start;
+    margin-bottom: 20px; 
 }
 
 .chat-message.sent {
-    background-color: #e0f7fa;
     align-self: flex-end;
+}
+
+.message-profile-pic {
+    width: 30px;
+    height: 30px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+}
+
+.message-content {
+    max-width: 40%; /* Limit message width to 50% */
+    word-wrap: break-word;
+    padding: 8px; /* Padding around message text */
+    border-radius: 8px;
+    display: inline-block; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
 }
 
 .chat-input {
@@ -175,4 +198,45 @@ body {
 
 .mobile-back-btn {
     display: none;
+}
+
+@media (max-width: 600px) {
+    .chat-container {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .contacts {
+        width: 100%;
+        border: none;
+        padding: 10px;
+        background-color: #fff;
+    }
+    
+    .chat-interface {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        height: 100vh; /* Full height of the viewport */
+        overflow-y: auto; /* Enable scrolling */
+    }
+    
+    .chat-messages {
+        flex-grow: 1; /* Take up remaining space */
+        padding: 10px;
+    }
+    
+    .mobile-back-btn {
+        display: flex;
+        font-size: 24px;
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .add-contact-btn {
+        width: 100%;
+        text-align: center;
+    }
 }

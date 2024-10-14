@@ -1,3 +1,40 @@
+<?php
+include '../db_connection.php';
+connectDB();
+
+// Retrive the session token
+$sessionToken = $_COOKIE['SESSION_TOKEN'] ?? null;
+
+if ($sessionToken) {
+    // Validate the session token
+    $query = "SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("s", $sessionToken);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $userData = $result->fetch_assoc();
+        $userId = $userData['USER_ID'];
+
+        // Fetch contacts for the logged-in user
+        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL 
+                         FROM CONTACTS 
+                         WHERE CONTACTS.USER_ID = ?";
+        $contactStmt = $mysqli->prepare($contactQuery);
+        $contactStmt->bind_param("i", $userId);
+        $contactStmt->execute();
+        $contacts = $contactStmt->get_result();
+    } else {
+        echo "Invalid session token.";
+        exit; // Stop further execution if the token is invalid
+    }
+} else {
+    echo "Session token not provided.";
+    exit; // Stop further execution if no token is provided
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,28 +43,23 @@
     <title>Chat Server</title>
     <link rel="stylesheet" href="chat.css">
     <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <script src="deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
     <script>
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
         function loadMobileCSS() {
+            var sidebar = document.querySelector('.sidebar');
             if (window.innerWidth <= 600) {
-                // Create a link element for mobile CSS
-                var mobileCss = document.createElement('link');
-                mobileCss.rel = 'stylesheet';
-                mobileCss.href = 'chat-mobile.css'; // Your mobile CSS file path
-
-                // Append it to the head
-                document.head.appendChild(mobileCss);
-
                 // Hide the sidebar for mobile screens
-                var sidebar = document.querySelector('.sidebar');
                 if (sidebar) {
                     sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
                 }
             }
+            else {
+                sidebar.style.display = 'block';
+            }
         }
         // Run this when the page loads
         window.onload = loadMobileCSS;
-
         // Also check when the window is resized (optional)
         window.onresize = loadMobileCSS;
     </script>
@@ -39,22 +71,34 @@
 
         <!-- Contacts Section -->
         <div class="contacts">
-            <!-- Add Back button for mobile, hidden on desktop -->
-             <div class="mobile-back-btn">
+            <div class="mobile-back-btn">
                 <button type="button" onclick="window.history.back()">← Back</button>
             </div>
- 
+
             <h3>Contacts</h3>
             <ul id="contact-list">
-                <!-- Initially, this will be empty. JavaScript can be used to dynamically add contacts -->
+                <?php if (isset($contacts) && $contacts->num_rows > 0): ?>
+                    <?php while ($contact = $contacts->fetch_assoc()): ?>
+                        <li onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>')">
+                            <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
+                            <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span>
+                            <span class="contact-email"><?= htmlspecialchars($contact['CONTACT_EMAIL']) ?></span>
+                            <button class="delete-contact-btn" onclick="deleteContact('<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">X</button>
+                        </li>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <li id="no-contacts-message">No contacts found.</li>
+                <?php endif; ?>
             </ul>
-            <!-- Add Contact Button -->
             <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
         </div>
 
         <!-- Chat Section -->
         <div class="chat-interface">
             <div class="chat-header">
+                <div class="mobile-back-btn">
+                    <button type="button" onclick="goBack()">← Back</button>
+                </div>
                 <h3 id="chat-header-text">Select a contact to start chatting</h3>
             </div>
             <div class="chat-messages" id="chat-messages">

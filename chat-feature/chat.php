@@ -53,14 +53,15 @@ if ($sessionToken) {
                 if (sidebar) {
                     sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
                 }
+                document.querySelector('.chat-interface').style.display = 'none';
             }
             else {
                 sidebar.style.display = 'block';
+                document.querySelector('.chat-interface').style.display = 'flex';
             }
         }
         // Run this when the page loads
         window.onload = loadMobileCSS;
-        // Also check when the window is resized (optional)
         window.onresize = loadMobileCSS;
     </script>
 </head>

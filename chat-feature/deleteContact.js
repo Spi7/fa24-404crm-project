@@ -19,15 +19,12 @@ function deleteContact(contactEmail) {
                 if (contactItem) {
                     contactItem.remove(); // Remove the contact item from the list
                 }
+                disableChat();
                 //when last contact is removed from the list, no contacts found would appear in the list again
-                if (contactList.children.length === 1) {
+                if (contactList.children.length === 1 && noContactsMessage) {
                     noContactsMessage.style.display = 'block';
                 }
-                disableChat();
                 //at this point the contact should already be removed from the contactlist
-                if (window.innerWidth <= 768) {
-                    window.location.href = "chat.php";
-                }
             } else {
                 alert('Error deleting contact: ' + data.message);
             }
@@ -37,6 +34,10 @@ function deleteContact(contactEmail) {
 }
 
 function disableChat() {
+    if (window.innerWidth <= 768) {
+        document.querySelector('.contacts').style.display = 'block';
+        document.querySelector('.chat-interface').style.display = 'none';
+    }
     // Disable message input
     const messageInput = document.getElementById('message-input');
     if (messageInput) {

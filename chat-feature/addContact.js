@@ -1,5 +1,5 @@
 // Function to add a new contact
-
+let isChatOpen = false; //keep track chat UI for mobile
 // Validate email format
 function addNewContact() {
     let contactList = document.getElementById('contact-list');
@@ -8,6 +8,7 @@ function addNewContact() {
 
     // Validate email format
     if (newContactEmail && validateEmail(newContactEmail)) {
+
         fetch('add_contact_backend.php', {
             method: 'POST',
             headers: {
@@ -64,20 +65,19 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-let isChatOpen = false; //keep track chat UI for mobile
 // Function to open chat with the selected contact
 function openChat(contactName) {
-    isChatOpen = true;
-    if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
-        // For mobile: Show chat interface and hide contact list
-        document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
-    }
     // For desktop: Keep the existing behavior
     document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
     document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;
     document.getElementById('message-input').disabled = false;
     document.querySelector('.send-btn').disabled = false;
     document.getElementById('chat-messages').innerHTML = '';
+    if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
+        isChatOpen = true;
+        // For mobile: Show chat interface and hide contact list
+        document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
+    }
 
     document.getElementById('message-input').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
@@ -91,10 +91,7 @@ function goBack() {
         if (isChatOpen) {
             // If in chat, go back to contacts
             isChatOpen = false;
-            window.location.href = "chat.php";
-        } else {
-            // If in contacts, navigate back in history
-            window.history.back();
+            showContacts();
         }
     } 
 }
@@ -104,7 +101,6 @@ function showContacts() {
     document.querySelector('.contacts').style.display = 'block'; // Show contacts
     document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
 }
-
 
 // Function to send a message
 function sendMessage() {

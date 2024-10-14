@@ -247,13 +247,18 @@ body {
     }
 }
 
-#homeButton{
-    width: 48px;
+/* Hide the Home button on larger screens (desktop) */
+#homeButton, #homeButton + p {
+    display: none;
 }
 
-.sidebar {
-    width: 250px; 
-    height: 100vh; 
-    background-color: #f4f4f4; 
+/* Show the Home button only on mobile screens */
+@media screen and (max-width: 768px) {
+    #homeButton, #homeButton + p {
+        display: block; /* Make sure the Home button is visible */
+        width: 48px; /* Ensure the correct width is applied */
+        margin: 10px 0; /* Optional: Add spacing around the button */
+        text-align: center; /* Optional: Center-align the text */
+    }
 }
 

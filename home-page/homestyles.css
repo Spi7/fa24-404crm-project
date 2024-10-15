@@ -1,0 +1,128 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5); /* d4e3fc, ffefe5  */
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header-content h1 {
+    font-size: 28px;
+}
+
+.header-content p {
+    font-size: 18px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile input[type="text"] {
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-right: 15px;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Main Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 40px;
+    padding: 40px;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.dashboard-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.dashboard-item:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-item img {
+    width: 80px;
+    height: 80px;
+}
+
+.dashboard-item p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.calendar {
+    background-color: #fce4ec; /* #fce4ec */
+}
+
+.chat {
+    background-color: #e0f7fa;
+}
+
+.projects {
+    background-color: #f1f8e9;
+}
+
+.invoice {
+    background-color: #fff9c4;
+}
+
+.logo-404 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.logo-404 img {
+    width: 200px;
+    height: auto;
+}
+
+.dashboard-item.chat a:focus {
+    outline: 2px solid #FF5733; /* Custom color */
+    outline-offset: 2px;
+    /* Optional: Add box-shadow to enhance focus visibility */
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.5);
+}
+
+.dashboard-item.chat a {
+    text-decoration: none; /* Remove the underline */
+}

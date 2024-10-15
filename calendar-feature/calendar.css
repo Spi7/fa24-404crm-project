@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
+    color: #333;
+    margin: 0;
+    height: 100vh; 
+    display: flex; 
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column; 
+    flex-grow: 1; 
+    overflow: hidden; 
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 3px solid black;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.image-header img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    padding: 20px;
+}
+
+.month {
+    text-align: center;
+    font-size: 30px;
+}
+
+.current-date {
+    display: table-column;
+    font-size: 0.5em;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    max-width: 100%; 
+}
+
+.days-row {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f0f0f0;
+    border-bottom: 2px solid #333;
+}
+
+.day {
+    flex: 1; 
+    padding: 10px;
+    font-weight: bold;
+    border-right: 1px solid #ccc;
+}
+
+.day-abbr {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .day-abbr {
+        display: block;
+        flex: 1; 
+        padding: 10px;
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+    }
+    
+    .day {
+        display: none;
+    }
+}
+
+.day:last-child {
+    border-right: none; 
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); 
+    grid-template-rows: repeat(5, 1fr);  
+    flex-grow: 1; 
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.day-box {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    flex-direction: column;
+}
+
+.event {
+    width: 100%;
+    height: 20%;
+    font-size: 14px;
+}

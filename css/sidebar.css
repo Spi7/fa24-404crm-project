@@ -1,0 +1,46 @@
+/* Sidebar placeholder */
+.sidebar {
+    width: 25vh; /* Fixed width for the sidebar */
+    height: calc(100vh/6); /* Full viewport height */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: flex-start; /* Align items at the top */
+    padding: 0; /* Remove any default padding */
+}
+
+.sidebar div {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center icon and text */
+    justify-content: center; /* Center items vertically */
+    flex: 0; /* Allow items to grow equally */
+    padding: 10px; /* Add padding inside each item */
+    margin: 0; /* Ensure no margin is applied */
+}
+
+/* Adjust image size within the sidebar */
+.sidebar div img {
+    width: 34.8%; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Sidebar styles for different sections */
+.sidebar.home { background-color: aquamarine; }
+.sidebar.calendar { background-color: #fce4ec; }
+.sidebar.chat { background-color: #e0f7fa; }
+.sidebar.projects { background-color: #f1f8e9; }
+.sidebar.invoice { background-color: #fff9c4; }
+.sidebar.profile { 
+  background-color: #FFDAB9; 
+  width: 100%;}
+
+
+.sidebar a {
+    display: flex; /* Make anchor a flex container */
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-decoration: none; /* Remove underline from the link */
+    width: 100%; /* Make the link take the full width */
+    height: 100%; /* Make the link take the full height */
+}

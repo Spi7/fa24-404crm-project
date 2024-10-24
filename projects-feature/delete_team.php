@@ -11,8 +11,16 @@
             $row = $result->fetch_assoc();
             $user_id = $row["USER_ID"];
             $team_name = $_POST["TEAM_NAME"];
-            # duplicate team names should not be allowed, so there should never be a case where multiple teams are deleted
-            $query = "DELETE FROM TEAMS WHERE TEAM_MANAGER='$user_id' AND TEAM_NAME='$team_name'";
+            # get the TEAM_ID for the team to be deleted
+            $query = "SELECT TEAM_ID FROM TEAMS WHERE TEAM_MANAGER='$user_id' AND TEAM_NAME='$team_name'";
+            $result = $mysqli->query($query);
+            $row = $result->fetch_assoc();
+            $team_id = $row["TEAM_ID"];
+            # delete all rows from TEAMS_USERS for the team to be deleted
+            $query = "DELETE FROM TEAMS_USERS WHERE TEAM_ID='$team_id'";
+            $mysqli->query($query);
+            # delete the team from TEAMS
+            $query = "DELETE FROM TEAMS WHERE TEAM_ID='$team_id'";
             $mysqli->query($query);
             header('Location: project.php');
             exit();

@@ -74,7 +74,7 @@
         <!-- Delete Team Section -->
         <section class="section">
             <h2>Delete Team</h2>
-            <form>
+            <form action="delete_team.php" method="POST">
                 <label for="delete-team">Select Team to Delete:</label>
                 <select id="delete-team" name="delete-team">
                     <option value="team1">Team 1</option>

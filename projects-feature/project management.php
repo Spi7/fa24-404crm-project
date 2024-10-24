@@ -93,9 +93,18 @@
             <form action="delete_team.php" method="POST">
                 <label for="delete-team">Select Team to Delete:</label>
                 <select id="delete-team" name="delete-team">
-                    <option value="team1">Team 1</option>
-                    <option value="team2">Team 2</option>
-                    <!-- Existing teams from the database -->
+                <?php
+                    // Fetch teams to delete
+                    $query = "SELECT TEAM_ID, TEAM_NAME FROM TEAMS";
+                    $result = $mysqli->query($query);
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['TEAM_ID']}'>{$row['TEAM_NAME']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No teams found</option>";
+                    }
+                    ?>
                 </select>
 
                 <label for="confirm-team-name">Type the team name to confirm deletion:</label>

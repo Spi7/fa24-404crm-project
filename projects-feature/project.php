@@ -41,7 +41,7 @@
     <div class="main-content">
         <div class="header">
             <h1 id="project-title">Project #1 Overview</h1>
-            <button class="top-right-button" onclick="location.href='new.php'">Project management</button>
+            <button class="top-right-button" onclick="location.href='project management.php'">Project management</button>
 
             <!-- Progress Bar -->
             <div class="progress-bar-container">

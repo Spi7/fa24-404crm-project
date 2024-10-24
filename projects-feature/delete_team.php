@@ -10,7 +10,7 @@
         if($result->num_rows == 1){
             $row = $result->fetch_assoc();
             $user_id = $row["USER_ID"];
-            $team_name = $_POST["TEAM_NAME"];
+            $team_name = $_POST["confirm-team-name"];
             # get the TEAM_ID for the team to be deleted
             $query = "SELECT TEAM_ID FROM TEAMS WHERE TEAM_MANAGER='$user_id' AND TEAM_NAME='$team_name'";
             $result = $mysqli->query($query);

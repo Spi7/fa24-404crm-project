@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Management</title>
-    <link rel="stylesheet" href="new.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="project management.css">
 </head>
 <body>
     <div class="container">
@@ -54,7 +53,14 @@
         <!-- Delete Team Section -->
         <section class="section">
             <h2>Delete Team</h2>
-            <form id="delete-team-form">
+            <form>
+                <label for="delete-team">Select Team to Delete:</label>
+                <select id="delete-team" name="delete-team">
+                    <option value="team1">Team 1</option>
+                    <option value="team2">Team 2</option>
+                    <!-- Existing teams from the database -->
+                </select>
+
                 <label for="confirm-team-name">Type the team name to confirm deletion:</label>
                 <input type="text" id="confirm-team-name" name="confirm-team-name" placeholder="Enter team name for confirmation" required>
 
@@ -63,22 +69,5 @@
         </section>
     </div>
 </body>
-
-<script>
-    document.getElementById('delete-team-form').addEventListener('submit', function(event) {
-    event.preventDefault();  // Prevent the form from submitting
-    const teamName = document.getElementById('confirm-team-name').value;
-
-    if (teamName) {
-        const confirmation = confirm(`You are about to permanently delete the team: "${teamName}". This action cannot be undone. Are you sure you want to proceed?`);
-        if (confirmation) {
-            // Proceed with deletion (this is where back-end integration would go)
-            alert(`Team "${teamName}" has been successfully deleted.`);  // Replace with actual delete logic later
-        }
-    } else {
-        alert('Please enter the team name to confirm deletion.');
-    }
-});
-
-</script>
 </html>
+

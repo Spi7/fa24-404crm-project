@@ -15,31 +15,41 @@
             <h2>Assign Team Members to Project</h2>
             <form action="assign_team_member.php" method="POST">
                 <label for="project">Select Project:</label>
-                <select id="project" name="project" required>
-                    <option value="">Select a project</option> <!-- Placeholder option -->
+                <select id="project" name="project">
                     <?php
                     // Include the database connection
                     include('../db_connection.php');
                     connectDB();
 
                     // Fetch projects from the database
-                    $query = "SELECT PROJECT_ID, TITLE FROM PROJECTS";  // Correct case
+                    $query = "SELECT PROJECT_ID, TITLE FROM PROJECTS";
                     $result = $mysqli->query($query);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='{$row['PROJECT_ID']}'>{$row['TITLE']}</option>";
+
+                    // Check if the query executed successfully
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['PROJECT_ID']}'>{$row['TITLE']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No projects found</option>";
                     }
                     ?>
                 </select>
 
                 <label for="team-member">Assign Team Member:</label>
-                <select id="team-member" name="team-member" required>
-                    <option value="">Select a team member</option> <!-- Placeholder option -->
+                <select id="team-member" name="team-member">
                     <?php
                     // Fetch team members from the accounts table
-                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM ACCOUNTS";  // Use accounts table
+                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM ACCOUNTS";
                     $result = $mysqli->query($query);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+
+                    // Check if the query executed successfully
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No team members found</option>";
                     }
                     ?>
                 </select>
@@ -58,11 +68,17 @@
                 <label for="team-members">Add Team Members:</label>
                 <select id="team-members" name="team-members[]" multiple>
                     <?php
-                    // Fetch users for assigning to a new team from the accounts table
-                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM accounts";
+                    // Fetch users for assigning to a new team
+                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM ACCOUNTS";
                     $result = $mysqli->query($query);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+
+                    // Check if the query executed successfully
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No users found</option>";
                     }
                     ?>
                 </select>

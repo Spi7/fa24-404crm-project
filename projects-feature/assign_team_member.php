@@ -31,7 +31,7 @@ if (isset($_COOKIE['SESSION_TOKEN'])) {
                 header('Location: project.php');
                 exit();
             } else {
-                echo "Error: Could not assign team member to project. " . $mysqli->error;
+                echo "Error: Could not assign team member to project. " . $stmt->error;
             }
         } else {
             echo "Error: Project or team member not set.";

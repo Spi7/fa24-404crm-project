@@ -67,6 +67,10 @@
                 <button type="submit" class="delete-btn">Delete Team</button>
             </form>
         </section>
+        <!-- Back Button -->
+        <section class="section">
+            <button onclick="window.location.href='project.php'" class="back-btn">Back to Project</button>
+        </section>
     </div>
 </body>
 </html>

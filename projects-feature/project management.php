@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Management</title>
-    <link rel="stylesheet" href="project management.css">
+    <link rel="stylesheet" href="project management.css"> <!-- Assuming the file name has an underscore -->
 </head>
 <body>
     <div class="container">
@@ -13,19 +13,35 @@
         <!-- Assign Team Members Section -->
         <section class="section">
             <h2>Assign Team Members to Project</h2>
-            <form>
+            <form action="assign_team_member.php" method="POST">
                 <label for="project">Select Project:</label>
-                <select id="project" name="project">
-                    <option value="project1">Project 1</option>
-                    <option value="project2">Project 2</option>
-                    <!-- Additional project options here -->
+                <select id="project" name="project" required>
+                    <option value="">Select a project</option> <!-- Placeholder option -->
+                    <?php
+                    // Include the database connection
+                    include('../db_connection.php');
+                    connectDB();
+
+                    // Fetch projects from the database
+                    $query = "SELECT PROJECT_ID, TITLE FROM PROJECTS";  // Correct case
+                    $result = $mysqli->query($query);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='{$row['PROJECT_ID']}'>{$row['TITLE']}</option>";
+                    }
+                    ?>
                 </select>
 
                 <label for="team-member">Assign Team Member:</label>
-                <select id="team-member" name="team-member">
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                    <!-- User options populated from the user database -->
+                <select id="team-member" name="team-member" required>
+                    <option value="">Select a team member</option> <!-- Placeholder option -->
+                    <?php
+                    // Fetch team members from the accounts table
+                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM ACCOUNTS";  // Use accounts table
+                    $result = $mysqli->query($query);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+                    }
+                    ?>
                 </select>
 
                 <button type="submit">Assign Member</button>
@@ -35,15 +51,20 @@
         <!-- Create Team Section -->
         <section class="section">
             <h2>Create New Team</h2>
-            <form>
+            <form action="create_team.php" method="POST">
                 <label for="team-name">Team Name:</label>
                 <input type="text" id="team-name" name="team-name" placeholder="Enter team name" required>
 
                 <label for="team-members">Add Team Members:</label>
-                <select id="team-members" name="team-members" multiple>
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                    <!-- User options populated from the user database -->
+                <select id="team-members" name="team-members[]" multiple>
+                    <?php
+                    // Fetch users for assigning to a new team from the accounts table
+                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM accounts";
+                    $result = $mysqli->query($query);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+                    }
+                    ?>
                 </select>
 
                 <button type="submit">Create Team</button>
@@ -74,4 +95,3 @@
     </div>
 </body>
 </html>
-

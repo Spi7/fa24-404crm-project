@@ -33,6 +33,13 @@ body {
     border-bottom: 2px solid #ccc;
 }
 
+.contacts h3 input[type="text"] { /* the search bar section */
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-left: auto;
+}
+
 #contact-list {
     list-style: none;
     flex-grow: 1;
@@ -169,7 +176,6 @@ body {
 
 .chat-input {
     display: flex;
-    margin-top: 10px;
 }
 
 #message-input {
@@ -208,35 +214,42 @@ body {
     }
     
     .contacts {
-        width: 100%;
+        width: 100%; /* This is fine */
         border: none;
         padding: 10px;
         background-color: #fff;
     }
     
+    .add-contact-btn {
+        width: 100%; /* Ensure it fills the available space */
+        text-align: center;
+    }
+
     .chat-interface {
-        display: none;
+        display: flex;
         flex-direction: column;
         width: 100%;
         background-color: #fff;
-        height: 100vh; /* Full height of the viewport */
-        overflow-y: auto; /* Enable scrolling */
+        height: 95%; /* Full height */
+        overflow-y: auto;
+        padding-bottom: 50px; /* Prevent overlap with input area */
     }
-    
-    .chat-messages {
-        flex-grow: 1; /* Take up remaining space */
-        padding: 10px;
+
+    .chat-input {
+        display: flex;
+        position: fixed; /* Change to fixed */
+        bottom: 0; /* Stick to the bottom */
+        left: 0;
+        right: 0;
+        padding: 10px; /* Maintain aesthetics */
+        background-color: white;
+        box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
     }
-    
+
     .mobile-back-btn {
         display: flex;
         font-size: 24px;
         padding: 10px;
         cursor: pointer;
-    }
-    
-    .add-contact-btn {
-        width: 100%;
-        text-align: center;
     }
 }

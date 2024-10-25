@@ -33,6 +33,7 @@ function addNewContact() {
                 }
 
                 let listItem = document.createElement('li');
+                listItem.className = 'contact-item';
                 listItem.innerHTML = `
                     <img src="${profilePic}" alt="${nickname}" class="profile-pic" />
                     <span class="contact-nickname">${nickname}</span>
@@ -46,6 +47,11 @@ function addNewContact() {
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
+
+                //update new contact list
+                updateContactsArray();
+                //Call filterContact
+                filterContacts();
             } else {
                 alert(data.message); // Show error message if it's added unsuccessfully
             }
@@ -57,6 +63,12 @@ function addNewContact() {
     } else {
         alert('Please enter a valid email address.');
     }
+}
+
+// Function to update contacts array
+function updateContactsArray() {
+    const contactList = document.getElementById('contact-list');
+    contacts = Array.from(contactList.getElementsByClassName('contact-item')); // Refresh the contacts array
 }
 
 // Function to validate email format (simple regex) --> later on, fetch it from database to validate if the user exist
@@ -98,7 +110,7 @@ function goBack() {
 
 function showContacts() {
     isChatOpen = false;
-    document.querySelector('.contacts').style.display = 'block'; // Show contacts
+    document.querySelector('.contacts').style.display = 'flex'; // Show contacts
     document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
 }
 

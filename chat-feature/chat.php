@@ -44,25 +44,39 @@ if ($sessionToken) {
     <link rel="stylesheet" href="chat.css">
     <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
     <script src="deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
+    <script src="searchContact.js" defer></script> <!-- Include the search js file -->
     <script>
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
         function loadMobileCSS() {
-            var sidebar = document.querySelector('.sidebar');
-            if (window.innerWidth <= 600) {
-                // Hide the sidebar for mobile screens
-                if (sidebar) {
-                    sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
-                }
-                document.querySelector('.chat-interface').style.display = 'none';
+        var sidebar = document.querySelector('.sidebar');
+        var chatInterface = document.querySelector('.chat-interface');
+        var cList = document.querySelector('.contacts');
+        
+        if (window.innerWidth <= 768) {
+            // Hide the sidebar and chat interface for mobile screens
+            if (sidebar) {
+                sidebar.style.display = 'none';
             }
-            else {
+            if (chatInterface) {
+                chatInterface.style.display = 'none';
+            }
+        } else {
+            // Show the sidebar and chat interface for larger screens
+            if (sidebar) {
                 sidebar.style.display = 'block';
-                document.querySelector('.chat-interface').style.display = 'flex';
+            }
+            if (chatInterface) {
+                chatInterface.style.display = 'flex';
+            }
+            if (cList) {
+                cList.style.display = 'flex';
             }
         }
-        // Run this when the page loads
-        window.onload = loadMobileCSS;
-        window.onresize = loadMobileCSS;
+    }
+
+    // Run this when the page loads
+    window.addEventListener('load', loadMobileCSS);
+    window.addEventListener('resize', loadMobileCSS);
     </script>
 </head>
 <body>
@@ -71,28 +85,7 @@ if ($sessionToken) {
         <?php include '../sidebar.php'; ?>
 
         <!-- Contacts Section -->
-        <div class="contacts">
-            <div class="mobile-back-btn">
-                <button type="button" onclick="window.history.back()">← Back</button>
-            </div>
-
-            <h3>Contacts</h3>
-            <ul id="contact-list">
-                <?php if (isset($contacts) && $contacts->num_rows > 0): ?>
-                    <?php while ($contact = $contacts->fetch_assoc()): ?>
-                        <li onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>')">
-                            <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
-                            <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span>
-                            <span class="contact-email"><?= htmlspecialchars($contact['CONTACT_EMAIL']) ?></span>
-                            <button class="delete-contact-btn" onclick="deleteContact('<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">X</button>
-                        </li>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <li id="no-contacts-message">No contacts found.</li>
-                <?php endif; ?>
-            </ul>
-            <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
-        </div>
+        <?php include 'contact.php'; ?>
 
         <!-- Chat Section -->
         <div class="chat-interface">

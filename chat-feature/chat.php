@@ -20,7 +20,7 @@ if ($sessionToken) {
         // Fetch contacts for the logged-in user
         $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL 
                          FROM CONTACTS 
-                         WHERE CONTACTS.USER_ID = ?";
+                         WHERE CONTACTS.CURRENT_USER_ID = ?";
         $contactStmt = $mysqli->prepare($contactQuery);
         $contactStmt->bind_param("i", $userId);
         $contactStmt->execute();

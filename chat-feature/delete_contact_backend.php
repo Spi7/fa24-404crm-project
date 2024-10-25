@@ -1,5 +1,5 @@
 <?php
-include '../db_connection.php'; // Include your database connection
+include '../db_connection.php';
 connectDB();
 
 $input = json_decode(file_get_contents('php://input'), true);
@@ -19,7 +19,7 @@ if ($emailToDelete) {
         $userId = $userData['USER_ID'];
 
         // Prepare the delete statement
-        $query = "DELETE FROM CONTACTS WHERE CONTACT_EMAIL = ? AND USER_ID = ?";
+        $query = "DELETE FROM CONTACTS WHERE CONTACT_EMAIL = ? AND CURRENT_USER_ID = ?";
         $deleteStmt = $mysqli->prepare($query);
         $deleteStmt->bind_param("si", $emailToDelete, $userId);
         if ($deleteStmt->execute()) {

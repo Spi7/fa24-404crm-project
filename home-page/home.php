@@ -54,6 +54,7 @@
             <img src="../img/404 not found.png" alt="404 Not Found">
         </div>
         <button onclick="logout()">Log out</button>
+        <a href="/faq-page/faq.php" class="reset-password">FAQ Page</a> <!--FAQ page-->
     </main>
     <script>
         function logout(){

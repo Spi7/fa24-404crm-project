@@ -29,8 +29,7 @@
             </li>
             <li class="answer">
                 Try checking your input for any extra or missing characters
-                copied and pasted from the email as one change will cause it to not work, also make sure its been less
-                than 15 minutes as they expire
+                copied and pasted from the email as one change will cause it to not work, also make sure it's been less than 15 minutes as the tokens expire
             </li>
             <li class="question">
                 Are emails case sensitive?

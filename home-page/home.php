@@ -1,3 +1,8 @@
+<?php
+    include_once('../db_connection.php');
+    connectDB();
+    fetchUserData();
+?>
 <!DOCTYPE html>
 <html lang="en"> <!-- set the language to eng -->
 <head>
@@ -10,7 +15,7 @@
 <body>
     <header> <!-- define the top section of the web page, WEBLOGO?/Title/Navigation page -->
         <div class="header-content">
-            <h1>Welcome, User</h1> <!-- in the future, we can do dynamic change of "User" to like the person's user name who logined -->
+            <h1>Welcome, <?php echo $user["NICKNAME"]; ?></h1> <!-- in the future, we can do dynamic change of "User" to like the person's user name who logined -->
             <p><?php echo date("F j, Y"); ?></p> <!-- Display the current date -->
             <div class="user-profile">
                 <input type="text" placeholder="Search"> <!-- Search bar input field -->
@@ -54,7 +59,6 @@
             <img src="../img/404 not found.png" alt="404 Not Found">
         </div>
         <button onclick="logout()">Log out</button>
-        <a href="/faq-page/faq.php" class="reset-password">FAQ Page</a> <!--FAQ page-->
     </main>
     <script>
         function logout(){

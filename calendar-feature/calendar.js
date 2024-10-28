@@ -303,9 +303,19 @@ function populateEvents(){
             let eventYear = eventDate.getFullYear();
             let eventMonth = eventDate.getMonth();
             let eventDay = eventDate.getDate();
+
+            // assume not on current month from start
+            let onCurrentMonth = false;
+
             if(Number(year) == eventYear && eventMonth == monthIndex){
                 dayboxes.forEach(daybox => {
-                    if(Number(daybox.textContent.slice(0,2)) == eventDay){
+                    // if daybox is 1st of month, flip to true
+                    // if daybox is 1st of month a second time, flip to false
+                    if(Number(daybox.textContent.slice(0,2).trim()) == 1){
+                        onCurrentMonth = !onCurrentMonth;
+                    }
+
+                    if(Number(daybox.textContent.slice(0,2).trim()) == eventDay && onCurrentMonth){
                         let eventDiv = document.createElement('div');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;
@@ -313,6 +323,7 @@ function populateEvents(){
                         eventDiv.id = event.EVENT_ID;
                         daybox.appendChild(eventDiv);
                     }
+
                 })
             }
         })

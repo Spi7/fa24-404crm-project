@@ -305,7 +305,7 @@ function populateEvents(){
             let eventDay = eventDate.getDate();
             if(Number(year) == eventYear && eventMonth == monthIndex){
                 dayboxes.forEach(daybox => {
-                    if(Number(daybox.textContent.trim()) == eventDay){
+                    if(Number(daybox.textContent.slice(0,2)) == eventDay){
                         let eventDiv = document.createElement('div');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;

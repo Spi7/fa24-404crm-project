@@ -1,7 +1,8 @@
 //an outscope variable to update Enter key on sending messages
 let sendMessageListener; //DEclare for "Pressing Enter"
 // Function to open chat with the selected contact
-function openChat(contactName, contactUserId) {
+function openChat(contactName, contactUserId, email) {
+    openChatEmail=email
     // Show chat interface
     document.querySelector('.chat-interface').style.display = 'flex'; 
     document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;
@@ -10,12 +11,12 @@ function openChat(contactName, contactUserId) {
     document.getElementById('chat-messages').innerHTML = ''; // Clear previous messages
 
     //iphone display
-    if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
+    if (window.innerWidth <= 800) { // Adjust the width according to your mobile breakpoint
         isChatOpen = true;
         // For mobile: Show chat interface and hide contact list
         document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
     }
-
+    console.log("fetch message history")
     // Fetch chat history
     fetch('fetch_chat.php', {
         method: 'POST',
@@ -26,6 +27,7 @@ function openChat(contactName, contactUserId) {
     })
     .then(response => response.json())
     .then(messages => {
+        messages.sort((a,b)=>a.CHAT_ID-b.CHAT_ID)
         messages.forEach(message => {
             let messageElement = document.createElement('div');
             if (message.CHAT_USER_ID == contactUserId) {

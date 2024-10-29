@@ -48,19 +48,21 @@ if ($sessionToken) {
     <script src="chat-js/searchContact.js" defer></script> <!-- Include the search js file -->
     <script src="chat-js/message.js" defer></script> <!-- Include the search js file -->
     <script>
+        var openChatEmail=""
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
-        function loadMobileCSS() {
+        function loadMobileCSS(load) {
         var sidebar = document.querySelector('.sidebar');
         var chatInterface = document.querySelector('.chat-interface');
         var cList = document.querySelector('.contacts');
         
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 800) {
             // Hide the sidebar and chat interface for mobile screens
             if (sidebar) {
                 sidebar.style.display = 'none';
             }
-            if (chatInterface) {
+            if(chatInterface.style.display!='none' && cList.style.display!='none'){
                 chatInterface.style.display = 'none';
+
             }
         } else {
             // Show the sidebar and chat interface for larger screens

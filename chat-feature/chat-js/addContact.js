@@ -36,14 +36,16 @@ function addNewContact() {
                 listItem.className = 'contact-item';
                 listItem.innerHTML = `
                     <img src="${profilePic}" alt="${nickname}" class="profile-pic" />
-                    <span class="contact-nickname">${nickname}</span>
+                    <div>
+                    <span class="contact-nickname">${nickname}</span><br>
                     <span class="contact-email">${newContactEmail}</span>
-                    <button class="delete-contact-btn" onclick="deleteContact('${newContactEmail}')">X</button>
+                    </div>
+                    <button class="delete-contact-btn" onclick="deleteContact(event,'${newContactEmail}')">X</button>
                 `;
                 
                 // Set onclick event to open chat
                 listItem.onclick = function() {
-                    openChat(nickname, data.id); // Pass the chat user's email in
+                    openChat(nickname, data.id, newContactEmail); // Pass the chat user's email in
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
@@ -79,7 +81,7 @@ function validateEmail(email) {
 
 
 function goBack() {
-    if (window.innerWidth <= 768) { // Mobile behavior
+    if (window.innerWidth <= 800) { // Mobile behavior
         if (isChatOpen) {
             // If in chat, go back to contacts
             isChatOpen = false;

@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 20px;
 }
+
 
 .chat-header {
     background-color: #f5f5f5;
@@ -26,12 +26,16 @@
 
 .chat-message {
     display: flex; 
-    align-items: flex-start;
+    /* align-items: flex-start; */
     margin-bottom: 20px; 
 }
 
 .chat-message.sent {
-    align-self: flex-end;
+    justify-content: flex-start
+}
+.chat-message.received{
+    justify-content: flex-end
+
 }
 
 .message-profile-pic {
@@ -51,6 +55,7 @@
 }
 
 .chat-input {
+    padding: 1;
     display: flex;
 }
 
@@ -82,7 +87,7 @@
     display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .chat-interface {
         display: flex;
         flex-direction: column;

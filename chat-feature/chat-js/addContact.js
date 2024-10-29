@@ -43,7 +43,7 @@ function addNewContact() {
                 
                 // Set onclick event to open chat
                 listItem.onclick = function() {
-                    openChat(nickname); // Open chat on click
+                    openChat(nickname, newContactEmail); // Pass the chat user's email in
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
@@ -77,26 +77,6 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-// Function to open chat with the selected contact
-function openChat(contactName) {
-    // For desktop: Keep the existing behavior
-    document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
-    document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;
-    document.getElementById('message-input').disabled = false;
-    document.querySelector('.send-btn').disabled = false;
-    document.getElementById('chat-messages').innerHTML = '';
-    if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
-        isChatOpen = true;
-        // For mobile: Show chat interface and hide contact list
-        document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
-    }
-
-    document.getElementById('message-input').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    });
-}
 
 function goBack() {
     if (window.innerWidth <= 768) { // Mobile behavior
@@ -112,19 +92,4 @@ function showContacts() {
     isChatOpen = false;
     document.querySelector('.contacts').style.display = 'flex'; // Show contacts
     document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
-}
-
-// Function to send a message
-function sendMessage() {
-    let message = document.getElementById('message-input').value; // Get message input
-    if (message) {
-        let messageElement = document.createElement('div');
-        messageElement.className = 'chat-message sent'; // Add class for styling
-        messageElement.innerHTML = `
-            <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
-            <div class="message-content">${message}</div>
-        `; // Set message text
-        document.getElementById('chat-messages').appendChild(messageElement); // Append message to chat
-        document.getElementById('message-input').value = ''; // Clear input
-    }
 }

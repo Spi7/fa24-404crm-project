@@ -10,7 +10,8 @@
     <ul id="contact-list">
         <?php if (isset($contacts) && $contacts->num_rows > 0): ?>
             <?php while ($contact = $contacts->fetch_assoc()): ?>
-                <li class="contact-item" onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>')">
+            <!-- Pass in both the coontact's nickname and email for display and chat history -->
+                <li class="contact-item" onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>', '<?= htmlspecialchars($contact['CONTACT_USER_ID']) ?>')">
                     <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
                     <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span>
                     <span class="contact-email"><?= htmlspecialchars($contact['CONTACT_EMAIL']) ?></span>

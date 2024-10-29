@@ -96,6 +96,7 @@ function prevMonth() {
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function nextMonth() {
@@ -172,6 +173,7 @@ function nextMonth() {
 
     document.querySelector('h1.month').textContent = nextMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function selectDate() {
@@ -247,6 +249,7 @@ function selectDate() {
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function highlightCurrDay(){
@@ -258,11 +261,15 @@ function highlightCurrDay(){
     let monthText = document.querySelector('h1.month').textContent;
     let [month, year] = monthText.split(' ');
     monthIndex = months.indexOf(month);
+    let onCurrMonth = false;
     if(Number(year) == currYear && currMonth == monthIndex){
         const calendarGrid = document.getElementById('calendar-grid');
         const dayboxes = calendarGrid.querySelectorAll('.day-box');
         dayboxes.forEach(daybox => {
-            if(Number(daybox.textContent.trim()) == currDay){
+            if(Number(daybox.textContent.slice(0,2).trim()) == 1){
+                onCurrMonth = !onCurrMonth;
+            }
+            if(Number(daybox.textContent.trim()) == currDay && onCurrMonth){
                 daybox.style.backgroundColor = 'yellow';
             }
         });
@@ -330,4 +337,11 @@ function populateEvents(){
     }).catch(error => {
         console.error('Error fetching events:', error);
     })
+}
+
+function viewEventRedirect(){
+    let monthText = document.querySelector('h1.month').textContent;
+    let [month, year] = monthText.split(' ');
+    let url = "viewevents.php?month="+month+"&year="+year;
+    window.location.href = url;
 }

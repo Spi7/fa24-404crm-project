@@ -32,7 +32,7 @@ function populateEvents(){
             let startDate = new Date(event.EVENT_START);
             let eventYear = startDate.getFullYear();
             let eventMonth = startDate.getMonth();
-            if(eventMonth != monthIndex && eventYear != year){
+            if(eventMonth != monthIndex || eventYear != year){
                 return;
             }
             let endDate = new Date(event.EVENT_END)

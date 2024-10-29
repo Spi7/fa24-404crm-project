@@ -27,7 +27,7 @@ function addNewContact() {
             if (data.status === 'success') {
                 const profilePic = '../img/user profile icon.png'; // Default profile picture
                 const nickname = data.nickname; // nickname fetch by data from ajax
-
+                const id = data.id; // nickname fetch by data from ajax
                 if (noContactsMessage) {
                     noContactsMessage.style.display = 'none'; // Hide the no contact found message
                 }
@@ -43,7 +43,7 @@ function addNewContact() {
                 
                 // Set onclick event to open chat
                 listItem.onclick = function() {
-                    openChat(nickname, newContactEmail); // Pass the chat user's email in
+                    openChat(nickname, data.id); // Pass the chat user's email in
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list

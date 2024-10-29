@@ -14,13 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $currentUserId, $currChatUserId, $content);
 
         if ($stmt->execute()) {
+            header(header: 'Content-type: application/json');
             echo json_encode(["status" => "success", "message" => "Message sent!"]);
         } else {
+            header('Content-type: application/json');
             echo json_encode(["status" => "error", "message" => "Message not sent!"]);
         }
         $stmt->close();
     
     } else {
+        header('Content-type: application/json');
         echo json_encode(["status" => "error", "message" => "User not authenticated."]);
     }
     $mysqli->close(); // Close the database connection

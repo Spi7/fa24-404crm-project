@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 // This line $insertStmt adds the contacts in
                 if ($insertStmt->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Contact added successfully.', 'nickname' => $contactNickname]);
+                    echo json_encode(['status' => 'success', 'message' => 'Contact added successfully.', 'nickname' => $contactNickname,'id'=>$contactUserId]);
                     $reverseInsertQuery = "INSERT INTO CONTACTS (CURRENT_USER_ID, CONTACT_USER_ID, CONTACT_NICKNAME, CONTACT_EMAIL, CREATED_AT, UPDATED_AT) VALUES (?, ?, ?, ?, NOW(), NOW())";
                     $reverseInsertStmt = $mysqli->prepare($reverseInsertQuery);
                     $reverseInsertStmt->bind_param("iiss", $contactUserId, $currentUserId, $currentUserNickname, $currentUserEmail);

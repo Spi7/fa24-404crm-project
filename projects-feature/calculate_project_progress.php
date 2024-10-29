@@ -33,4 +33,3 @@ $updateStmt->close();
 // Return the total progress
 echo json_encode(['status' => 'success', 'project_progress' => $average_progress]);
 ?>
-

@@ -108,7 +108,6 @@
         <span class="mini-progress-percentage" id="progress-text-${task.TASK_ID}">Progress: ${task.PROGRESS}%</span>
     `;
 
-    // List subtasks with "Mark as Done" buttons
     if (task.subtasks && task.subtasks.length > 0) {
         const subtaskList = document.createElement('ul');
         subtaskList.classList.add('subtask-list');
@@ -118,9 +117,9 @@
             subtaskItem.classList.add('subtask-item');
             subtaskItem.innerHTML = `
                 <span>${subtask.DESCRIPTION}</span>
-                <button id="subtask-${task.TASK_ID}-${index}" 
+                <button id="subtask-${task.TASK_ID}-${subtask.SUBTASK_ID}" 
                     class="subtask-button ${subtask.COMPLETED ? 'completed' : ''}" 
-                    onclick="completeSubtask(${task.TASK_ID}, ${subtask.SUBTASK_ID}, ${!subtask.COMPLETED})">
+                    onclick="completeSubtask(${task.TASK_ID}, ${subtask.SUBTASK_ID})">
                     ${subtask.COMPLETED ? 'Subtask Completed' : 'Mark Subtask as Done'}
                 </button>
             `;
@@ -132,100 +131,102 @@
         taskDetails.innerHTML += `<p>No subtasks available for this task.</p>`;
     }
 
-    // Add delete button for task
     taskDetails.innerHTML += `<button class="delete-task-button" onclick="deleteTask(${task.TASK_ID})">Delete Task</button>`;
-
     taskDetailsContainer.appendChild(taskDetails);
 }
 
-    // Mark subtask as completed
-    function completeSubtask(taskId, subtaskId, completed) {
-        fetch('update_subtask_progress.php', {
+function completeSubtask(taskId, subtaskId, completed) {
+    const subtaskButton = document.getElementById(`subtask-${taskId}-${subtaskId}`);
+    
+    // Toggle completion status based on button's current state
+    if (subtaskButton.classList.contains('completed')) {
+        completed = false; // Mark as not completed if it's currently completed
+    } else {
+        completed = true; // Otherwise, mark it as completed
+    }
+
+    // Fetch request to update the subtask progress
+    fetch('update_subtask_progress.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task_id: taskId, subtask_id: subtaskId, completed: completed ? 1 : 0 })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response and update UI accordingly
+        if (data.status === 'success') {
+            // Update the UI based on the new completion status
+            subtaskButton.classList.toggle('completed', completed);
+            subtaskButton.textContent = completed ? 'Subtask Completed' : 'Mark Subtask as Done';
+
+            // Update the mini progress bar for the specific task
+            updateProgress(taskId, data.task_progress);
+
+            // Update the total project progress after the mini progress is updated
+            updateTotalProjectProgress();
+        } else {
+            console.error('Error updating subtask:', data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function updateProgress(taskId, taskProgress) {
+    const miniProgressBar = document.getElementById(`mini-progress-${taskId}`);
+    const progressTextElement = document.getElementById(`progress-text-${taskId}`);
+    
+    if (miniProgressBar) {
+        miniProgressBar.style.width = `${taskProgress}%`;
+    }
+    
+    if (progressTextElement) {
+        progressTextElement.textContent = `Progress: ${taskProgress}%`;
+    }
+}
+
+function updateTotalProjectProgress() {
+    fetch(`calculate_project_progress.php?project_id=${currentProject}`)
+        .then(response => response.json())
+        .then(projectData => {
+            if (projectData.status === 'success') {
+                const totalProgressBar = document.getElementById('progress-bar');
+                const totalProgressText = document.getElementById('progress-text');
+
+                if (totalProgressBar && totalProgressText) {
+                    totalProgressBar.style.width = `${projectData.project_progress}%`;
+                    totalProgressText.textContent = `Progress: ${projectData.project_progress}%`;
+                }
+            } else {
+                console.error('Error updating project progress:', projectData.message);
+            }
+        })
+        .catch(error => console.error('Error fetching total project progress:', error));
+}
+
+    // Function to add a new task to the current project
+    function addTask() {
+        const taskTitle = prompt("Enter the task title:");
+        if (!taskTitle) return; // Exit if title is not provided
+
+        const taskDescription = prompt("Enter the task description:"); // New prompt for description
+        if (!taskDescription) return; // Exit if description is not provided
+
+        fetch('add_task.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ task_id: taskId, subtask_id: subtaskId, completed: completed ? 1 : 0 })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `project_id=${currentProject}&title=${encodeURIComponent(taskTitle)}&description=${encodeURIComponent(taskDescription)}` // Include description
         })
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                // Update the mini progress bar width
-                document.getElementById(`mini-progress-${taskId}`).style.width = `${data.task_progress}%`;
-
-                // Correctly select the mini progress percentage element
-                const miniProgressPercentageElement = document.querySelector(`#mini-progress-${taskId} + .mini-progress-percentage`);
-                if (miniProgressPercentageElement) {
-                    miniProgressPercentageElement.textContent = `Progress: ${data.task_progress}%`;
-                } else {
-                    console.error(`Element for mini progress percentage not found for task ID: ${taskId}`);
-                }
-
-                // Toggle button state and text
-                const subtaskButton = document.getElementById(`subtask-${taskId}-${subtaskId}`);
-                if (subtaskButton) {
-                    subtaskButton.classList.toggle('completed', completed);
-                    subtaskButton.textContent = completed ? 'Subtask Completed' : 'Mark Subtask as Done';
-                }
-
-                // Fetch updated task progress for the parent task
-                fetch(`calculate_project_progress.php?task_id=${taskId}`)
-                    .then(response => response.json())
-                    .then(taskData => {
-                        if (taskData.status === 'success') {
-                            // Check for the progress text element before updating
-                            const progressTextElement = document.getElementById(`progress-text-${taskId}`);
-                            if (progressTextElement) {
-                                progressTextElement.textContent = `Progress: ${taskData.task_progress}%`;
-                                document.getElementById(`mini-progress-${taskId}`).style.width = `${taskData.task_progress}%`;
-                            } else {
-                                console.error(`Element with ID progress-text-${taskId} not found.`);
-                            }
-                        } else {
-                            console.error('Error updating task progress:', taskData.message);
-                        }
-                    });
-
-                // Fetch updated project progress
-                fetch(`calculate_project_progress.php?project_id=${currentProject}`)
-                    .then(response => response.json())
-                    .then(projectData => {
-                        if (projectData.status === 'success') {
-                            document.getElementById('progress-bar').style.width = `${projectData.project_progress}%`;
-                            document.getElementById('progress-text').textContent = `Progress: ${projectData.project_progress}%`;
-                        } else {
-                            console.error('Error updating project progress:', projectData.message);
-                        }
-                    });
+                loadProjectData(currentProject); // Refresh to include the new task
+                updateTotalProjectProgress();
             } else {
-                console.error('Error:', data.message);
-                alert('Failed to update subtask status');
+                alert("Error adding task.");
             }
         })
-        .catch(error => console.error('Error updating task progress:', error));
+        .catch(error => console.error("Error adding task:", error));
     }
-
-    // Function to add a new task to the current project
-    function addTask() {
-    const taskTitle = prompt("Enter the task title:");
-    if (!taskTitle) return; // Exit if title is not provided
-
-    const taskDescription = prompt("Enter the task description:"); // New prompt for description
-    if (!taskDescription) return; // Exit if description is not provided
-
-    fetch('add_task.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `project_id=${currentProject}&title=${encodeURIComponent(taskTitle)}&description=${encodeURIComponent(taskDescription)}` // Include description
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            loadProjectData(currentProject); // Refresh to include the new task
-        } else {
-            alert("Error adding task.");
-        }
-    })
-    .catch(error => console.error("Error adding task:", error));
-}
 
     // Function to delete a specific task from the current project
     function deleteTask(taskId) {
@@ -239,6 +240,7 @@
             .then(data => {
                 if (data.status === 'success') {
                     loadProjectData(currentProject); // Refresh after deletion
+                    updateTotalProjectProgress();
                 } else {
                     alert("Error deleting task: " + data.message);
                 }

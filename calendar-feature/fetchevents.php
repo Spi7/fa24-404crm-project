@@ -7,7 +7,7 @@
         if($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $user_id = $row["USER_ID"];
-            $events_query = "SELECT * FROM CALENDARS WHERE USER_ID = '$user_id'";
+            $events_query = "SELECT * FROM CALENDARS WHERE USER_ID = '$user_id' ORDER BY EVENT_START";
             $events_result = $mysqli->query($events_query);
             $events = [];
             while($event = $events_result->fetch_assoc()) {

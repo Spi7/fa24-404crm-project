@@ -31,13 +31,13 @@ function openChat(contactName, contactUserId, email) {
         messages.forEach(message => {
             let messageElement = document.createElement('div');
             if (message.CHAT_USER_ID == contactUserId) {
-                messageElement.className = 'chat-message received'; // Other user's message
+                messageElement.className = 'chat-message sent'; // Current user's message
                 messageElement.innerHTML = `
                     <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
                     <div class="message-content">${message.CONTENT}</div>
                 `;
             } else {
-                messageElement.className = 'chat-message sent'; // Current user's message
+                messageElement.className = 'chat-message received'; // Other user's message
                 messageElement.innerHTML = `
                     <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
                     <div class="message-content">${message.CONTENT}</div>

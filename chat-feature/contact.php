@@ -24,6 +24,10 @@
             <li id="no-contacts-message">No contacts found.</li>
         <?php endif; ?>
     </ul>
+    <div id="addContactInput" class="hide">
+        <input id="addContactEmail" type="email" placeholder="enter contact email">
+        <button id="cancelAddContact" onclick="cancelAddNewContactInput()">cancel</button>
+    </div>
     <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
 
 </div>

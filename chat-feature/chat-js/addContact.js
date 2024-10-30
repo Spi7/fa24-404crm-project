@@ -1,14 +1,24 @@
 // Function to add a new contact
 let isChatOpen = false; //keep track chat UI for mobile
 // Validate email format
+function cancelAddNewContactInput(){
+    document.querySelector("#addContactEmail").value = ""
+    document.querySelector("#addContactInput").classList.add("hide")
+}
 function addNewContact() {
     let contactList = document.getElementById('contact-list');
     let noContactsMessage = document.getElementById('no-contacts-message'); // no contact found message
-    let newContactEmail = prompt("Enter contact email:"); // Prompt for email input
+    let addContactInputs=document.querySelector("#addContactInput")
+    let newContactEmail=document.querySelector("#addContactEmail").value
+
+    if (addContactInputs.classList.contains("hide")){
+        addContactInputs.classList.remove("hide")
+    } else {
 
     // Validate email format
     if (newContactEmail && validateEmail(newContactEmail)) {
-
+        addContactInputs.classList.add("hide")
+        document.querySelector("#addContactEmail").value = ""
         fetch('add_contact_backend.php', {
             method: 'POST',
             headers: {
@@ -65,6 +75,7 @@ function addNewContact() {
     } else {
         alert('Please enter a valid email address.');
     }
+}
 }
 
 // Function to update contacts array

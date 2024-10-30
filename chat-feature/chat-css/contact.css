@@ -34,7 +34,7 @@ body {
     border-bottom: 2px solid #ccc;
 }
 
-.contacts h3 input[type="text"] { /* the search bar section */
+.contacts h3 input[type="text"], #addContactEmail { /* the search bar section */
     padding: 8px;
     border-radius: 20px;
     border: 1px solid #ccc;
@@ -146,4 +146,20 @@ body {
         width: 100%; /* Ensure it fills the available space */
         text-align: center;
     }
+}
+
+#addContactInput.hidden{
+    display: none;
+}
+#cancelAddContact, .mobile-back-btn>button{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+}
+.hide{
+    display: none;
+}
+#addContactInput{
+    margin: 10px auto;
 }

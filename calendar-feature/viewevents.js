@@ -23,10 +23,16 @@ function fetchEvents(){
 }
 
 function populateEvents(){
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get('id');
     let month = window.month;
     let year = Number(window.year);
     let monthIndex = months.indexOf(month);
     let stackEvents = document.getElementById('stack-events');
+    let populateSingle = false;
+    if(typeof id !== 'undefined'){
+        populateSingle = true;
+    }
     fetchEvents().then(events => {
         events.forEach(event => {
             let startDate = new Date(event.EVENT_START);
@@ -53,7 +59,10 @@ function populateEvents(){
             eventDiv.className = 'event';
             eventDiv.style.backgroundColor = event.COLOR;
             eventDiv.innerHTML = eventText;
-            event.id = startDate.toISOString();
+            eventDiv.id = startDate.toISOString();
+            if(populateSingle && event.EVENT_ID != id){
+                return;
+            }
             stackEvents.appendChild(eventDiv);
         });
     })

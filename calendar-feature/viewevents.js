@@ -30,7 +30,7 @@ function populateEvents(){
     let monthIndex = months.indexOf(month);
     let stackEvents = document.getElementById('stack-events');
     let populateSingle = false;
-    if(typeof id !== 'undefined'){
+    if(id !== null){
         populateSingle = true;
     }
     fetchEvents().then(events => {

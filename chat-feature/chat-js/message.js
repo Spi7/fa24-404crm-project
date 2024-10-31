@@ -16,40 +16,15 @@ function openChat(contactName, contactUserId, email) {
         // For mobile: Show chat interface and hide contact list
         document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
     }
-    console.log("fetch message history")
-    // Fetch chat history
-    fetch('fetch_chat.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `chat_user_id=${contactUserId}`  //pass in the the current chatting target's user_id
-    })
-    .then(response => response.json())
-    .then(messages => {
-        messages.sort((a,b)=>a.CHAT_ID-b.CHAT_ID)
-        messages.forEach(message => {
-            let messageElement = document.createElement('div');
-            if (message.CHAT_USER_ID == contactUserId) {
-                messageElement.className = 'chat-message sent'; // Current user's message
-                messageElement.innerHTML = `
-                    <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
-                    <div class="message-content">${message.CONTENT}</div>
-                `;
-            } else {
-                messageElement.className = 'chat-message received'; // Other user's message
-                messageElement.innerHTML = `
-                    <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
-                    <div class="message-content">${message.CONTENT}</div>
-                `;
-            }
-            document.getElementById('chat-messages').appendChild(messageElement); // Append message
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching chat history:', error);
-    });
+    
+     // Fetch initial chat history
+     fetchChatHistory(contactUserId);
 
+     // Set an interval to fetch new messages every 2 seconds
+     messageFetchInterval = setInterval(() => {
+         fetchChatHistory(contactUserId);
+     }, 2000); // 2000 ms = 2 seconds
+ 
     // Set up event listener for sending messages
     const messageInput = document.getElementById('message-input');
      // Remove existing listener if it exists
@@ -109,4 +84,42 @@ function sendMessage(contactUserId) {
 
         document.getElementById('message-input').value = ''; // Clear input
     }
+}
+
+function fetchChatHistory(contactUserId) {
+    fetch('fetch_chat.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `chat_user_id=${contactUserId}`  // Pass in the current chatting target's user_id
+    })
+    .then(response => response.json())
+    .then(messages => {
+        messages.sort((a, b) => a.CHAT_ID - b.CHAT_ID);
+        // Clear the chat messages before appending to prevent duplicates
+        const chatMessagesContainer = document.getElementById('chat-messages');
+        chatMessagesContainer.innerHTML = ''; // Clear previous messages to avoid duplicates
+
+        messages.forEach(message => {
+            let messageElement = document.createElement('div');
+            if (message.CHAT_USER_ID == contactUserId) {
+                messageElement.className = 'chat-message sent'; // Current user's message
+                messageElement.innerHTML = `
+                    <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
+                    <div class="message-content">${message.CONTENT}</div>
+                `;
+            } else {
+                messageElement.className = 'chat-message received'; // Other user's message
+                messageElement.innerHTML = `
+                    <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
+                    <div class="message-content">${message.CONTENT}</div>
+                `;
+            }
+            chatMessagesContainer.appendChild(messageElement); // Append message
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching chat history:', error);
+    });
 }

@@ -323,11 +323,14 @@ function populateEvents(){
                     }
 
                     if(Number(daybox.textContent.slice(0,2).trim()) == eventDay && onCurrentMonth){
-                        let eventDiv = document.createElement('div');
+                        let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;
                         eventDiv.textContent = event.TITLE;
                         eventDiv.id = event.EVENT_ID;
+			eventDiv.href = "viewevents.php?month="+months[eventMonth]+"&year="+eventYear+"&id="+event.EVENT_ID.toString();
+			eventDiv.style.textDecoration = "none";
+			eventDiv.style.color = "black";
                         daybox.appendChild(eventDiv);
                     }
 

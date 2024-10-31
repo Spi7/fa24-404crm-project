@@ -3,6 +3,27 @@ body {
     background: linear-gradient(135deg, #d4e3fc, #ffefe5);
     color: #333;
 }
+header {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.back-calendar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    padding: 10px;
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
 .form-container {
     background-color: white;
     border-radius: 8px;
@@ -12,6 +33,14 @@ body {
     margin: 0 auto;
     position: relative;
 }
+
+.form-title {
+    top: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+
 .top-left-link {
     top: 10px; 
     left: 30px; 

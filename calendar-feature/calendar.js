@@ -328,9 +328,9 @@ function populateEvents(){
                         eventDiv.style.backgroundColor = event.COLOR;
                         eventDiv.textContent = event.TITLE;
                         eventDiv.id = event.EVENT_ID;
-			eventDiv.href = "viewevents.php?month="+months[eventMonth]+"&year="+eventYear+"&id="+event.EVENT_ID.toString();
-			eventDiv.style.textDecoration = "none";
-			eventDiv.style.color = "black";
+			            eventDiv.href = "viewevents.php?month="+months[eventMonth]+"&year="+eventYear+"&id="+event.EVENT_ID;
+			            eventDiv.style.textDecoration = "none";
+			            eventDiv.style.color = "black";
                         daybox.appendChild(eventDiv);
                     }
 

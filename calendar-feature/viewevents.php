@@ -14,6 +14,11 @@
                 <img src="../img/calendar-icon.png" alt="Calendar">
             </a>
         </div>
+        <div class="profile-button">
+                <a href="../profile/profile.php">
+                    <img src="../img/user profile icon.png" alt="Profile">
+                </a>
+            </div>
         <?php
             $month = $_GET['month'];
             $year = $_GET['year'];

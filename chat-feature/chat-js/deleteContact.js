@@ -1,4 +1,5 @@
-function deleteContact(contactEmail) {
+function deleteContact(event,contactEmail) {
+    event.stopPropagation()
     let noContactsMessage = document.getElementById('no-contacts-message');
     if (confirm('Are you sure you want to delete this contact?')) {
         fetch('delete_contact_backend.php', {
@@ -24,7 +25,12 @@ function deleteContact(contactEmail) {
                     noContactsMessage.style.display = 'block';
                 }
                 disableChat();
-                
+                console.log(contactEmail,openChatEmail)
+                if (contactEmail.toLowerCase()==openChatEmail.toLowerCase()){
+                    openChatEmail=""
+                    console.log("clear message contact deleted")
+                    document.querySelector("#chat-messages").innerHTML=""
+                }           
                 //at this point the contact should already be removed from the contactlist
             } else {
                 alert('Error deleting contact: ' + data.message);
@@ -35,7 +41,7 @@ function deleteContact(contactEmail) {
 }
 
 function disableChat() {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 800) {
         document.querySelector('.contacts').style.display = 'block';
         document.querySelector('.chat-interface').style.display = 'none';
     }

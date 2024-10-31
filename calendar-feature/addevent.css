@@ -2,112 +2,82 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #d4e3fc, #ffefe5);
     color: #333;
-    margin: 0;
-    height: 100vh; 
-    display: flex; 
 }
-
-.main-container {
-    display: flex;
-    flex-direction: column; 
-    flex-grow: 1; 
-    overflow: hidden; 
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.top-left-link {
+    top: 10px; 
+    left: 30px; 
+    border: 1px solid #007BFF; 
+    padding: 5px 10px; 
+    color: #007BFF; 
+    border-radius: 4px; 
+    position: absolute;
+}
+.top-right-link {
+    top: 10px; 
+    right: 30px; 
+    border: 1px solid #007BFF; 
+    padding: 5px 10px; 
+    color: #007BFF; 
+    border-radius: 4px; 
+    position: absolute;
+}
+.form-group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input, .form-group textarea, .form-group select {
     width: 100%;
-    border-bottom: 3px solid black;
-    padding: 10px 0;
-    box-sizing: border-box;
-}
-
-.image-header img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    padding: 20px;
-}
-
-.month {
-    text-align: center;
-    font-size: 30px;
-}
-
-.current-date {
-    display: table-column;
-    font-size: 0.5em;
-}
-
-.calendar {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; 
-    max-width: 100%; 
-}
-
-.days-row {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    padding: 10px 0;
-    background-color: #f0f0f0;
-    border-bottom: 2px solid #333;
-}
-
-.day {
-    flex: 1; 
     padding: 10px;
-    font-weight: bold;
-    border-right: 1px solid #ccc;
+    border: 1px solid black;
+    border-radius: 4px;
 }
-
-.day-abbr {
-    display: none;
+.toggle-label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 5px;
+    background-color: #ccc;
+    border-radius: 15px;
+    position: relative;
+    transition: background-color 0.3s;
+    padding: 5px 10px;
 }
-
-@media (max-width: 600px) {
-    .day-abbr {
-        display: block;
-        flex: 1; 
-        padding: 10px;
-        font-weight: bold;
-        border-right: 1px solid #ccc;
-    }
-    
-    .day {
-        display: none;
-    }
+.toggle {
+    display: none; 
 }
-
-.day:last-child {
-    border-right: none; 
+.toggle:checked + .toggle-label {
+    background-color: green; 
 }
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); 
-    grid-template-rows: repeat(5, 1fr);  
-    flex-grow: 1; 
+.toggle:checked + .toggle-label:before {
+    content: '✔';
+    color: white;
+    margin-left: 5px;
+}
+.toggle-label:before {
+    content: '✖';
+    color: red;
+    margin-left: 5px;
+}
+.submit-button {
+    background-color: green;
+    color: white;
+    border: none;
     padding: 10px;
-    box-sizing: border-box;
+    border-radius: 5px;
+    cursor: pointer;
 }
-
-.day-box {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-}
-
-.event {
-    width: 100%;
-    height: 20%;
-    font-size: 14px;
+.submit-button:hover {
+    background-color: green;
 }

@@ -18,6 +18,14 @@ header {
     padding: 10px;
 }
 
+.profile-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    padding: 10px;
+}
+
 img {
     max-width: 100px;
     max-height: 100px;

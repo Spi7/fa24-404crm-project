@@ -28,25 +28,19 @@ set_error_handler("var_dump");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- ensure compatibility w/ older version of Internet Explorer -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- makes pg responsive, adjust its width based on device's secreen size -->
-    <title>CRM Dashboard (404)</title> <!-- our title -->
-    <link rel="stylesheet" href="invoice.css"> <!-- Link to external CSS file -->
+    <title>View Invoices</title>
+    <link rel="stylesheet" href="invoices.css"> <!-- Link to external CSS file -->
 </head>
-
 <body>
-<a href="../home-page/home.php">
+    <a href="../home-page/home.php" class="button" id="homeButtonWrapper">
         <img id="homeButton" src="../img/home.png" alt="Home">
-        <p>Home</p>
     </a>
     <div id="main-container">
-        <h1>invoices involving you</h1>
-        <table>
+        <h1>Invoices Involving You</h1>
+        <table class="invoice-table">
             <tr>
                 <th>Invoice ID</th>
                 <th>Sender</th>
@@ -56,7 +50,6 @@ set_error_handler("var_dump");
                 <th>Description</th>
             </tr>
             <?php
-            
             while($row=$invoicesInfo->fetch_row()){
                 echo "<tr>";
                 foreach ($row as $value) {
@@ -66,8 +59,8 @@ set_error_handler("var_dump");
             }
             ?>
         </table>
-        <h1>invoice items involving your invoices</h1>
-        <table>
+        <h1>Invoice Items Involving Your Invoices</h1>
+        <table class="invoice-table">
             <tr>
                 <th>Item ID</th>
                 <th>Invoice ID</th>
@@ -76,7 +69,6 @@ set_error_handler("var_dump");
                 <th>Description</th>
             </tr>
             <?php
-            
             while($row=$invoiceItems->fetch_row()){
                 echo "<tr>";
                 foreach ($row as $value) {
@@ -88,5 +80,4 @@ set_error_handler("var_dump");
         </table>
     </div>
 </body>
-
 </html>

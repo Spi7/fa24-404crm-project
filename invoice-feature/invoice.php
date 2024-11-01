@@ -47,9 +47,8 @@ if (count($_POST) > 0) {
 </head>
 
 <body>
-<a href="../home-page/home.php">
+    <a href="../home-page/home.php">
         <img id="homeButton" src="../img/home.png" alt="Home">
-        <p>Home</p>
     </a>
     <div id="centerWrapper">
     <div class="main-container">
@@ -96,7 +95,7 @@ if (count($_POST) > 0) {
         </form>
     </div>
     </div>
-    <a href="./invoices.php">View Invoices</a>
+    <a href="./invoices.php" class="button" id="viewInvoicesLink">View Invoices</a>
     <template id="itemTemplate">
         <fieldset class="item">
             <!-- new inputs will all have the same names quantity/price/description this will result to the server receiving an array of values for each -->

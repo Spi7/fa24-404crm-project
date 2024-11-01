@@ -63,4 +63,9 @@ function disableChat() {
     if (chatHeaderText) {
         chatHeaderText.textContent = "Select a contact to start chatting";
     }
+
+    const attachButton = document.querySelector('.attach-btn');
+    if (attachButton) {
+        attachButton.disabled = true;
+    }
 }

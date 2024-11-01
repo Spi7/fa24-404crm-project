@@ -11,7 +11,7 @@ fileInput.addEventListener('change', function() {
 // An outscope variable to update Enter key on sending messages
 
 let sendMessageListener; //DEclare for "Pressing Enter"
-let messageFetchInterval
+let messageFetchInterval;
 // Function to open chat with the selected contact
 function openChat(contactName, contactUserId, email) {
     clearInterval(messageFetchInterval)

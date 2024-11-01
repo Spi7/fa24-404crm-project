@@ -11,15 +11,21 @@ header {
     display: grid;
     align-items: center;
     width: 100%;
-    border-bottom: 3px solid black;
     padding: 10px 0;
-    box-sizing: border-box;
 }
 
 .back-calendar {
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    padding: 10px;
+}
+
+.profile-button {
+    position: fixed;
+    top: 0;
+    right: 0;
     display: flex;
     padding: 10px;
 }

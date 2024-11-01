@@ -109,7 +109,7 @@ function sendMessage(contactUserId) {
                         // Handle non-image files
                         let fileElement = document.createElement('a');
                         fileElement.href = data.file_path; // Link to the uploaded file
-                        fileElement.textContent = 'Download File'; // Change this based on the file type
+                        fileElement.textContent = 'Open File'; // Change this based on the file type
                         fileElement.target = '_blank'; // Open in a new tab
                         messageElement.appendChild(fileElement); // Append file link to message
                     }

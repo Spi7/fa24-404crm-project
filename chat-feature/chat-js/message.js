@@ -1,7 +1,9 @@
 //an outscope variable to update Enter key on sending messages
 let sendMessageListener; //DEclare for "Pressing Enter"
+let messageFetchInterval
 // Function to open chat with the selected contact
 function openChat(contactName, contactUserId, email) {
+    clearInterval(messageFetchInterval)
     openChatEmail=email
     // Show chat interface
     document.querySelector('.chat-interface').style.display = 'flex'; 

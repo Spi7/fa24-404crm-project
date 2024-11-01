@@ -24,11 +24,20 @@ if (isset($_GET["q"])) {
     $stmt->bind_param("iss",$currentUserId,$searchQuery,$searchQuery);
     $stmt->execute();
     $contactsResult = $stmt->get_result();
+    $fileSearchQuery="uploads/_____________\_%".$_GET['q']."%";
+
+    $fileQuery = "SELECT ACCOUNTS.NICKNAME, ACCOUNTS.EMAIL, CHAT_HISTORY.CURRENT_USER_ID, CHAT_HISTORY.CHAT_USER_ID, CHAT_HISTORY.FILE_PATH FROM CHAT_HISTORY,ACCOUNTS WHERE ((CHAT_HISTORY.CURRENT_USER_ID = ? AND CHAT_HISTORY.CHAT_USER_ID = ACCOUNTS.USER_ID) OR (CHAT_HISTORY.CHAT_USER_ID = ? AND CHAT_HISTORY.CURRENT_USER_ID = ACCOUNTS.USER_ID)) AND CHAT_HISTORY.FILE_PATH LIKE ?";
+    $stmt = $mysqli->prepare($fileQuery);
+    $stmt->bind_param("iis", $currentUserId, $currentUserId,$fileSearchQuery);
+    $stmt->execute();
+    $filesResult = $stmt->get_result();
+
 
 
     echo json_encode([
         "messages"=>$messagesResult->fetch_all(MYSQLI_ASSOC),
         "contacts"=>$contactsResult->fetch_all(MYSQLI_ASSOC),
+        "files"=>$filesResult->fetch_all(MYSQLI_ASSOC),
         "CurrUserID"=>$currentUserId,
     ]);
 

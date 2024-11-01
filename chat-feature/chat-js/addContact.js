@@ -59,11 +59,7 @@ function addNewContact() {
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
-
-                //update new contact list
-                updateContactsArray();
-                //Call filterContact
-                filterContacts();
+                search()
             } else {
                 alert(data.message); // Show error message if it's added unsuccessfully
             }

@@ -12,7 +12,9 @@
     <div class="main-container">
     <header>
         <div class='image-header'>
-            <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
+            <a href="#" onclick="viewEventRedirect()">
+                <img src="../img/megaphone-activity-events-icon.png" alt="View Event">
+            </a>
         </div> 
         <button id="prev-month">Prev</button>
         <div class="current-date">

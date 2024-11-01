@@ -1,16 +1,16 @@
 <?php
 include '../db_connection.php';
 connectDB();
-fetchUserData(); 
+fetchUserData();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $currentUserId = $user['USER_ID']; 
+    $currentUserId = $user['USER_ID'];
     $chatUserId = $_POST['chat_user_id'];
 
     // Check for existing chat history
-    $query = "SELECT * FROM CHAT_HISTORY 
-    WHERE (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?) 
-    OR (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?)";
+    $query = "SELECT CONTENT, FILE_PATH, CHAT_USER_ID FROM CHAT_HISTORY
+              WHERE (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?)
+              OR (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?)";
 
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param("iiii", $currentUserId, $chatUserId, $chatUserId, $currentUserId);
@@ -23,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($messages);
     } else {
         // Return an empty array indicating no chat history
-        echo json_encode([]); 
+        echo json_encode([]);
     }
-
 }
 ?>

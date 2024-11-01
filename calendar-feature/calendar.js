@@ -344,7 +344,7 @@ function populateEvents(){
 
 function eventPopup(start, end, description, title, frequency, allday, color){
     const popup = document.getElementById('popup-content');
-    let repeat = event.FREQUENCY;
+    let repeat = frequency;
     let eventText = "Title: "+title+"<br>Description: "+description+"<br>";
     if (allday == 0){
         eventText += "Start: "+start.toLocaleString()+"<br>End: "+end.toLocaleString()+"<br>";

@@ -41,13 +41,14 @@ body {
     margin-left: auto;
 }
 
-#contact-list {
+#contact-container {
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
 }
 
-#contact-list li {
+
+.search-results-list li, #contact-list li {
     display: flex; /* Use flexbox for alignment */
     align-items: center; /* Center items vertically */
     padding: 10px;

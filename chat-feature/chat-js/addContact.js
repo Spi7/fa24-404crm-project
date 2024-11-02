@@ -63,7 +63,7 @@ function addNewContact() {
                 //update new contact list
                 updateContactsArray();
                 //Call filterContact
-                filterContacts();
+                //filterContacts();
             } else {
                 alert(data.message); // Show error message if it's added unsuccessfully
             }

@@ -89,42 +89,18 @@ function sendMessage(contactUserId) {
             if (data.status !== 'success') {
                 alert(data.message); // Show error if message fails
             } else {
-                // Display sent message
-                let messageElement = document.createElement('div');
-                messageElement.className = 'chat-message sent'; // Add class for styling
-                messageElement.innerHTML = `
-                    <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
-                    <div class="message-content">${message}</div>
-                `; // Set message text
-                document.getElementById('chat-messages').appendChild(messageElement); // Append message to chat
+                // Clear the message input and file input
+                document.getElementById('message-input').value = ''; // Clear input
+                fileInput.value = ''; // Clear file input
 
-                // Handle file display if uploaded
-                if (data.file_path) {
-                    if (data.is_image) {
-                        // Create an image element if the uploaded file is an image
-                        let imgElement = document.createElement('img');
-                        imgElement.src = data.file_path; // Set the image source
-                        imgElement.alt = 'Sent Image';
-                        imgElement.className = 'message-image'; // Add your styles if needed
-                        messageElement.appendChild(imgElement); // Append the image element
-                    } else {
-                        // Handle non-image files
-                        let fileElement = document.createElement('a');
-                        fileElement.href = data.file_path; // Link to the uploaded file
-                        fileElement.textContent = 'Open File'; // Change this based on the file type
-                        fileElement.target = '_blank'; // Open in a new tab
-                        messageElement.appendChild(fileElement); // Append file link to message
-                    }
-                }
+                // Refresh chat history to ensure the correct order
+                fetchChatHistory(contactUserId);
             }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('An error occurred while sending the message. Please try again. ' + error.message);
         });
-
-        document.getElementById('message-input').value = ''; // Clear input
-        fileInput.value = ''; // Clear file input
     }
 }
 
@@ -138,6 +114,9 @@ function fetchChatHistory(contactUserId) {
     })
     .then(response => response.json())
     .then(messages => {
+        // Sort messages by CHAT_ID
+        messages.sort((a, b) => a.CHAT_ID - b.CHAT_ID);
+
         document.getElementById('chat-messages').innerHTML = ''; // Clear previous messages to prevent duplicates
         messages.forEach(message => {
             let messageElement = document.createElement('div');

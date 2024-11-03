@@ -96,6 +96,7 @@ function prevMonth() {
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function nextMonth() {
@@ -172,6 +173,7 @@ function nextMonth() {
 
     document.querySelector('h1.month').textContent = nextMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function selectDate() {
@@ -247,6 +249,7 @@ function selectDate() {
 
     document.querySelector('h1.month').textContent = prevMonth + " " + year;
     highlightCurrDay();
+    populateEvents();
 }
 
 function highlightCurrDay(){
@@ -258,11 +261,15 @@ function highlightCurrDay(){
     let monthText = document.querySelector('h1.month').textContent;
     let [month, year] = monthText.split(' ');
     monthIndex = months.indexOf(month);
+    let onCurrMonth = false;
     if(Number(year) == currYear && currMonth == monthIndex){
         const calendarGrid = document.getElementById('calendar-grid');
         const dayboxes = calendarGrid.querySelectorAll('.day-box');
         dayboxes.forEach(daybox => {
-            if(Number(daybox.textContent.trim()) == currDay){
+            if(Number(daybox.textContent.slice(0,2).trim()) == 1){
+                onCurrMonth = !onCurrMonth;
+            }
+            if(Number(daybox.textContent.trim()) == currDay && onCurrMonth){
                 daybox.style.backgroundColor = 'yellow';
             }
         });
@@ -303,20 +310,61 @@ function populateEvents(){
             let eventYear = eventDate.getFullYear();
             let eventMonth = eventDate.getMonth();
             let eventDay = eventDate.getDate();
+
+            // assume not on current month from start
+            let onCurrentMonth = false;
+
             if(Number(year) == eventYear && eventMonth == monthIndex){
                 dayboxes.forEach(daybox => {
-                    if(Number(daybox.textContent.trim()) == eventDay){
-                        let eventDiv = document.createElement('div');
+                    // if daybox is 1st of month, flip to true
+                    // if daybox is 1st of month a second time, flip to false
+                    if(Number(daybox.textContent.slice(0,2).trim()) == 1){
+                        onCurrentMonth = !onCurrentMonth;
+                    }
+
+                    if(Number(daybox.textContent.slice(0,2).trim()) == eventDay && onCurrentMonth){
+                        let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;
                         eventDiv.textContent = event.TITLE;
                         eventDiv.id = event.EVENT_ID;
+			            eventDiv.style.textDecoration = "none";
+			            eventDiv.style.color = "black";
+                        eventDiv.addEventListener('click', () => eventPopup(event.EVENT_START, event.EVENT_END, event.EVENT_DESCRIPTION, event.TITLE, event.FREQUENCY, parseInt(event.ALL_DAY), event.COLOR));
                         daybox.appendChild(eventDiv);
                     }
+
                 })
             }
         })
     }).catch(error => {
         console.error('Error fetching events:', error);
     })
+}
+
+function eventPopup(start, end, description, title, frequency, allday, color){
+    const popup = document.getElementById('popup-content');
+    let repeat = frequency;
+    let eventText = "Title: "+title+"<br>Description: "+description+"<br>";
+    if (allday == 0){
+        eventText += "Start: "+start.toLocaleString()+"<br>End: "+end.toLocaleString()+"<br>";
+    }
+    else{
+        eventText += "All Day: "+start.toLocaleString()+"<br>";
+    }
+    eventText += "Repeat: "+repeat;
+    popup.innerHTML = eventText;
+    popup.style.backgroundColor = color;
+    document.getElementById('event-modal').style.display = 'block';
+}
+
+function closeModal(){
+    document.getElementById('event-modal').style.display = 'none';
+}
+
+function viewEventRedirect(){
+    let monthText = document.querySelector('h1.month').textContent;
+    let [month, year] = monthText.split(' ');
+    let url = "viewevents.php?month="+month+"&year="+year;
+    window.location.href = url;
 }

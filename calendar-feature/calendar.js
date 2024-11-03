@@ -323,11 +323,14 @@ function populateEvents(){
                     }
 
                     if(Number(daybox.textContent.slice(0,2).trim()) == eventDay && onCurrentMonth){
-                        let eventDiv = document.createElement('div');
+                        let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;
                         eventDiv.textContent = event.TITLE;
                         eventDiv.id = event.EVENT_ID;
+			            eventDiv.style.textDecoration = "none";
+			            eventDiv.style.color = "black";
+                        eventDiv.addEventListener('click', () => eventPopup(event.EVENT_START, event.EVENT_END, event.EVENT_DESCRIPTION, event.TITLE, event.FREQUENCY, parseInt(event.ALL_DAY), event.COLOR));
                         daybox.appendChild(eventDiv);
                     }
 
@@ -337,6 +340,26 @@ function populateEvents(){
     }).catch(error => {
         console.error('Error fetching events:', error);
     })
+}
+
+function eventPopup(start, end, description, title, frequency, allday, color){
+    const popup = document.getElementById('popup-content');
+    let repeat = frequency;
+    let eventText = "Title: "+title+"<br>Description: "+description+"<br>";
+    if (allday == 0){
+        eventText += "Start: "+start.toLocaleString()+"<br>End: "+end.toLocaleString()+"<br>";
+    }
+    else{
+        eventText += "All Day: "+start.toLocaleString()+"<br>";
+    }
+    eventText += "Repeat: "+repeat;
+    popup.innerHTML = eventText;
+    popup.style.backgroundColor = color;
+    document.getElementById('event-modal').style.display = 'block';
+}
+
+function closeModal(){
+    document.getElementById('event-modal').style.display = 'none';
 }
 
 function viewEventRedirect(){

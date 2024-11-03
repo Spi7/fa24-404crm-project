@@ -8,9 +8,20 @@
     <link rel="stylesheet" href="addevent.css"> <!-- Link to external CSS file -->
 </head>
     <body>
+        <header>
+            <div class='back-calendar'>
+                <a href="calendar.php">
+                    <img src="../img/calendar-icon.png" alt="Calendar">
+                </a>
+            </div>
+            <div class="profile-button">
+                <a href="../profile/userinfo.php">
+                    <img src="../img/user profile icon.png" alt="Profile">
+                </a>
+            </div>
+        </header>
         <div class="form-container">
-            <a class="top-left-link" href="calendar.php">Cancel</a>
-            <a class="top-right-link" href="calendar.php">Add</a>
+            <div class="form-title"> Add New Event</div>
             <form action="addevent.php" method="post" id="event-form">
                 <div class="form-group">
                     <label for="event-title">Event Title</label>

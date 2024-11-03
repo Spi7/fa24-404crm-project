@@ -6,28 +6,20 @@
     <title>Project Management</title>
     <link rel="stylesheet" href="project.css"> <!-- Link to the external CSS file -->
     <script>
-        // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
         function loadMobileCSS() {
             if (window.innerWidth <= 600) {
-                // Create a link element for mobile CSS
                 var mobileCss = document.createElement('link');
                 mobileCss.rel = 'stylesheet';
-                mobileCss.href = 'chat-mobile.css'; // Your mobile CSS file path
-
-                // Append it to the head
+                mobileCss.href = 'chat-mobile.css';
                 document.head.appendChild(mobileCss);
 
-                // Hide the sidebar for mobile screens
                 var sidebar = document.querySelector('.sidebar');
                 if (sidebar) {
-                    sidebar.style.display = 'none'; // Hide the sidebar for mobile
+                    sidebar.style.display = 'none';
                 }
             }
         }
-        // Run this when the page loads
         window.onload = loadMobileCSS;
-
-        // Also check when the window is resized (optional)
         window.onresize = loadMobileCSS;
     </script>
 </head>
@@ -40,213 +32,226 @@
     <?php include '../sidebar.php'; ?> <!-- Including the sidebar.php file -->
     <div class="main-content">
         <div class="header">
-            <h1 id="project-title">Project #1 Overview</h1>
+            <h1 id="project-title">Project Overview</h1>
+            <button class="top-right-button" onclick="location.href='project management.php'">Project management</button>
 
-            <!-- Progress Bar -->
             <div class="progress-bar-container">
-                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div> <!-- Progress Bar -->
+                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
             </div>
             <span id="progress-text">Progress: 0%</span>
 
-            <!-- Project Switcher -->
             <div class="project-switcher">
                 <button onclick="switchProject(1)">Project #1</button>
                 <button onclick="switchProject(2)">Project #2</button>
                 <button onclick="switchProject(3)">Project #3</button>
             </div>
 
-            <!-- Add Task Button -->
             <button class="add-task-button" onclick="addTask()">Add Task</button>
         </div>
 
-        <!-- Task List -->
-        <ul class="task-list" id="task-list">
-            <!-- Tasks will be dynamically loaded here -->
-        </ul>
-
-        <!-- Task Details (will be shown dynamically) -->
+        <ul class="task-list" id="task-list"></ul>
         <div id="task-details-container"></div>
-
     </div>
 </div>
 
 <script>
-    let currentProject = 1; // Default to Project 1
-    let taskCounter = {1: 4, 2: 3, 3: 3}; // Counter for new task numbers in each project
-    let projectData = {
-        1: {
-            tasks: [
-                { number: 1, name: "Design UI", subtasks: [false, false, false], done: false },
-                { number: 2, name: "Implement Frontend", subtasks: [false, false, false], done: false },
-                { number: 3, name: "Backend Integration", subtasks: [false, false, false], done: false }
-            ],
-            progress: 0
-        },
-        2: {
-            tasks: [
-                { number: 1, name: "Initial Planning", subtasks: [false, false, false], done: false },
-                { number: 2, name: "Resource Allocation", subtasks: [false, false, false], done: false }
-            ],
-            progress: 0
-        },
-        3: {
-            tasks: [
-                { number: 1, name: "Set Up Database", subtasks: [false, false, false], done: false },
-                { number: 2, name: "Implement Security", subtasks: [false, false, false], done: false }
-            ],
-            progress: 0
-        }
-    };
+    let currentProject = 1;
 
-    // Function to switch between projects
+    // Switch between projects and load project data
     function switchProject(projectNumber) {
         currentProject = projectNumber;
-        document.getElementById('project-title').textContent = `Project #${projectNumber} Overview`;
-
-        // Load tasks for the selected project
-        dynamicDisplay(projectNumber);
-        updateProjectProgress();
+        loadProjectData(projectNumber);
     }
 
-    // Function to dynamically display tasks for the current project
-    function dynamicDisplay(projectNumber) {
-        const taskList = document.getElementById('task-list');
-        taskList.innerHTML = ''; // Clear task list
-        const tasks = projectData[projectNumber].tasks;
+    // Load project data, including tasks and subtasks
+    function loadProjectData(projectId) {
+    fetch(`fetch_project_data.php?project_id=${projectId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Loaded Project Data:', data); // Debugging output
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
 
-        tasks.forEach(task => {
-            const taskItem = document.createElement('li');
-            taskItem.setAttribute('data-task', task.number);
-            taskItem.textContent = `Task #${task.number}: ${task.name}`;
-            taskItem.onclick = () => showTask(task.number);
-            taskList.appendChild(taskItem);
+            const { project, tasks } = data;
+            document.getElementById('project-title').textContent = project.TITLE;
+            document.getElementById('progress-bar').style.width = project.PROGRESS + '%';
+            document.getElementById('progress-text').textContent = `Progress: ${project.PROGRESS}%`;
+
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.textContent = `Task #${task.TASK_ID}: "${task.TITLE}"`;
+                taskItem.onclick = () => showTask(task);
+                taskList.appendChild(taskItem);
+            });
+        })
+        .catch(error => console.error('Error fetching project data:', error));
+}
+
+
+    // Show task details and display subtasks
+    function showTask(task) {
+    const taskDetailsContainer = document.getElementById('task-details-container');
+    taskDetailsContainer.innerHTML = '';
+
+    const taskDetails = document.createElement('div');
+    taskDetails.classList.add('task-details');
+    taskDetails.innerHTML = `
+        <h3>Task #${task.TASK_ID} Details</h3>
+        <p>Task Description: "${task.TITLE}"</p>
+        <div class="mini-progress-bar">
+            <div class="mini-progress" id="mini-progress-${task.TASK_ID}" style="width: ${task.PROGRESS}%"></div>
+        </div>
+        <span class="mini-progress-percentage" id="progress-text-${task.TASK_ID}">Progress: ${task.PROGRESS}%</span>
+    `;
+
+    if (task.subtasks && task.subtasks.length > 0) {
+        const subtaskList = document.createElement('ul');
+        subtaskList.classList.add('subtask-list');
+
+        task.subtasks.forEach((subtask, index) => {
+            const subtaskItem = document.createElement('li');
+            subtaskItem.classList.add('subtask-item');
+            subtaskItem.innerHTML = `
+                <span>${subtask.DESCRIPTION}</span>
+                <button id="subtask-${task.TASK_ID}-${subtask.SUBTASK_ID}" 
+                    class="subtask-button ${subtask.COMPLETED ? 'completed' : ''}" 
+                    onclick="completeSubtask(${task.TASK_ID}, ${subtask.SUBTASK_ID})">
+                    ${subtask.COMPLETED ? 'Subtask Completed' : 'Mark Subtask as Done'}
+                </button>
+            `;
+            subtaskList.appendChild(subtaskItem);
         });
+
+        taskDetails.appendChild(subtaskList);
+    } else {
+        taskDetails.innerHTML += `<p>No subtasks available for this task.</p>`;
     }
 
-    // Function to show task details
-    function showTask(taskNumber) {
-        const task = projectData[currentProject].tasks.find(t => t.number === taskNumber);
-        const taskDetailsContainer = document.getElementById('task-details-container');
-        taskDetailsContainer.innerHTML = ''; // Clear previous details
+    taskDetails.innerHTML += `<button class="delete-task-button" onclick="deleteTask(${task.TASK_ID})">Delete Task</button>`;
+    taskDetailsContainer.appendChild(taskDetails);
+}
 
-        const taskDetails = document.createElement('div');
-        taskDetails.classList.add('task-details');
-        taskDetails.innerHTML = `
-            <h3>Task #${task.number} Details</h3>
-            <p>Assigned To: Employee Name</p>
-            <p>Task Description: ${task.name}</p>
-            <ul>
-                <li>1. Subtask 1</li>
-                <li>2. Subtask 2</li>
-                <li>3. Subtask 3</li>
-            </ul>
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-${task.number}" style="width: ${calculateMiniProgress(task)}%;"></div>
-            </div>
-            <span class="mini-progress-percentage">Progress: ${calculateMiniProgress(task)}%</span>
-            <button id="subtask-${task.number}-0" class="subtask-button ${task.subtasks[0] ? 'completed' : ''}" onclick="completeSubtask(${task.number}, 0)">
-                ${task.subtasks[0] ? 'Subtask 1 Completed' : 'Mark Subtask 1 as Done'}
-            </button>
-            <button id="subtask-${task.number}-1" class="subtask-button ${task.subtasks[1] ? 'completed' : ''}" onclick="completeSubtask(${task.number}, 1)">
-                ${task.subtasks[1] ? 'Subtask 2 Completed' : 'Mark Subtask 2 as Done'}
-            </button>
-            <button id="subtask-${task.number}-2" class="subtask-button ${task.subtasks[2] ? 'completed' : ''}" onclick="completeSubtask(${task.number}, 2)">
-                ${task.subtasks[2] ? 'Subtask 3 Completed' : 'Mark Subtask 3 as Done'}
-            </button>
-            <button class="delete-task-button" onclick="deleteTask(${task.number})">Delete Task</button>
-        `;
-        taskDetailsContainer.appendChild(taskDetails);
-    }
-
-
-    // Function to mark a task as done
-    function markTaskAsDone(taskNumber) {
-        const task = projectData[currentProject].tasks.find(t => t.number === taskNumber);
-        task.done = true; // Mark task as done
-
-        updateProjectProgress(); // Update overall project progress
-    }
-
-    // Function to unmark a task as done
-    function unmarkTaskAsDone(taskNumber) {
-        const task = projectData[currentProject].tasks.find(t => t.number === taskNumber);
-        task.done = false; // Unmark task as done
-
-        updateProjectProgress(); // Update overall project progress
-    }
-
-    // Function to complete a subtask and update mini progress bar
-    function completeSubtask(taskNumber, subtaskIndex) {
-        const task = projectData[currentProject].tasks.find(t => t.number === taskNumber);
-        task.subtasks[subtaskIndex] = !task.subtasks[subtaskIndex]; // Toggle subtask state
-
-        const subtaskButton = document.querySelector(`#subtask-${taskNumber}-${subtaskIndex}`);
-
-        // Toggle the class based on whether the subtask is completed
-        if (task.subtasks[subtaskIndex]) {
-            subtaskButton.classList.add('completed'); // Add the green background
-            subtaskButton.textContent = `Subtask ${subtaskIndex + 1} Completed`;
-        } else {
-            subtaskButton.classList.remove('completed'); // Revert to blue background
-            subtaskButton.textContent = `Mark Subtask ${subtaskIndex + 1} as Done`;
-        }
-
-        // Update the mini progress bar for the task
-        document.getElementById(`mini-progress-${taskNumber}`).style.width = calculateMiniProgress(task) + '%';
+function completeSubtask(taskId, subtaskId, completed) {
+    const subtaskButton = document.getElementById(`subtask-${taskId}-${subtaskId}`);
     
-        // If all subtasks are done, mark the task as done, else unmark
-        if (task.subtasks.every(Boolean)) {
-            markTaskAsDone(taskNumber);
+    // Toggle completion status based on button's current state
+    if (subtaskButton.classList.contains('completed')) {
+        completed = false; // Mark as not completed if it's currently completed
+    } else {
+        completed = true; // Otherwise, mark it as completed
+    }
+
+    // Fetch request to update the subtask progress
+    fetch('update_subtask_progress.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task_id: taskId, subtask_id: subtaskId, completed: completed ? 1 : 0 })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response and update UI accordingly
+        if (data.status === 'success') {
+            // Update the UI based on the new completion status
+            subtaskButton.classList.toggle('completed', completed);
+            subtaskButton.textContent = completed ? 'Subtask Completed' : 'Mark Subtask as Done';
+
+            // Update the mini progress bar for the specific task
+            updateProgress(taskId, data.task_progress);
+
+            // Update the total project progress after the mini progress is updated
+            updateTotalProjectProgress();
         } else {
-            unmarkTaskAsDone(taskNumber);
+            console.error('Error updating subtask:', data.message);
         }
+    })
+    .catch(error => console.error('Error:', error));
+}
 
-        showTask(taskNumber); // Re-render the task to update subtask buttons
+function updateProgress(taskId, taskProgress) {
+    const miniProgressBar = document.getElementById(`mini-progress-${taskId}`);
+    const progressTextElement = document.getElementById(`progress-text-${taskId}`);
+    
+    if (miniProgressBar) {
+        miniProgressBar.style.width = `${taskProgress}%`;
     }
-
-    // Function to calculate mini progress for a task
-    function calculateMiniProgress(task) {
-        const completedSubtasks = task.subtasks.filter(Boolean).length;
-        return (completedSubtasks / task.subtasks.length) * 100;
+    
+    if (progressTextElement) {
+        progressTextElement.textContent = `Progress: ${taskProgress}%`;
     }
+}
 
-    // Function to update overall project progress
-    function updateProjectProgress() {
-        const projectTasks = projectData[currentProject].tasks;
-        const completedTasks = projectTasks.filter(task => task.subtasks.every(Boolean)).length;
-        const progress = (completedTasks / projectTasks.length) * 100;
-        projectData[currentProject].progress = progress;
+function updateTotalProjectProgress() {
+    fetch(`calculate_project_progress.php?project_id=${currentProject}`)
+        .then(response => response.json())
+        .then(projectData => {
+            if (projectData.status === 'success') {
+                const totalProgressBar = document.getElementById('progress-bar');
+                const totalProgressText = document.getElementById('progress-text');
 
-        document.getElementById('progress-bar').style.width = progress + '%';
-        document.getElementById('progress-text').textContent = `Progress: ${progress}%`;
-    }
+                if (totalProgressBar && totalProgressText) {
+                    totalProgressBar.style.width = `${projectData.project_progress}%`;
+                    totalProgressText.textContent = `Progress: ${projectData.project_progress}%`;
+                }
+            } else {
+                console.error('Error updating project progress:', projectData.message);
+            }
+        })
+        .catch(error => console.error('Error fetching total project progress:', error));
+}
 
     // Function to add a new task to the current project
     function addTask() {
-        const taskList = projectData[currentProject].tasks;
-        const newTaskNumber = taskCounter[currentProject]++;
-        const newTask = {
-            number: newTaskNumber,
-            name: `New Task #${newTaskNumber}`,
-            subtasks: [false, false, false],
-            done: false
-        };
-        taskList.push(newTask); // Add the new task to the current project's task list
-        dynamicDisplay(currentProject); // Re-render the task list
-        updateProjectProgress(); // Update the project progress
+        const taskTitle = prompt("Enter the task title:");
+        if (!taskTitle) return; // Exit if title is not provided
+
+        const taskDescription = prompt("Enter the task description:"); // New prompt for description
+        if (!taskDescription) return; // Exit if description is not provided
+
+        fetch('add_task.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `project_id=${currentProject}&title=${encodeURIComponent(taskTitle)}&description=${encodeURIComponent(taskDescription)}` // Include description
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                loadProjectData(currentProject); // Refresh to include the new task
+                updateTotalProjectProgress();
+            } else {
+                alert("Error adding task.");
+            }
+        })
+        .catch(error => console.error("Error adding task:", error));
     }
 
     // Function to delete a specific task from the current project
-    function deleteTask(taskNumber) {
-        projectData[currentProject].tasks = projectData[currentProject].tasks.filter(t => t.number !== taskNumber);
-        dynamicDisplay(currentProject); // Re-render the task list
-        updateProjectProgress(); // Update the project progress
-        document.getElementById('task-details-container').innerHTML = ''; // Clear task details
+    function deleteTask(taskId) {
+        if (confirm("Are you sure you want to delete this task?")) {
+            fetch('delete_task.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `task_id=${taskId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    loadProjectData(currentProject); // Refresh after deletion
+                    updateTotalProjectProgress();
+                } else {
+                    alert("Error deleting task: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error deleting task:', error));
+        }
     }
-
-    // Initially load Project 1
+    // Initially load the first project
     switchProject(1);
 </script>
+
 
 </body>
 </html>

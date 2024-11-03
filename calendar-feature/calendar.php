@@ -91,6 +91,12 @@
         </div>
     </div>
 </div>
+<div id='event-modal'>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="popup-content"></p>
+    </div>
+</div>
 <script src='calendar.js'></script>
 </body>
 </html>

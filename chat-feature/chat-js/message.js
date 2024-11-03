@@ -11,7 +11,7 @@ fileInput.addEventListener('change', function() {
 // An outscope variable to update Enter key on sending messages
 
 let sendMessageListener; //DEclare for "Pressing Enter"
-let messageFetchInterval
+let messageFetchInterval;
 // Function to open chat with the selected contact
 function openChat(contactName, contactUserId, email) {
     clearInterval(messageFetchInterval)
@@ -111,7 +111,7 @@ function sendMessage(contactUserId) {
                         // Handle non-image files
                         let fileElement = document.createElement('a');
                         fileElement.href = data.file_path; // Link to the uploaded file
-                        fileElement.textContent = 'Download File'; // Change this based on the file type
+                        fileElement.textContent = 'Open File'; // Change this based on the file type
                         fileElement.target = '_blank'; // Open in a new tab
                         messageElement.appendChild(fileElement); // Append file link to message
                     }

@@ -18,9 +18,10 @@ body {
 
 /* Contacts Section */
 .contacts {
-    width: 25%;
+    height: 100vh;
+    width: 30%;
     background-color: #fff;
-    padding: 20px;
+    padding: 8px;
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
@@ -33,14 +34,21 @@ body {
     border-bottom: 2px solid #ccc;
 }
 
-#contact-list {
+.contacts h3 input[type="text"], #addContactEmail { /* the search bar section */
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-left: auto;
+}
+
+#contact-container {
     list-style: none;
     flex-grow: 1;
-    padding: 10px;
     overflow-y: auto;
 }
 
-#contact-list li {
+
+.search-results-list li, #contact-list li {
     display: flex; /* Use flexbox for alignment */
     align-items: center; /* Center items vertically */
     padding: 10px;
@@ -67,6 +75,7 @@ body {
 }
 
 .contact-email {
+    font-size: .5em;
     color: #666; /* Lighter color for email */
 }
 
@@ -83,6 +92,18 @@ body {
     background-color: #0056b3;
 }
 
+.delete-contact-btn {
+    margin-left: auto; /* Push the button to the far right */
+    background: #f20;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    border-radius: 50%;
+    border: none; 
+    color: #fff;
+    font-weight: 900;
+    cursor: pointer;
+}
 
 .contacts h3 a {
     text-decoration: none; /* Remove underline from the link */
@@ -108,71 +129,42 @@ body {
     vertical-align: middle; /* Align vertically */
 }
 
-/* Chat Interface */
-.chat-interface {
-    width: 55%;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    padding: 20px;
+@media (max-width: 800px) {
+    .chat-container {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .contacts {
+        width: 100%; /* This is fine */
+        border: none;
+        padding: 10px;
+        background-color: #fff;
+    }
+    
+    .add-contact-btn {
+        width: 100%; /* Ensure it fills the available space */
+        text-align: center;
+    }
 }
 
-.chat-header {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.chat-header h3 {
-    font-size: 18px;
-}
-
-.chat-messages {
-    flex-grow: 1;
-    padding: 10px;
-    overflow-y: auto;
-    border-bottom: 1px solid #ddd;
-}
-
-.chat-message {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.chat-message.sent {
-    background-color: #e0f7fa;
-    align-self: flex-end;
-}
-
-.chat-input {
-    display: flex;
-    margin-top: 10px;
-}
-
-#message-input {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-}
-
-.send-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.send-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.mobile-back-btn {
+#addContactInput.hidden{
     display: none;
+}
+#cancelAddContact, .mobile-back-btn>button{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+}
+.hide{
+    display: none;
+}
+#addContactInput{
+    margin: 10px auto;
+}
+.searchResultImage{
+    min-width: 50%;
+    max-width: 90%;
 }

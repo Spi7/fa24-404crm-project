@@ -8,33 +8,44 @@
     <link rel="stylesheet" href="addevent.css"> <!-- Link to external CSS file -->
 </head>
     <body>
+        <header>
+            <div class='back-calendar'>
+                <a href="calendar.php">
+                    <img src="../img/calendar-icon.png" alt="Calendar">
+                </a>
+            </div>
+            <div class="profile-button">
+                <a href="../profile/userinfo.php">
+                    <img src="../img/user profile icon.png" alt="Profile">
+                </a>
+            </div>
+        </header>
         <div class="form-container">
-            <a class="top-left-link" href="calendar.php">Cancel</a>
-            <a class="top-right-link" href="calendar.php">Add</a>
-            <form id="event-form">
+            <div class="form-title"> Add New Event</div>
+            <form action="addevent.php" method="post" id="event-form">
                 <div class="form-group">
                     <label for="event-title">Event Title</label>
-                    <input type="text" id="event-title" required>
+                    <input type="text" id="event-title" name="event-title" required>
                 </div>
                 <div class="form-group">
                     <label for="event-description">Event Description</label>
-                    <textarea id="event-description" rows="4"></textarea>
+                    <textarea id="event-description" name="event-description" rows="4"></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="all-day" class="toggle">
+                    <input type="checkbox" id="all-day" name="all-day" class="toggle">
                     <label for="all-day" class="toggle-label">All Day Event</label>
                 </div>
                 <div class="form-group">
                     <label for="start-time">Start Time</label>
-                    <input type="datetime-local" id="start-time" required>
+                    <input type="datetime-local" id="start-time" name="start-time" required>
                 </div>
                 <div class="form-group">
                     <label for="end-time">End Time</label>
-                    <input type="datetime-local" id="end-time" required>
+                    <input type="datetime-local" id="end-time" name="end-time" required>
                 </div>
                 <div class="form-group">
                     <label for="repeat">Repeat</label>
-                    <select id="repeat">
+                    <select id="repeat" name="repeat">
                         <option value="none">No Repeat</option>
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
@@ -43,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="color">Event Color</label>
-                    <select id="color">
+                    <select id="color" name="color">
                         <option value="red">Red</option>
                         <option value="orange">Orange</option>
                         <option value="yellow">Yellow</option>
@@ -53,7 +64,7 @@
                         <option value="pink">Pink</option>
                     </select>
                 </div>
-                <a type="submit" class="submit-button" href="calendar.php">Add Event</a>
+                <button type="submit" class="submit-button">Add Event</button>
             </form>
         </div>
     </body>

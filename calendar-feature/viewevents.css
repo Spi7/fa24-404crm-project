@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
+    color: #333;
+    margin: 0;
+    height: 100vh; 
+    display: block; 
+}
+
+header {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.back-calendar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    padding: 10px;
+}
+
+.profile-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    padding: 10px;
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+h1 {
+    text-align: center;
+    justify-self: center;
+    top: 0;
+    padding: 10px;
+}
+
+.stack-events {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.event {
+    border: 2px solid black;
+    width: 80%;
+    padding-left: 10px;
+    font-weight: bold;
+}

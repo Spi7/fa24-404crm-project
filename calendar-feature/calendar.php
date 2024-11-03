@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
 </head>
 <body>
-    <?php include '../sidebar.php'; ?>
+    <div id="sidebar">
+        <?php include '../sidebar.php'; ?>
+    </div>
     <div class="main-container">
     <header>
+        <a href="../home-page/home.php" class='mobile-home'>Home</a>
         <div class='image-header'>
             <a href="#" onclick="viewEventRedirect()">
                 <img src="../img/megaphone-activity-events-icon.png" alt="View Event">

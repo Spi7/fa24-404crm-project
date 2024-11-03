@@ -68,6 +68,20 @@ header {
     display: none;
 }
 
+.mobile-home {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-color: white;
+    display: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.mobile-home:hover {
+    background-color: blue;
+}
+
 @media (max-width: 600px) {
     .day-abbr {
         display: block;
@@ -79,6 +93,15 @@ header {
     
     .day {
         display: none;
+    }
+
+    #sidebar {
+        display: none;
+    }
+
+    .mobile-home {
+        display: block;
+        border-radius: 5px;
     }
 }
 

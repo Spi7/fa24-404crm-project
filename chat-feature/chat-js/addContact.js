@@ -1,14 +1,24 @@
 // Function to add a new contact
 let isChatOpen = false; //keep track chat UI for mobile
 // Validate email format
+function cancelAddNewContactInput(){
+    document.querySelector("#addContactEmail").value = ""
+    document.querySelector("#addContactInput").classList.add("hide")
+}
 function addNewContact() {
     let contactList = document.getElementById('contact-list');
     let noContactsMessage = document.getElementById('no-contacts-message'); // no contact found message
-    let newContactEmail = prompt("Enter contact email:"); // Prompt for email input
+    let addContactInputs=document.querySelector("#addContactInput")
+    let newContactEmail=document.querySelector("#addContactEmail").value
+
+    if (addContactInputs.classList.contains("hide")){
+        addContactInputs.classList.remove("hide")
+    } else {
 
     // Validate email format
     if (newContactEmail && validateEmail(newContactEmail)) {
-
+        addContactInputs.classList.add("hide")
+        document.querySelector("#addContactEmail").value = ""
         fetch('add_contact_backend.php', {
             method: 'POST',
             headers: {
@@ -27,25 +37,29 @@ function addNewContact() {
             if (data.status === 'success') {
                 const profilePic = '../img/user profile icon.png'; // Default profile picture
                 const nickname = data.nickname; // nickname fetch by data from ajax
-
+                const id = data.id; // nickname fetch by data from ajax
                 if (noContactsMessage) {
                     noContactsMessage.style.display = 'none'; // Hide the no contact found message
                 }
 
                 let listItem = document.createElement('li');
+                listItem.className = 'contact-item';
                 listItem.innerHTML = `
                     <img src="${profilePic}" alt="${nickname}" class="profile-pic" />
-                    <span class="contact-nickname">${nickname}</span>
+                    <div>
+                    <span class="contact-nickname">${nickname}</span><br>
                     <span class="contact-email">${newContactEmail}</span>
-                    <button class="delete-contact-btn" onclick="deleteContact('${newContactEmail}')">X</button>
+                    </div>
+                    <button class="delete-contact-btn" onclick="deleteContact(event,'${newContactEmail}')">X</button>
                 `;
                 
                 // Set onclick event to open chat
                 listItem.onclick = function() {
-                    openChat(nickname); // Open chat on click
+                    openChat(nickname, data.id, newContactEmail); // Pass the chat user's email in
                 };
                 
                 contactList.appendChild(listItem); // Add the contact to the list
+                search()
             } else {
                 alert(data.message); // Show error message if it's added unsuccessfully
             }
@@ -58,6 +72,13 @@ function addNewContact() {
         alert('Please enter a valid email address.');
     }
 }
+}
+
+// Function to update contacts array
+function updateContactsArray() {
+    const contactList = document.getElementById('contact-list');
+    contacts = Array.from(contactList.getElementsByClassName('contact-item')); // Refresh the contacts array
+}
 
 // Function to validate email format (simple regex) --> later on, fetch it from database to validate if the user exist
 function validateEmail(email) {
@@ -65,29 +86,9 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-// Function to open chat with the selected contact
-function openChat(contactName) {
-    // For desktop: Keep the existing behavior
-    document.querySelector('.chat-interface').style.display = 'flex'; // Show chat
-    document.getElementById('chat-header-text').textContent = `Chat with ${contactName}`;
-    document.getElementById('message-input').disabled = false;
-    document.querySelector('.send-btn').disabled = false;
-    document.getElementById('chat-messages').innerHTML = '';
-    if (window.innerWidth <= 768) { // Adjust the width according to your mobile breakpoint
-        isChatOpen = true;
-        // For mobile: Show chat interface and hide contact list
-        document.querySelector('.contacts').style.display = 'none'; // Hide contacts for mobile
-    }
-
-    document.getElementById('message-input').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    });
-}
 
 function goBack() {
-    if (window.innerWidth <= 768) { // Mobile behavior
+    if (window.innerWidth <= 800) { // Mobile behavior
         if (isChatOpen) {
             // If in chat, go back to contacts
             isChatOpen = false;
@@ -98,21 +99,6 @@ function goBack() {
 
 function showContacts() {
     isChatOpen = false;
-    document.querySelector('.contacts').style.display = 'block'; // Show contacts
+    document.querySelector('.contacts').style.display = 'flex'; // Show contacts
     document.querySelector('.chat-interface').style.display = 'none'; // Hide chat
-}
-
-// Function to send a message
-function sendMessage() {
-    let message = document.getElementById('message-input').value; // Get message input
-    if (message) {
-        let messageElement = document.createElement('div');
-        messageElement.className = 'chat-message sent'; // Add class for styling
-        messageElement.innerHTML = `
-            <img src="../img/user profile icon.png" alt="User Profile" class="message-profile-pic" />
-            <div class="message-content">${message}</div>
-        `; // Set message text
-        document.getElementById('chat-messages').appendChild(messageElement); // Append message to chat
-        document.getElementById('message-input').value = ''; // Clear input
-    }
 }

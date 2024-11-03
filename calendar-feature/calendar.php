@@ -12,7 +12,9 @@
     <div class="main-container">
     <header>
         <div class='image-header'>
-            <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
+            <a href="#" onclick="viewEventRedirect()">
+                <img src="../img/megaphone-activity-events-icon.png" alt="View Event">
+            </a>
         </div> 
         <button id="prev-month">Prev</button>
         <div class="current-date">
@@ -87,6 +89,12 @@
             <div class="day-box">1</div>
             <div class="day-box">2</div>
         </div>
+    </div>
+</div>
+<div id='event-modal'>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="popup-content"></p>
     </div>
 </div>
 <script src='calendar.js'></script>

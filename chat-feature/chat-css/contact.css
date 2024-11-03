@@ -164,3 +164,7 @@ body {
 #addContactInput{
     margin: 10px auto;
 }
+.searchResultImage{
+    min-width: 50%;
+    max-width: 90%;
+}

@@ -3,6 +3,7 @@ const contactList = document.getElementById('contact-list');
 let contacts = Array.from(contactList.getElementsByClassName('contact-item'));
 const contactsListEl = document.querySelector("#search-results-contacts-list")
 const messageListEl = document.querySelector("#search-results-messages-list")
+const filesListEl = document.querySelector("#search-results-files-list")
 
 // Function to filter contacts based on search input
 function search() {
@@ -48,6 +49,43 @@ function search() {
                     <span class="message-search-content">${message.CONTENT}</span>
                     </div>
                     </li>`
+                    });
+                }
+                if (json.files) {
+                    filesListEl.innerHTML = ``
+                    //figure out the blank fields in open chat tommorow
+                    json.files.forEach(file => {
+                        //if our id is the sender of the message the open id should be set to the recipient
+                        if(json.CurrUserID == file.CURRENT_USER_ID ){
+                            chatOpenId = file.CHAT_USER_ID
+                            chatDir="you to "+file.NICKNAME
+                        } else {
+                        //if our id is the recipient of the message the open id should be set to the sender
+                            chatOpenId = file.CURRENT_USER_ID
+                            chatDir=file.NICKNAME+" to you"
+                        }
+                        let imgHTML=``
+                        fileExt=file.FILE_PATH.toLowerCase().split(".")
+                        fileExt=fileExt[fileExt.length-1]
+                        if(["jpg","webp","png","jpeg"].includes(fileExt)){
+                            imgHTML=`<img class='searchResultImage' src="${file.FILE_PATH}">`
+                        }
+                        filesListEl.innerHTML += 
+                        `<li class="file-item" onclick="openChat('${file.NICKNAME}', '${chatOpenId}','${file.EMAIL}')">
+                        <div>
+                        <span class="message-nickname">${chatDir}</span><br>
+                        <span>${file.FILE_PATH}</span>
+                        ${imgHTML==''? '' : imgHTML}
+                        </div>
+                        </li>`
+{/* 
+                        <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
+                    <div>
+                    <span class="message-nickname">${chatDir}</span><br>
+                    <span class="message-search-content">${message.CONTENT}</span>
+                    </div>
+                    </li> */}
+
                     });
                 }
             })

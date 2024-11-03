@@ -25,7 +25,7 @@
             <li id="no-contacts-message">No contacts found.</li>
         <?php endif; ?>
     </ul>
-    <div id="contact-search-results">
+    <div id="contact-search-results" class="hide">
         <h3>Contacts</h3>
         <ul class="search-results-list" id="search-results-contacts-list">
 

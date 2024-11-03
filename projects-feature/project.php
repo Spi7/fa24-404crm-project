@@ -32,7 +32,7 @@
     <?php include '../sidebar.php'; ?> <!-- Including the sidebar.php file -->
     <div class="main-content">
         <div class="header">
-            <h1 id="project-title">Project Overview</h1>
+            <h1 id="project-title">Project #1 Overview</h1>
             <button class="top-right-button" onclick="location.href='project management.php'">Project management</button>
 
             <div class="progress-bar-container">

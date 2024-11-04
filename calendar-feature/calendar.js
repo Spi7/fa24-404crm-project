@@ -15,7 +15,6 @@ const monthDays = {
 
 const months = Object.keys(monthDays);
 
-document.addEventListener('DOMContentLoaded', initializeCalendar);
 document.getElementById('set-date').addEventListener('click', () => selectDate());
 document.getElementById('prev-month').addEventListener('click', () => prevMonth());
 document.getElementById('next-month').addEventListener('click', () => nextMonth());
@@ -386,6 +385,11 @@ function populateEvents(){
             let eventMonth = eventDate.getMonth();
             let eventDay = eventDate.getDate();
 
+            let firstDateOfMonth = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
+            let numPaddingDays = firstDateOfMonth.getDay() - 1;
+
+            let iterations = 0;
+
             // assume not on current month from start
             let onCurrentMonth = false;
 
@@ -393,13 +397,16 @@ function populateEvents(){
                 dayboxes.forEach(daybox => {
                     // if daybox is 1st of month, flip to true
                     // if daybox is 1st of month a second time, flip to false
-                    if(Number(daybox.textContent.slice(0,2).trim()) == 1){
-                        onCurrentMonth = !onCurrentMonth;
+                    if(iterations > numPaddingDays){
+                        onCurrentMonth = true;
+                    }
+                    if(iterations > monthDays[months[eventMonth]]+numPaddingDays){
+                        onCurrentMonth = false;
                     }
 
-                    let bothDigitsMatch = Number(daybox.textContent.slice(0,2)) == eventDay;
+                    let bothDigitsMatch = Number(daybox.textContent.slice(0,2).trim()) == eventDay;
                     let firstDigitMatch = Number(daybox.textContent.slice(0,1)) == eventDay;
-                    let isSingleDigit = daybox.textContent.slice(0,2).length == 1;
+                    let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1;
 
                     if(((bothDigitsMatch) || (firstDigitMatch && isSingleDigit)) && onCurrentMonth){
                         let eventDiv = document.createElement('a');
@@ -412,7 +419,7 @@ function populateEvents(){
                         eventDiv.addEventListener('click', () => eventPopup(event.EVENT_START, event.EVENT_END, event.EVENT_DESCRIPTION, event.TITLE, event.FREQUENCY, parseInt(event.ALL_DAY), event.COLOR));
                         daybox.appendChild(eventDiv);
                     }
-
+                    iterations = iterations + 1;
                 })
             }
         })

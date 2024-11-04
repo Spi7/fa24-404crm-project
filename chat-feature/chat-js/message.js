@@ -11,6 +11,7 @@ fileInput.addEventListener('change', function() {
 // An outscope variable to update Enter key on sending messages
 
 let sendMessageListener; //DEclare for "Pressing Enter"
+let sendButtonListener;
 let messageFetchInterval;
 // Function to open chat with the selected contact
 function openChat(contactName, contactUserId, email) {
@@ -41,9 +42,13 @@ function openChat(contactName, contactUserId, email) {
 
     // Set up event listener for sending messages
     const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button')
     // Remove existing listener if it exists
     if (sendMessageListener) {
         messageInput.removeEventListener('keypress', sendMessageListener);
+    }
+    if (sendButtonListener) {
+        sendButton.removeEventListener('click',sendButtonListener)
     }
     // Define the sendMessageListener with the current contactUserId
     sendMessageListener = function(event) {
@@ -51,14 +56,13 @@ function openChat(contactName, contactUserId, email) {
             sendMessage(contactUserId); // Use the correct user ID
         }
     };
-
+    sendButtonListener = function() {
+        sendMessage(contactUserId);
+    }
     // Add the new listener
     messageInput.addEventListener('keypress', sendMessageListener);
-
     // Set up event listener for Send button
-    document.getElementById('send-button').addEventListener('click', function() {
-        sendMessage(contactUserId);
-    });
+    sendButton.addEventListener('click', sendButtonListener)
 }
 
 function sendMessage(contactUserId) {

@@ -322,7 +322,11 @@ function populateEvents(){
                         onCurrentMonth = !onCurrentMonth;
                     }
 
-                    if(Number(daybox.textContent.slice(0,2).trim()) == eventDay && onCurrentMonth){
+                    let bothDigitsMatch = Number(daybox.textContent.slice(0,2).trim()) == eventDay;
+                    let firstDigitMatch = Number(daybox.textContent.slice(0,1).trim()) == eventDay;
+                    let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1;
+
+                    if((bothDigitsMatch) || (firstDigitMatch && isSingleDigit) && onCurrentMonth){
                         let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;

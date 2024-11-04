@@ -7,7 +7,7 @@
     <title>CRM Dashboard (404)</title> <!-- our title -->
     <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
 </head>
-<body>
+<body onload="initializeCalendar()">
     <div id="sidebar">
         <?php include '../sidebar.php'; ?>
     </div>

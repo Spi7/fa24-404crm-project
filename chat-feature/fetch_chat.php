@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $chatUserId = $_POST['chat_user_id'];
 
     // Check for existing chat history
-    $query = "SELECT CONTENT, FILE_PATH, CHAT_USER_ID FROM CHAT_HISTORY
+    $query = "SELECT CHAT_ID, CONTENT, FILE_PATH, CHAT_USER_ID FROM CHAT_HISTORY
               WHERE (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?)
               OR (CURRENT_USER_ID = ? AND CHAT_USER_ID = ?)";
 

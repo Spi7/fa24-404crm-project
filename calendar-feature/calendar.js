@@ -15,12 +15,12 @@ const monthDays = {
 
 const months = Object.keys(monthDays);
 
+document.addEventListener('DOMContentLoaded', initializeCalendar);
 document.getElementById('set-date').addEventListener('click', () => selectDate());
 document.getElementById('prev-month').addEventListener('click', () => prevMonth());
 document.getElementById('next-month').addEventListener('click', () => nextMonth());
 document.addEventListener('DOMContentLoaded', highlightCurrDay);
 document.addEventListener('DOMContentLoaded', populateEvents);
-//document.addEventListener('DOMContentLoaded', initializeCalendar);
 
 function prevMonth() {
     let monthText = document.querySelector('h1.month').textContent;
@@ -397,9 +397,9 @@ function populateEvents(){
                         onCurrentMonth = !onCurrentMonth;
                     }
 
-                    let bothDigitsMatch = Number(daybox.textContent.slice(0,2).trim()) == eventDay;
-                    let firstDigitMatch = Number(daybox.textContent.slice(0,1).trim()) == eventDay;
-                    let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1;
+                    let bothDigitsMatch = Number(daybox.textContent.slice(0,2)) == eventDay;
+                    let firstDigitMatch = Number(daybox.textContent.slice(0,1)) == eventDay;
+                    let isSingleDigit = daybox.textContent.slice(0,2).length == 1;
 
                     if(((bothDigitsMatch) || (firstDigitMatch && isSingleDigit)) && onCurrentMonth){
                         let eventDiv = document.createElement('a');

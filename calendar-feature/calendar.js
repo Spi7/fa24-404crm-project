@@ -15,6 +15,7 @@ const monthDays = {
 
 const months = Object.keys(monthDays);
 
+document.addEventListener('DOMContentLoaded', initializeCalendar);
 document.getElementById('set-date').addEventListener('click', () => selectDate());
 document.getElementById('prev-month').addEventListener('click', () => prevMonth());
 document.getElementById('next-month').addEventListener('click', () => nextMonth());

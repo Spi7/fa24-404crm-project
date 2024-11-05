@@ -28,7 +28,7 @@
     <?php include 'profile.php';?>
     <header>
         <div class="header-content">
-            <h1>Welcome, User</h1>
+            <h1>Welcome, <?php echo $user["NICKNAME"];?></h1>
             <p><?php echo date("F j, Y");?></p>
             <div class="user-profile">
                 <input type="text" placeholder="Search">
@@ -58,8 +58,8 @@
             <div class="profile-pic">
                 <button class="blue-button" onclick="window.location.href='username.php';">Change Username</button>
                 <img src="../img/user profile icon.png" alt="Profile Icon">
-                <label>User</label>
-                <label>Email:</label>
+                <label><?php echo $user["NICKNAME"];?></label>
+                <label>Email: <?php echo $user["EMAIL"];?></label>
             </div>
             <div>
                 <label>First Name</label>

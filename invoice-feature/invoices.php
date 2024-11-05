@@ -52,8 +52,8 @@ if ($invoicesInfo->num_rows != 0) {
                 <th>Recipient</th>
                 <th>Created</th>
                 <th>Due</th>
-                <th>Address</th>
                 <th>Description</th>
+                <th>Address</th>
             </tr>
             <?php
             if ($noInvoices == false) {

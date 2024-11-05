@@ -1,127 +1,155 @@
+
+/* General styles */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #d4e3fc, #ffefe5);
     color: #333;
-    height: 100vh; 
-}
-#centerWrapper{
     display: flex;
-}
-#homeButton{
-    width: 48px;
-}
-/* clear borders and outline */
-fieldset,.deleteItemButton,#addItemButton,#submitButton{
- border:none;
- outline:none;
-}
-.sidebar {
-    width: 250px; 
-    height: 100vh; 
-    background-color: #f4f4f4; 
-}
-
-h1{
-    text-align: center;
-}
-.main-container{
-    display: flex; 
-    margin: 0 auto;
-}
-/* 
-no line around fieldset
-nice delete button
-nice add button
-*/
-.headerLabel{
-    font-size: 24px;
-}
-
-fieldset{
-    padding: 2px;
-    border: none;
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 }
 
-.deleteItemButton{
-    background-color: #f44;
-    color:#fff;
-    text-align: center;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;/*align x*/
-    border-radius: 50%;
-    font-weight: 900;
+html, body {
+    height: 100%; /* Ensure the background covers the full viewport height */
+    margin: 0;
+    padding: 0;
 }
 
-.quantity{
-    width: 20%;
-}
-
-#addItemButton,#submitButton{
-    padding: 8px;
+/* Main container styling for consistency */
+.main-container {
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     border-radius: 8px;
-    background: #7af;
-    border: 1px solid;
-}
-button[type="submit"]{
-    margin: 4px auto;
-}
-.quantityInput{
-    width: 35px;
-}
-.priceInput{
-    width: 45px;
-}
-input,textarea{
-    background: #f9f9f9;
-    border: 1px solid #222;
-    outline: none;
-    padding: 8px;
-    border-radius: 8px;
-    outline: 0;
-}
-input[name="invoiceName"], input[type="email"]{
-    width: 50%;
-    margin: 2px 8px;
-}
-#baAndDateWrapper{
-    display: flex;
-    justify-content: space-between;
-}
-#invoiceBAWrapper{
-    text-align: center;
-    width: 40%;
-}
-#dateWrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-textarea[name="invoiceBA"]{
-    resize: none;
-    width: 100%;
-    height: 10vh;
-}
-#addButtonAndTotal{
-    margin: 0 auto;
-}
-.descriptionInput{
-    width: 25%;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 
-.errorText{
-    color: #f44;
+#homeButton{
+    width: 48px;
 }
-#userNotFoundErr{
-    padding-left: 16px;
+
+/* Form field labels */
+.headerLabel {
     font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
 }
-.hide{
+
+/* Input and textarea fields */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+button, .button {
+    display: inline-block;
+    width: auto;
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    box-shadow: none; 
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007bff;
+    text-align: center;
+}
+
+.button:hover, button:hover {
+    background-color: #0056b3;
+}
+
+/* Specific button styles */
+#addItemButton {
+    background-color: #007bff;
+}
+
+#submitButton {
+    background-color: #28a745; 
+}
+
+/* Styling for View Invoices link to look like a button */
+#viewInvoicesLink {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Invoice item section for a coordinated appearance */
+fieldset.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+/* Input fields inside the invoice item section */
+.quantityInput, .priceInput {
+    width: 60px;
+    text-align: center;
+}
+
+.descriptionInput {
+    flex: 2; /* Takes up remaining space */
+    padding: 8px;
+}
+
+/* Delete button styling */
+.deleteItemButton {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;  
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 0;
+}
+
+#viewInvoicesLink {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 30px; /* Increased margin for more space */
+    display: inline-block;
+    text-align: center;
+}
+
+/* Error message styling */
+.errorText {
+    color: #d9534f;
+    font-size: 14px;
+}
+
+.hide {
     display: none;
 }
-#submitStatus{
-    text-align: center;
-}
+

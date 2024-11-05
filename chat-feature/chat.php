@@ -18,9 +18,9 @@ if ($sessionToken) {
         $userId = $userData['USER_ID'];
 
         // Fetch contacts for the logged-in user
-        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL 
+        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL, CONTACTS.CONTACT_USER_ID 
                          FROM CONTACTS 
-                         WHERE CONTACTS.USER_ID = ?";
+                         WHERE CONTACTS.CURRENT_USER_ID = ?";
         $contactStmt = $mysqli->prepare($contactQuery);
         $contactStmt->bind_param("i", $userId);
         $contactStmt->execute();
@@ -41,28 +41,46 @@ if ($sessionToken) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Server</title>
-    <link rel="stylesheet" href="chat.css">
-    <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
-    <script src="deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
+    <link rel="stylesheet" href="chat-css/contact.css">
+    <link rel="stylesheet" href="chat-css/message.css">
+    <script src="chat-js/addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <script src="chat-js/deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
+    <script src="chat-js/searchContact.js" defer></script> <!-- Include the search js file -->
+    <script src="chat-js/message.js" defer></script> <!-- Include the search js file -->
     <script>
+        var openChatEmail=""
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
-        function loadMobileCSS() {
-            var sidebar = document.querySelector('.sidebar');
-            if (window.innerWidth <= 600) {
-                // Hide the sidebar for mobile screens
-                if (sidebar) {
-                    sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
-                }
-                document.querySelector('.chat-interface').style.display = 'none';
+        function loadMobileCSS(load) {
+        var sidebar = document.querySelector('.sidebar');
+        var chatInterface = document.querySelector('.chat-interface');
+        var cList = document.querySelector('.contacts');
+        
+        if (window.innerWidth <= 800) {
+            // Hide the sidebar and chat interface for mobile screens
+            if (sidebar) {
+                sidebar.style.display = 'none';
             }
-            else {
+            if(chatInterface.style.display!='none' && cList.style.display!='none'){
+                chatInterface.style.display = 'none';
+
+            }
+        } else {
+            // Show the sidebar and chat interface for larger screens
+            if (sidebar) {
                 sidebar.style.display = 'block';
-                document.querySelector('.chat-interface').style.display = 'flex';
+            }
+            if (chatInterface) {
+                chatInterface.style.display = 'flex';
+            }
+            if (cList) {
+                cList.style.display = 'flex';
             }
         }
-        // Run this when the page loads
-        window.onload = loadMobileCSS;
-        window.onresize = loadMobileCSS;
+    }
+
+    // Run this when the page loads
+    window.addEventListener('load', loadMobileCSS);
+    window.addEventListener('resize', loadMobileCSS);
     </script>
 </head>
 <body>
@@ -71,48 +89,11 @@ if ($sessionToken) {
         <?php include '../sidebar.php'; ?>
 
         <!-- Contacts Section -->
-        <div class="contacts">
-            <div class="mobile-back-btn">
-                <button type="button" onclick="window.history.back()">← Back</button>
-            </div>
-
-            <h3>Contacts</h3>
-            <ul id="contact-list">
-                <?php if (isset($contacts) && $contacts->num_rows > 0): ?>
-                    <?php while ($contact = $contacts->fetch_assoc()): ?>
-                        <li onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>')">
-                            <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
-                            <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span>
-                            <span class="contact-email"><?= htmlspecialchars($contact['CONTACT_EMAIL']) ?></span>
-                            <button class="delete-contact-btn" onclick="deleteContact('<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">X</button>
-                        </li>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <li id="no-contacts-message">No contacts found.</li>
-                <?php endif; ?>
-            </ul>
-            <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
-        </div>
+        <?php include 'contact.php'; ?>
 
         <!-- Chat Section -->
-        <div class="chat-interface">
-            <div class="chat-header">
-                <div class="mobile-back-btn">
-                    <button type="button" onclick="goBack()">← Back</button>
-                </div>
-                <h3 id="chat-header-text">Select a contact to start chatting</h3>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <!-- Chat messages will appear here dynamically -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="message-input" placeholder="Type a message" disabled>
-                <button class="attach-btn" onclick="attachFile()">
-                    <img src="../img/attachment.png" alt="Attach" class="attach-icon"> <!-- Add attachment icon -->
-                </button>
-                <button class="send-btn" onclick="sendMessage()" disabled>Send</button>
-            </div>
-        </div>
+        <?php include 'chat_interface.php'; ?>
+
     </div>
 </body>
 </html>

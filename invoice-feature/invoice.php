@@ -24,7 +24,7 @@ if (count($_POST) > 0) {
     $senderID = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN='$_COOKIE[SESSION_TOKEN]'")->fetch_assoc()["USER_ID"];
     //get dest id - already checked there is a row before
     $destUserId = $userEmailQuery->fetch_assoc()["USER_ID"];
-    $mysqli->query(query: "INSERT INTO INVOICES VALUES ('$invoiceID','$senderID','$destUserId',now(),'$_POST[invoiceDueDate]','$_POST[invoiceBA]','$_POST[invoiceName]')");
+    $mysqli->query(query: "INSERT INTO INVOICES VALUES ('$invoiceID','$senderID','$destUserId',now(),'$_POST[invoiceDueDate]','$_POST[invoiceName]','$_POST[invoiceBA]')");
     for ($i = 0; $i < count(value: $quantities); $i++) {
         $invoiceItemID = (int) $mysqli->query("SELECT MAX(ITEM_ID) as max FROM INVOICE_ITEMS")->fetch_assoc()["max"] + 1;
         $mysqli->query("INSERT INTO INVOICE_ITEMS VALUES ('$invoiceItemID','$invoiceID','$quantities[$i]','$prices[$i]','$descriptions[$i]')");
@@ -47,9 +47,8 @@ if (count($_POST) > 0) {
 </head>
 
 <body>
-<a href="../home-page/home.php">
+    <a href="../home-page/home.php">
         <img id="homeButton" src="../img/home.png" alt="Home">
-        <p>Home</p>
     </a>
     <div id="centerWrapper">
     <div class="main-container">
@@ -96,7 +95,7 @@ if (count($_POST) > 0) {
         </form>
     </div>
     </div>
-    <a href="./invoices.php">View Invoices</a>
+    <a href="./invoices.php" class="button" id="viewInvoicesLink">View Invoices</a>
     <template id="itemTemplate">
         <fieldset class="item">
             <!-- new inputs will all have the same names quantity/price/description this will result to the server receiving an array of values for each -->

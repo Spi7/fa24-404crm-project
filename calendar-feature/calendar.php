@@ -7,12 +7,17 @@
     <title>CRM Dashboard (404)</title> <!-- our title -->
     <link rel="stylesheet" href="calendar.css"> <!-- Link to external CSS file -->
 </head>
-<body>
-    <?php include '../sidebar.php'; ?>
+<body onload="initializeCalendar()">
+    <div id="sidebar">
+        <?php include '../sidebar.php'; ?>
+    </div>
     <div class="main-container">
     <header>
+        <a href="../home-page/home.php" class='mobile-home'>Home</a>
         <div class='image-header'>
-            <img src="../img/sunny cloud.webp" alt="Sunny Cloud">
+            <a href="#" onclick="viewEventRedirect()">
+                <img src="../img/megaphone-activity-events-icon.png" alt="View Event">
+            </a>
         </div> 
         <button id="prev-month">Prev</button>
         <div class="current-date">
@@ -87,6 +92,12 @@
             <div class="day-box">1</div>
             <div class="day-box">2</div>
         </div>
+    </div>
+</div>
+<div id='event-modal'>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="popup-content"></p>
     </div>
 </div>
 <script src='calendar.js'></script>

@@ -22,7 +22,7 @@
         </header>
         <div class="form-container">
             <div class="form-title"> Schedule An Event</div>
-            <form action="scheduler_invite.php" method="post" id="event-form">
+            <form action="scheduler_send_invite.php" method="post" id="event-form">
                 <div class="form-group">
                     <label for="select-event">Select Event</label>
                     <select id="select-event" name="select-event">

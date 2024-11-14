@@ -25,29 +25,46 @@
         <!-- Client List Section -->
         <div class="client-list">
             <h2>Clients</h2>
-            <!-- Example Client Card -->
-            <div class="client-card">
-                <h3>Client Name</h3>
-                <p><strong>Goals:</strong> Improve marketing strategy, Increase revenue</p>
-                <p><strong>Values:</strong> Customer satisfaction, Innovation</p>
-                <div class="actions">
-                    <button onclick="window.location.href='myscheduler.html'">Schedule Meeting</button>
-                    <button onclick="window.location.href='invoice.html'">Send Invoice</button>
-                </div>
-            </div>
-
-            <div class="client-card">
-                <h3>Another Client</h3>
-                <p><strong>Goals:</strong> Enhance product quality, Expand market reach</p>
-                <p><strong>Values:</strong> Sustainability, Integrity</p>
-                <div class="actions">
-                    <button onclick="window.location.href='myscheduler.html'">Schedule Meeting</button>
-                    <button onclick="window.location.href='invoice.html'">Send Invoice</button>
-                </div>
-            </div>
-            <!-- More client cards can go here -->
+            <!-- Client cards will be populated here dynamically -->
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchClients();
+        });
+
+        function fetchClients() {
+            fetch('get-clients.php')
+                .then(response => response.json())
+                .then(data => {
+                    const clientList = document.querySelector('.client-list');
+                    clientList.innerHTML = ''; // Clear any existing content
+
+                    if (data.status !== "success" || !Array.isArray(data.clients)) {
+                        console.error("Expected an array but received:", data);
+                        return;
+                    }
+
+                    data.clients.forEach(client => {
+                        const clientCard = document.createElement('div');
+                        clientCard.classList.add('client-card');
+
+                        clientCard.innerHTML = `
+                            <h3>${client.name}</h3>
+                            <p><strong>Goals:</strong> ${client.goals}</p>
+                            <p><strong>Values:</strong> ${client.values}</p>
+                            <div class="actions">
+                                <button onclick="window.location.href='#'">Schedule Meeting</button>
+                                <button onclick="window.location.href='../invoice-feature/invoice.php?clientId=${client.user_id}'">Send Invoice</button>
+                            </div>
+                        `;
+                        clientList.appendChild(clientCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching clients:', error));
+        }   
+    </script>
 
 </body>
 </html>

@@ -5,8 +5,8 @@
     fetchUserData();
 
     $user_id = $user['USER_ID'];
-    $recipient_id = $_POST['RECIPIENT_ID'];
-    $event_id = $_POST['EVENT_ID']
+    $recipient_id = $_POST['select-contact'];
+    $event_id = $_POST['select-event']
     //get max id , +1 for next valid id
     $query = "SELECT MAX(INVITE_ID) as max FROM SCHEDULER_INVITES";
     $result = $mysqli->query($query);

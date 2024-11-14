@@ -116,13 +116,30 @@ header {
     height: auto;
 }
 
-.dashboard-item.chat a:focus {
-    outline: 2px solid #FF5733; /* Custom color */
-    outline-offset: 2px;
-    /* Optional: Add box-shadow to enhance focus visibility */
-    box-shadow: 0 0 5px rgba(255, 87, 51, 0.5);
+.client-dashboard-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px; 
 }
 
-.dashboard-item.chat a {
-    text-decoration: none; /* Remove the underline */
+.client-dashboard-button button {
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.client-dashboard-button button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.client-dashboard-button button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 4px;
 }

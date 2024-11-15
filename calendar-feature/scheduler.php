@@ -58,13 +58,13 @@
                     $user_id = $user['USER_ID'];
 
                     // Fetch events from the database
-                    $query = "SELECT CONTACT_ID FROM CONTACTS WHERE CURRENT_USER_ID='$user_id'";
+                    $query = "SELECT CONTACT_ID, CONTACT_USER_ID FROM CONTACTS WHERE CURRENT_USER_ID='$user_id'";
                     $result = $mysqli->query($query);
 
                     // Check if the query executed successfully
                     if ($result && $result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='{$row['CONTACT_ID']}'>{$row['CONTACT_ID']}</option>";
+                            echo "<option value='{$row['CONTACT_ID']}'>{$row['CONTACT_USER_ID']}</option>";
                         }
                     } else {
                         echo "<option value=''>No contacts found</option>";

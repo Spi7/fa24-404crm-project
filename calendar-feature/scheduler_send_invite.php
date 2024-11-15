@@ -14,5 +14,8 @@
     //insert the invite into the table
     $query = "INSERT INTO SCHEDULER_INVITES (INVITE_ID, EVENT_ID, SENDER_ID, RECIPIENT_ID) VALUES ('$invite_id', '$event_id', '$user_id', '$recipient_id')";
     $mysqli->query($query);
+    //redirect to calendar and exit
+    header('Location: calendar.php');
+    exit();
 
 ?>

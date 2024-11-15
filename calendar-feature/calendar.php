@@ -31,6 +31,9 @@
             <a href="addevent.html">
                 <img src="../img/add icon.png" alt="Add Note">
             </a>
+            <a href="scheduler.php">
+                <img src="../img/weekly.png" alt="Scheduler">
+            </a>
         </div> 
     </header>
     <div>

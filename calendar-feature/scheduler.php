@@ -54,12 +54,7 @@
                     <label for="select-contact">Select Contact</label>
                     <select id="select-contact" name="select-contact">
                     <?php
-                    // Include the database connection
-                    include('../db_connection.php');
-                    connectDB();
-
                     // get user_id to fetch only their events
-                    fetchUserData();
                     $user_id = $user['USER_ID'];
 
                     // Fetch events from the database

@@ -12,11 +12,7 @@ if (!$mysqli) {
 }
 
 // Query to fetch clients with relevant information from both CLIENT and ACCOUNTS tables
-$clientQuery = $mysqli->prepare("
-    SELECT C.CLIENT_ID, A.USER_ID, A.FIRST_NAME, A.LAST_NAME, A.CLIENT_VALUES, A.GOALS, C.COMPANY_NAME, C.INDUSTRY, C.NOTES
-    FROM CLIENT C
-    JOIN ACCOUNTS A ON C.USER_ID = A.USER_ID
-");
+$clientQuery = $mysqli->prepare("SELECT * FROM CLIENT;");
 if (!$clientQuery) {
     echo json_encode(['status' => 'error', 'message' => 'Failed to prepare client query', 'error' => $mysqli->error]);
     exit();
@@ -29,12 +25,12 @@ $clients = [];
 while ($client = $clientResult->fetch_assoc()) {
     $clients[] = [
         'client_id' => $client['CLIENT_ID'],
-        'user_id' => $client['USER_ID'],
-        'name' => $client['FIRST_NAME'] . ' ' . $client['LAST_NAME'],
+//        'user_id' => $client['USER_ID'],
+        'affiliation' => $client['AFFILIATION'],
+        'company_name' => $client['COMPANY_NAME'],
         'goals' => $client['GOALS'],
-        'values' => $client['CLIENT_VALUES'],
-        'company' => $client['COMPANY_NAME'],
-        'industry' => $client['INDUSTRY'],
+        'values' => $client['COMPANY_VALUES'],
+        'invoice_history' => $client['INVOICE_HISTORY'],
         'notes' => $client['NOTES']
     ];
 }

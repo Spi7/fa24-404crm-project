@@ -54,6 +54,10 @@
             </div>
         </div>
 
+        <div class="client-dashboard-button">
+            <button onclick="navigateToClientDashboard()">Go to Client Dashboard</button>
+        </div>
+
         <!-- Optional: You can place the 404 image or other content here -->
         <div class="logo-404">
             <img src="../img/404 not found.png" alt="404 Not Found">
@@ -85,5 +89,9 @@
 
     function navigateToInvoice() {
         window.location.href = "../invoice-feature/invoice.php";
+    }
+
+    function navigateToClientDashboard() {
+        window.location.href = "../dashboard/dashboard.php";
     }
 </script>

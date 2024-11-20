@@ -61,7 +61,7 @@
                                 <p><strong>Other Details:</strong> ${client.notes}</p>
                             </div>
                             <div class="actions">
-                                <button onclick="window.location.href='#'">Schedule Meeting</button>
+                                <button onclick="window.location.href='../calendar-feature/schedule.php?clientId=${client.user_id}'">Schedule Meeting</button>
                                 <button onclick="window.location.href='../invoice-feature/invoice.php?clientId=${client.user_id}'">Send Invoice</button>
                             </div>
                         `;

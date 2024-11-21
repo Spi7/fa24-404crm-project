@@ -2,14 +2,14 @@ let notificationFetchInterval;
 
 // Function to toggle the notifications panel
 function toggleNotifications() {
-    var notificationArea = document.getElementById("notificationArea");
+    var notificationModal = document.getElementById("notificationModal");
 
-    // Toggle the notification area visibility
-    if (notificationArea.style.display === "none" || notificationArea.style.display === "") {
-        notificationArea.style.display = "block";
-        fetchNotifications();  // Show latest notifications when the panel is opened
+    // Toggle the modal visibility
+    if (notificationModal.style.display === "none" || notificationModal.style.display === "") {
+        notificationModal.style.display = "block";
+        fetchNotifications();  // Show latest notifications when the modal is opened
     } else {
-        notificationArea.style.display = "none";
+        notificationModal.style.display = "none";
     }
 }
 
@@ -30,7 +30,7 @@ function fetchNotifications() {
     .then(notifications => {
         console.log('Fetched notifications:', notifications); 
         // Only update the notifications list when the panel is open
-        const notificationArea = document.getElementById("notificationArea");
+        const notificationArea = document.getElementById("notificationModal");
         if (notificationArea.style.display === "block") {
             updateNotifications(notifications);  // Update the UI with the notifications
         }
@@ -67,11 +67,11 @@ function updateNotifications(notifications) {
 
             let message = '';
             if (notification.NOTIFICATION_TYPE === 'CHATS') {
-                message = "You received a new message!";
+                message = `You received a message from ${notification.sender_email}`;
             } else if (notification.NOTIFICATION_TYPE === 'CALENDARS') {
-                message = "You have a new calendar event scheduled.";
+                message = `You have a new event scheduled with ${notification.sender_email}`;
             } else if (notification.NOTIFICATION_TYPE === 'INVOICES') {
-                message = "You have a new invoice!";
+                message = `You have a new invoice from ${notification.sender_email}`;
             } else if (notification.NOTIFICATION_TYPE === 'PROJECTS') {
                 message = "You have been assigned to a new project!";
             }
@@ -89,6 +89,13 @@ function updateNotifications(notifications) {
         console.error('Notifications are not in the correct format:', notifications);
     }
 }
+
+
+// When the page loads, ensure the modal is hidden
+document.addEventListener("DOMContentLoaded", function() {
+    var notificationModal = document.getElementById("notificationModal");
+    notificationModal.style.display = "none"; // Hide modal by default
+});
 
 // Start fetching notifications when the page loads
 startFetchingNotifications();

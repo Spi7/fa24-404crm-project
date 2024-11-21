@@ -35,12 +35,17 @@
 
     <main>
          <!-- Display Notification Area -->
-         <div class="notification-area" id="notificationArea">
-            <h2>Notifications</h2>
-            <ul id="notificationsList">
-                <!-- Notifications will be dynamically added here by JavaScript -->
-            </ul>
+        <!-- Modal for notifications -->
+        <div class="modal" id="notificationModal">
+            <div class="modal-content">
+                <span class="close" onclick="toggleNotifications()">&times;</span>
+                <h2>Notifications</h2>
+                <ul id="notificationsList">
+                    <!-- Notifications will be dynamically added here by JavaScript -->
+                </ul>
+            </div>
         </div>
+
         
         <div class="dashboard-grid"> <!-- representing different functional block for main board -->
             <!-- Calendar -->

@@ -11,12 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes pg responsive, adjust its width based on device's secreen size -->
     <title>CRM Dashboard (404)</title> <!-- our title --> 
     <link rel="stylesheet" href="homestyles.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="inbox.css">
 </head>
 <body>
     <header> <!-- define the top section of the web page, WEBLOGO?/Title/Navigation page -->
         <div class="header-content">
             <h1>Welcome, <?php echo $user["NICKNAME"]; ?></h1> <!-- in the future, we can do dynamic change of "User" to like the person's user name who logined -->
             <p><?php echo date("F j, Y"); ?></p> <!-- Display the current date -->
+            <!-- Inbox -->
+            <div class="inbox-icon">
+                <img src="../img/inbox-icon.png" alt="Inbox" onclick="toggleNotifications()">
+            </div>
             <div class="user-profile">
                 <input type="text" placeholder="Search"> <!-- Search bar input field -->
                 <div class="profile-icon">
@@ -28,6 +33,50 @@
     </header>
 
     <main>
+         <!-- Display Notification Area -->
+        <div class="notification-area" id="notificationArea">
+            <h2>Notifications</h2>
+            <ul id="notificationsList">
+                <!-- Notifications will be dynamically added here -->
+                <?php
+                    foreach ($notifications as $notification) {
+                        // Select the icon based on the type of notification
+                        $icon = "";
+                        switch ($notification['type']) {
+                            case 'chat':
+                                $icon = "../img/chat-icon.png"; // Message icon
+                                break;
+                            case 'invoice':
+                                $icon = "../img/invoice-icon.png"; // Invoice icon
+                                break;
+                            case 'calendar':
+                                $icon = "../img/calendar-icon.png"; // Meeting invite icon
+                                break;
+                            case 'project':
+                                $icon = "../img/project-icon.png"; // Project icon
+                                break;
+                            default: 
+                                $icon = "../img/404 not found Abous Us.jpg";
+                        }
+
+                        echo '<li>';
+                        echo '<img src="' . $icon . '" alt="' . $notification['type'] . '">'; // Display the corresponding icon
+                        /*
+                            modify the line below so that it display something like:
+                                a) user A send a message to you
+                                b) you receive a schedule meeting from user email?
+                                c) invoice etc
+                        */
+
+                        echo '<p>' . $notification['content'] . '</p>'; // Display the notification content
+                        //
+                        echo '<p>' . $notification['timestamp'] . '</p>'; // Display the timestamp (optional)
+                        echo '</li>';
+                    }
+                    ?>
+            </ul>
+        </div>
+        
         <div class="dashboard-grid"> <!-- representing different functional block for main board -->
             <!-- Calendar -->
             <div class="dashboard-item calendar" onclick="navigateToCalendar()">

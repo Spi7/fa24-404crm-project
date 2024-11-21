@@ -1,0 +1,11 @@
+.inbox-icon img {
+    width: 2vw;  /* Responsive width */
+    height: 2vw; /* Responsive height */
+    max-width: 50px;  
+    max-height: 50px;
+    cursor: pointer;
+}
+
+.notification-area {
+    display: none;
+}

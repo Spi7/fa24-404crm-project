@@ -1,5 +1,6 @@
 <?php
     include_once('../db_connection.php');
+    include_once('../notifications.php');
     connectDB();
     fetchUserData();
 ?>
@@ -34,46 +35,10 @@
 
     <main>
          <!-- Display Notification Area -->
-        <div class="notification-area" id="notificationArea">
+         <div class="notification-area" id="notificationArea">
             <h2>Notifications</h2>
             <ul id="notificationsList">
-                <!-- Notifications will be dynamically added here -->
-                <?php
-                    foreach ($notifications as $notification) {
-                        // Select the icon based on the type of notification
-                        $icon = "";
-                        switch ($notification['type']) {
-                            case 'chat':
-                                $icon = "../img/chat-icon.png"; // Message icon
-                                break;
-                            case 'invoice':
-                                $icon = "../img/invoice-icon.png"; // Invoice icon
-                                break;
-                            case 'calendar':
-                                $icon = "../img/calendar-icon.png"; // Meeting invite icon
-                                break;
-                            case 'project':
-                                $icon = "../img/project-icon.png"; // Project icon
-                                break;
-                            default: 
-                                $icon = "../img/404 not found Abous Us.jpg";
-                        }
-
-                        echo '<li>';
-                        echo '<img src="' . $icon . '" alt="' . $notification['type'] . '">'; // Display the corresponding icon
-                        /*
-                            modify the line below so that it display something like:
-                                a) user A send a message to you
-                                b) you receive a schedule meeting from user email?
-                                c) invoice etc
-                        */
-
-                        echo '<p>' . $notification['content'] . '</p>'; // Display the notification content
-                        //
-                        echo '<p>' . $notification['timestamp'] . '</p>'; // Display the timestamp (optional)
-                        echo '</li>';
-                    }
-                    ?>
+                <!-- Notifications will be dynamically added here by JavaScript -->
             </ul>
         </div>
         
@@ -113,6 +78,9 @@
         </div>
         <button onclick="logout()">Log out</button>
     </main>
+    
+    <!-- Include inbox.js -->
+    <script src="inbox.js"></script>
     <script>
         function logout(){
             document.cookie=""

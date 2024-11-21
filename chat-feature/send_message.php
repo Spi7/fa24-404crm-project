@@ -3,6 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 'On');
 set_error_handler("var_dump");
 include '../db_connection.php';
+include '../notifications.php';
 connectDB();
 fetchUserData();
 
@@ -46,6 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iiss", $currentUserId, $chatUserId, $content, $filePath);
 
         if ($stmt->execute()) {
+            // Get the last inserted message ID
+            $chatHistoryId = $stmt->insert_id;
+            // Call createNotification() to insert a notification for the recipient
+            createNotification($currentUserId, $chatUserId, 'CHATS', $chatHistoryId);
+
             // Return response including the file path and image status
             echo json_encode([
                 "status" => "success", 

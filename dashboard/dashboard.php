@@ -60,8 +60,9 @@
                                 <p><strong>Other Details:</strong> ${client.notes}</p>
                             </div>
                             <div class="actions">
-                                <button onclick="window.location.href='../calendar-feature/schedule.php?clientId=${client.user_id}'">Schedule Meeting</button>
-                                <button onclick="window.location.href='../invoice-feature/invoice.php?clientId=${client.user_id}'">Send Invoice</button>
+                                <button onclick="window.location.href='../calendar-feature/schedule.php?clientId=${client.client_id}'">Schedule Meeting</button>
+                                <button onclick="window.location.href='../invoice-feature/invoice.php?clientId=${client.client_id}'">Send Invoice</button>
+                                <button onclick="window.location.href='../invoice-feature/invoices.php?clientId=${client.client_id}'">Invoices</button>
                             </div>
                         `;
                         // //Event listener to call expandCard when clicked

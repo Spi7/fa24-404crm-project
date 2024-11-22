@@ -32,6 +32,16 @@ if (count($_POST) > 0) {
     echo json_encode(array("success" => "true"));
     exit();//if post dont respond with page
 }
+$emailOfClient=false;//we check ==false later on in the html and initialize with false bc get_results will be false on failure
+if(isset($_GET["clientId"])){
+    include "../db_connection.php";
+    connectDB();
+    $query = "SELECT EMAIL FROM ACCOUNTS WHERE USER_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $_GET["clientId"]);
+    $stmt->execute();
+    $emailOfClient = $stmt->get_result()->fetch_column(0);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +66,8 @@ if (count($_POST) > 0) {
             <h1>Create a New Invoice</h1>
             <label class="headerLabel">
                 Invoice Email Address<br>
-                <input name="email" type="email" placeholder="recipient@client.org">
+                <!-- php statement -> if email was fetched set it as the value and make the feild readonly -->
+                <input name="email" type="email" placeholder="recipient@client.org" <?php echo ($emailOfClient!=false) ? 'value="'.$emailOfClient.'" readonly' : "" ?>>
                 <br>
                 <span id="userNotFoundErr" class="errorText hide">user not found<br></span>
 

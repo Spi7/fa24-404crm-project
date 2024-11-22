@@ -5,28 +5,38 @@ set_error_handler("var_dump");
 
 include "../db_connection.php";
 connectDB();
-$userIDQuery = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN='$_COOKIE[SESSION_TOKEN]'");
+$stmt = $mysqli->prepare("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN=?");
+$stmt->bind_param("s",$_COOKIE["SESSION_TOKEN"]);
+$stmt->execute();
+$userIDQuery=$stmt->get_result();
 if ($userIDQuery->num_rows == 0) {
     die("error session token not found");
 }
-$userID = $userIDQuery->fetch_assoc()["USER_ID"];
+$userID = $userIDQuery->fetch_column(0);
 //get dest id - already checked there is a row before
 if(!isset($_GET["clientId"])){
-    $invoices = $mysqli->query("SELECT * FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
+    $stmt = $mysqli->prepare("SELECT * FROM INVOICES WHERE SENDER=? or RECIPIENT=?");
+    $stmt->bind_param("ss",$userID,$userID);
+    $stmt->execute();
+    $invoices=$stmt->get_result();
 } else {
     // convert to int to prevent sql injection - userID is also trusted bc it comes from our db and code and is not a user input
     // a wacky - possibly attack - string will just turn into a 0
     $filterID=(int)$_GET["clientId"];
-    $invoices = $mysqli->query("SELECT * FROM INVOICES WHERE (SENDER='$userID' AND RECIPIENT='$filterID') or (RECIPIENT='$userID' and SENDER='$userID')");
+    $stmt = $mysqli->prepare("SELECT * FROM INVOICES WHERE (SENDER=? AND RECIPIENT=?) or (RECIPIENT=? and SENDER=?)");
+    $stmt->bind_param("ssss",$userID,$filterID,$userID,$filterID);
+    $stmt->execute();
+    $invoices=$stmt->get_result();
 }
 $invoicesInfo = [];
 $invoiceIDs = [];
 while ($invoice = $invoices->fetch_assoc()) {
     array_push($invoicesInfo,$invoice);
-    array_push($invoiceIDs, $invoice["INVOICE_ID"]);
+    array_push($invoiceIDs, '"'.$invoice["INVOICE_ID"].'"');
 }
 $noInvoices = $invoices->num_rows == 0;
 if (!$noInvoices) {
+    // this was giving trouble when converting to a prepared statement and theres also no point as it is server generated ids from the db so there is no attack surface
     $invoiceItems = $mysqli->query("SELECT * FROM INVOICE_ITEMS WHERE INVOICE_ID IN (" . implode(',', $invoiceIDs) . ")");
 }
 

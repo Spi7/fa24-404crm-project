@@ -103,3 +103,25 @@
     font-size: 0.9em;
     color: #888;
 }
+
+.accept {
+    background-color: green;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    margin: 5px;
+}
+
+.reject {
+    background-color: red;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    margin: 5px;
+}

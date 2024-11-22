@@ -7,10 +7,10 @@ $userId = $user["USER_ID"];  // Get the logged-in user's ID
 
 // Query to fetch notifications along with the sender's email from the ACCOUNTS table
 $query = "
-    SELECT n.*, a.EMAIL AS sender_email 
+    SELECT n.*, a.EMAIL AS sender_email
     FROM NOTIFICATIONS n
-    JOIN ACCOUNTS a ON n.SENDER_ID = a.USER_ID 
-    WHERE n.RECIPIENT_ID = ? 
+    JOIN ACCOUNTS a ON n.SENDER_ID = a.USER_ID
+    WHERE n.RECIPIENT_ID = ?
     ORDER BY n.CREATED_AT DESC
 ";
 

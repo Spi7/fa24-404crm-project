@@ -39,6 +39,27 @@ function fetchNotifications() {
 }
 
 
+function handleSchedulerInvite(notificationId, action) {
+    let phpFile = '';
+    if (action === 'accept'){
+        phpFile = 'accept_scheduler_invite.php'
+    }
+    else if (action === 'reject'){
+        phpFile = 'reject_scheduler_invite.php'
+    }
+
+    // Send an AJAX POST request to the PHP file
+    fetch(phpFile, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `notification-id=${notificationId}`
+    })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
 
 // Function to update the notifications list in the UI
 function updateNotifications(notifications) {
@@ -81,7 +102,17 @@ function updateNotifications(notifications) {
             li.innerHTML = `<img src="${icon}" alt="${notification.NOTIFICATION_TYPE}">
                             <p>${message}</p>
                             <p>${new Date(notification.CREATED_AT).toLocaleString()}</p>`;
+            if (notification.NOTIFICATION_TYPE === 'CALENDARS'){
+                li.innerHTML += `<button class="accept" data-id="${notification.NOTIFICATION_ID}">Accept</button>
+                                 <button class="reject" data-id="${notification.NOTIFICATION_ID}">Reject</button>`;
 
+                li.querySelector('.accept').addEventListener('click', function () {
+                    handleSchedulerInvite(notification.NOTIFICATION_ID, 'accept');
+                });
+                li.querySelector('.reject').addEventListener('click', function () {
+                    handleSchedulerInvite(notification.NOTIFICATION_ID, 'reject');
+                });
+            }
             // Append the notification to the list
             notificationsList.appendChild(li);
         });

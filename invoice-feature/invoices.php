@@ -11,15 +11,22 @@ if ($userIDQuery->num_rows == 0) {
 }
 $userID = $userIDQuery->fetch_assoc()["USER_ID"];
 //get dest id - already checked there is a row before
-$invoices = $mysqli->query("SELECT INVOICE_ID FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
-$invoiceIDs = [];
-while ($invoiceID = $invoices->fetch_column(0)) {
-    array_push($invoiceIDs, $invoiceID);
+if(!isset($_GET["clientId"])){
+    $invoices = $mysqli->query("SELECT * FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
+} else {
+    // convert to int to prevent sql injection - userID is also trusted bc it comes from our db and code and is not a user input
+    // a wacky - possibly attack - string will just turn into a 0
+    $filterID=(int)$_GET["clientId"];
+    $invoices = $mysqli->query("SELECT * FROM INVOICES WHERE (SENDER='$userID' AND RECIPIENT='$filterID') or (RECIPIENT='$userID' and SENDER='$userID')");
 }
-$noInvoices = true;
-$invoicesInfo = $mysqli->query("SELECT * FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
-if ($invoicesInfo->num_rows != 0) {
-    $noInvoices = false;
+$invoicesInfo = [];
+$invoiceIDs = [];
+while ($invoice = $invoices->fetch_assoc()) {
+    array_push($invoicesInfo,$invoice);
+    array_push($invoiceIDs, $invoice["INVOICE_ID"]);
+}
+$noInvoices = $invoices->num_rows == 0;
+if (!$noInvoices) {
     $invoiceItems = $mysqli->query("SELECT * FROM INVOICE_ITEMS WHERE INVOICE_ID IN (" . implode(',', $invoiceIDs) . ")");
 }
 
@@ -56,14 +63,12 @@ if ($invoicesInfo->num_rows != 0) {
                 <th>Address</th>
             </tr>
             <?php
-            if ($noInvoices == false) {
-                while ($row = $invoicesInfo->fetch_row()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>" . $value . "</td>";
-                    }
-                    echo "</tr>";
+            foreach ($invoicesInfo as $row){
+                echo "<tr>";
+                foreach ($row as $value) {
+                    echo "<td>" . $value . "</td>";
                 }
+                echo "</tr>";
             }
             ?>
         </table>

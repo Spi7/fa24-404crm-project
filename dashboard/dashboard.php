@@ -50,7 +50,6 @@
                     data.clients.forEach(client => {
                         const clientCard = document.createElement('div');
                         clientCard.classList.add('client-card');
-
                         clientCard.innerHTML = `
                             <h3>${client.company_name}</h3>
                             <p><strong>Goals:</strong> ${client.goals}</p>

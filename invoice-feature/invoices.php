@@ -20,8 +20,6 @@ if(!isset($_GET["clientId"])){
     $stmt->execute();
     $invoices=$stmt->get_result();
 } else {
-    // convert to int to prevent sql injection - userID is also trusted bc it comes from our db and code and is not a user input
-    // a wacky - possibly attack - string will just turn into a 0
     $filterID=(int)$_GET["clientId"];
     $stmt = $mysqli->prepare("SELECT * FROM INVOICES WHERE (SENDER=? AND RECIPIENT=?) or (RECIPIENT=? and SENDER=?)");
     $stmt->bind_param("ssss",$userID,$filterID,$userID,$filterID);
@@ -57,9 +55,12 @@ if (!$noInvoices) {
 </head>
 
 <body>
+    <div id="navWrap">
+    <button type="button" id="back" onclick="window.history.back()">← Back</button>
     <a href="../home-page/home.php" class="button" id="homeButtonWrapper">
         <img id="homeButton" src="../img/home.png" alt="Home">
     </a>
+    </div>
     <div id="main-container">
         <h1>Invoices Involving You</h1>
         <table class="invoice-table">

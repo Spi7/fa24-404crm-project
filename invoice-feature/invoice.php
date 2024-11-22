@@ -57,9 +57,12 @@ if(isset($_GET["clientId"])){
 </head>
 
 <body>
-    <a href="../home-page/home.php">
-        <img id="homeButton" src="../img/home.png" alt="Home">
-    </a>
+    <div id="navWrap">
+        <button type="button" id="back" onclick="window.history.back()">← Back</button>
+        <a href="../home-page/home.php">
+            <img id="homeButton" src="../img/home.png" alt="Home">
+        </a>
+    </div>
     <div id="centerWrapper">
     <div class="main-container">
         <form action="invoice.php" method="post">

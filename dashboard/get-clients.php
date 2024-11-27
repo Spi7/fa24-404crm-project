@@ -25,7 +25,6 @@ $clients = [];
 while ($client = $clientResult->fetch_assoc()) {
     $clients[] = [
         'client_id' => $client['CLIENT_ID'],
-//        'user_id' => $client['USER_ID'],
         'affiliation' => $client['AFFILIATION'],
         'company_name' => $client['COMPANY_NAME'],
         'goals' => $client['GOALS'],

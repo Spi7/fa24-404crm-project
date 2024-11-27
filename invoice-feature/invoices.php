@@ -5,21 +5,36 @@ set_error_handler("var_dump");
 
 include "../db_connection.php";
 connectDB();
-$userIDQuery = $mysqli->query("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN='$_COOKIE[SESSION_TOKEN]'");
+$stmt = $mysqli->prepare("SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN=?");
+$stmt->bind_param("s",$_COOKIE["SESSION_TOKEN"]);
+$stmt->execute();
+$userIDQuery=$stmt->get_result();
 if ($userIDQuery->num_rows == 0) {
     die("error session token not found");
 }
-$userID = $userIDQuery->fetch_assoc()["USER_ID"];
+$userID = $userIDQuery->fetch_column(0);
 //get dest id - already checked there is a row before
-$invoices = $mysqli->query("SELECT INVOICE_ID FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
-$invoiceIDs = [];
-while ($invoiceID = $invoices->fetch_column(0)) {
-    array_push($invoiceIDs, $invoiceID);
+if(!isset($_GET["clientId"])){
+    $stmt = $mysqli->prepare("SELECT * FROM INVOICES WHERE SENDER=? or RECIPIENT=?");
+    $stmt->bind_param("ss",$userID,$userID);
+    $stmt->execute();
+    $invoices=$stmt->get_result();
+} else {
+    $filterID=(int)$_GET["clientId"];
+    $stmt = $mysqli->prepare("SELECT * FROM INVOICES WHERE (SENDER=? AND RECIPIENT=?) or (RECIPIENT=? and SENDER=?)");
+    $stmt->bind_param("ssss",$userID,$filterID,$userID,$filterID);
+    $stmt->execute();
+    $invoices=$stmt->get_result();
 }
-$noInvoices = true;
-$invoicesInfo = $mysqli->query("SELECT * FROM INVOICES WHERE SENDER='$userID' or RECIPIENT='$userID'");
-if ($invoicesInfo->num_rows != 0) {
-    $noInvoices = false;
+$invoicesInfo = [];
+$invoiceIDs = [];
+while ($invoice = $invoices->fetch_assoc()) {
+    array_push($invoicesInfo,$invoice);
+    array_push($invoiceIDs, '"'.$invoice["INVOICE_ID"].'"');
+}
+$noInvoices = $invoices->num_rows == 0;
+if (!$noInvoices) {
+    // this was giving trouble when converting to a prepared statement and theres also no point as it is server generated ids from the db so there is no attack surface
     $invoiceItems = $mysqli->query("SELECT * FROM INVOICE_ITEMS WHERE INVOICE_ID IN (" . implode(',', $invoiceIDs) . ")");
 }
 
@@ -40,9 +55,12 @@ if ($invoicesInfo->num_rows != 0) {
 </head>
 
 <body>
+    <div id="navWrap">
+    <button type="button" id="back" onclick="window.history.back()">← Back</button>
     <a href="../home-page/home.php" class="button" id="homeButtonWrapper">
         <img id="homeButton" src="../img/home.png" alt="Home">
     </a>
+    </div>
     <div id="main-container">
         <h1>Invoices Involving You</h1>
         <table class="invoice-table">
@@ -56,14 +74,12 @@ if ($invoicesInfo->num_rows != 0) {
                 <th>Address</th>
             </tr>
             <?php
-            if ($noInvoices == false) {
-                while ($row = $invoicesInfo->fetch_row()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>" . $value . "</td>";
-                    }
-                    echo "</tr>";
+            foreach ($invoicesInfo as $row){
+                echo "<tr>";
+                foreach ($row as $value) {
+                    echo "<td>" . $value . "</td>";
                 }
+                echo "</tr>";
             }
             ?>
         </table>

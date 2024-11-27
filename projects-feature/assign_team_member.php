@@ -1,6 +1,7 @@
 <?php
 // Connect to the database
 include('../db_connection.php');
+include('../notifications.php'); // Include notifications logic
 connectDB();
 
 // Validate the user session
@@ -27,6 +28,9 @@ if (isset($_COOKIE['SESSION_TOKEN'])) {
             $stmt->bind_param('ii', $project_id, $team_member_id);
 
             if ($stmt->execute()) {
+                // Create a notification for the team member
+                createNotification($current_user_id, $team_member_id, "PROJECTS", $project_id);
+
                 // Success, redirect back to the project or a confirmation page
                 header('Location: project.php');
                 exit();
@@ -43,4 +47,3 @@ if (isset($_COOKIE['SESSION_TOKEN'])) {
     echo "Error: No session token found.";
 }
 ?>
-

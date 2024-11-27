@@ -1,5 +1,4 @@
 <?php
-
     function createNotification($sender_id, $recipient_id, $table, $link_id){
         global $mysqli;
         //check if duplicate notification

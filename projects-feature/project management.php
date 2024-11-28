@@ -58,6 +58,50 @@
             </form>
         </section>
 
+        <!-- Assign Users to Teams Section -->
+        <section class="section">
+            <h2>Assign Users to a Team</h2>
+            <form action="assign_user_to_team.php" method="POST">
+                <label for="team">Select Team:</label>
+                <select id="team" name="team">
+                    <?php
+                    // Fetch teams from the database
+                    $query = "SELECT TEAM_ID, TEAM_NAME FROM TEAMS";
+                    $result = $mysqli->query($query);
+
+                    // Check if the query executed successfully
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['TEAM_ID']}'>{$row['TEAM_NAME']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No teams found</option>";
+                    }
+                    ?>
+                </select>
+
+                <label for="user">Assign User:</label>
+                <select id="user" name="user">
+                    <?php
+                    // Fetch users from the accounts table
+                    $query = "SELECT USER_ID, FIRST_NAME, LAST_NAME FROM ACCOUNTS";
+                    $result = $mysqli->query($query);
+
+                    // Check if the query executed successfully
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['USER_ID']}'>{$row['FIRST_NAME']} {$row['LAST_NAME']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No users found</option>";
+                    }
+                    ?>
+                </select>
+
+                <button type="submit">Assign User to Team</button>
+            </form>
+        </section>
+
         <!-- Create Team Section -->
         <section class="section">
             <h2>Create New Team</h2>

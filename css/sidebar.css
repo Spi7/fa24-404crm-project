@@ -6,6 +6,7 @@
     flex-direction: column; /* Stack items vertically */
     justify-content: flex-start; /* Align items at the top */
     padding: 0; /* Remove any default padding */
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
 }
 
 .sidebar div {
@@ -16,6 +17,7 @@
     flex: 0; /* Allow items to grow equally */
     padding: 10px; /* Add padding inside each item */
     margin: 0; /* Ensure no margin is applied */
+    border-bottom: 0.5px solid #333; 
 }
 
 /* Adjust image size within the sidebar */
@@ -24,7 +26,7 @@
     height: auto; /* Maintain aspect ratio */
 }
 
-/* Sidebar styles for different sections */
+/* Sidebar styles for different sections
 .sidebar.home { background-color: aquamarine; }
 .sidebar.calendar { background-color: #fce4ec; }
 .sidebar.chat { background-color: #e0f7fa; }
@@ -32,7 +34,7 @@
 .sidebar.invoice { background-color: #fff9c4; }
 .sidebar.profile { 
   background-color: #FFDAB9; 
-  width: 100%;}
+  width: 100%;} */
 
 
 .sidebar a {

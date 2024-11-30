@@ -69,32 +69,30 @@ function updateNotifications(notifications) {
     if (Array.isArray(notifications)) {
         notifications.forEach(notification => {
             let icon = '';
+            let message = '';
             switch (notification.NOTIFICATION_TYPE) {
                 case 'CHATS':
-                    icon = "../img/chat-icon.png"; 
+                    icon = "../img/chat-icon.png";
+                    message = `${notification.sender_email}: ${notification.message_content}`; 
                     break;
                 case 'INVOICES':
                     icon = "../img/invoice-icon.png"; 
+                    message = `You have a new invoice from ${notification.sender_email} | Invoice Detail: ${notification.message_content}`;
                     break;
                 case 'CALENDARS':
                     icon = "../img/calendar-icon.png"; 
+                    message = `A new event scheduled with ${notification.sender_email} --> Event Name: ${notification.message_content}`;
                     break;
                 case 'PROJECTS':
                     icon = "../img/project-icon.png"; 
+                    message = `You've been assigned to this project: ${notification.message_content}`;
+                    break;
+                case 'TEAMS':
+                    icon = "../img/project-icon.png"; 
+                    message = `You've been assigned to the team: ${notification.message_content}`;
                     break;
                 default:
                     icon = "../img/404 not found Abous Us.jpg";
-            }
-
-            let message = '';
-            if (notification.NOTIFICATION_TYPE === 'CHATS') {
-                message = `You received a message from ${notification.sender_email}`;
-            } else if (notification.NOTIFICATION_TYPE === 'CALENDARS') {
-                message = `You have a new event scheduled with ${notification.sender_email}`;
-            } else if (notification.NOTIFICATION_TYPE === 'INVOICES') {
-                message = `You have a new invoice from ${notification.sender_email}`;
-            } else if (notification.NOTIFICATION_TYPE === 'PROJECTS') {
-                message = "You have been assigned to a new project!";
             }
 
             // Create a new list item for the notification

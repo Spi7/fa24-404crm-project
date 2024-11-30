@@ -34,6 +34,12 @@ while ($row = $result->fetch_assoc()) {
         case 'TEAMS':
             $row['message_content'] = fetchTeamContent($row['LINK_ID']);
             break;
+        case 'CALENDARS':
+            $row['message_content'] = fetchCalendarContent($row['LINK_ID']);
+            break;
+        case 'INVOICES':
+            $row['message_content'] = fetchInvoiceContent($row['LINK_ID']);
+            break;
         default:
             $row['message_content'] = null;  // In case no content is found
             break;

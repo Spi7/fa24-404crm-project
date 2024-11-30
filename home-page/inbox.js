@@ -77,11 +77,11 @@ function updateNotifications(notifications) {
                     break;
                 case 'INVOICES':
                     icon = "../img/invoice-icon.png"; 
-                    message = `You have a new invoice from ${notification.sender_email}`;
+                    message = `You have a new invoice from ${notification.sender_email} | Invoice Detail: ${notification.message_content}`;
                     break;
                 case 'CALENDARS':
                     icon = "../img/calendar-icon.png"; 
-                    message = `You have a new event scheduled with ${notification.sender_email}`;
+                    message = `A new event scheduled with ${notification.sender_email} --> Event Name: ${notification.message_content}`;
                     break;
                 case 'PROJECTS':
                     icon = "../img/project-icon.png"; 

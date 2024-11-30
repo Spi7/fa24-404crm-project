@@ -14,6 +14,19 @@ function fetchChatContent($link_id) {
     return $content;
 }
 
+function fetchCalendarContent($link_id) {
+    global $mysqli;
+
+    $query = "SELECT TITLE FROM CALENDARS WHERE EVENT_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $link_id);
+    $stmt->execute();
+    $stmt->bind_result($eventName);
+    $stmt->fetch();
+
+    return $eventName;
+}
+
 function fetchInvoiceContent($link_id) {
     global $mysqli;
 

@@ -1,35 +1,86 @@
+<?php
+include '../db_connection.php';
+connectDB();
+
+// Retrive the session token
+$sessionToken = $_COOKIE['SESSION_TOKEN'] ?? null;
+
+if ($sessionToken) {
+    // Validate the session token
+    $query = "SELECT USER_ID FROM ACCOUNTS WHERE SESSION_TOKEN = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("s", $sessionToken);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $userData = $result->fetch_assoc();
+        $userId = $userData['USER_ID'];
+
+        // Fetch contacts for the logged-in user
+        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL, CONTACTS.CONTACT_USER_ID 
+                         FROM CONTACTS 
+                         WHERE CONTACTS.CURRENT_USER_ID = ?";
+        $contactStmt = $mysqli->prepare($contactQuery);
+        $contactStmt->bind_param("i", $userId);
+        $contactStmt->execute();
+        $contacts = $contactStmt->get_result();
+    } else {
+        echo "Invalid session token.";
+        exit; // Stop further execution if the token is invalid
+    }
+} else {
+    echo "Session token not provided.";
+    exit; // Stop further execution if no token is provided
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Server</title>
-    <link rel="stylesheet" href="chat.css">
-    <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <link rel="stylesheet" href="chat-css/contact.css">
+    <link rel="stylesheet" href="chat-css/message.css">
+    <script src="chat-js/addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <script src="chat-js/deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
+    <script src="chat-js/searchContact.js" defer></script> <!-- Include the search js file -->
+    <script src="chat-js/message.js" defer></script> <!-- Include the search js file -->
     <script>
+        var openChatEmail=""
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
-        function loadMobileCSS() {
-            if (window.innerWidth <= 600) {
-                // Create a link element for mobile CSS
-                var mobileCss = document.createElement('link');
-                mobileCss.rel = 'stylesheet';
-                mobileCss.href = 'chat-mobile.css'; // Your mobile CSS file path
+        function loadMobileCSS(load) {
+        var sidebar = document.querySelector('.sidebar');
+        var chatInterface = document.querySelector('.chat-interface');
+        var cList = document.querySelector('.contacts');
+        
+        if (window.innerWidth <= 800) {
+            // Hide the sidebar and chat interface for mobile screens
+            if (sidebar) {
+                sidebar.style.display = 'none';
+            }
+            if(chatInterface.style.display!='none' && cList.style.display!='none'){
+                chatInterface.style.display = 'none';
 
-                // Append it to the head
-                document.head.appendChild(mobileCss);
-
-                // Hide the sidebar for mobile screens
-                var sidebar = document.querySelector('.sidebar');
-                if (sidebar) {
-                    sidebar.style.display = 'none'; // You can also use sidebar.remove() if you want to completely remove it
-                }
+            }
+        } else {
+            // Show the sidebar and chat interface for larger screens
+            if (sidebar) {
+                sidebar.style.display = 'block';
+            }
+            if (chatInterface) {
+                chatInterface.style.display = 'flex';
+            }
+            if (cList) {
+                cList.style.display = 'flex';
             }
         }
-        // Run this when the page loads
-        window.onload = loadMobileCSS;
+    }
 
-        // Also check when the window is resized (optional)
-        window.onresize = loadMobileCSS;
+    // Run this when the page loads
+    window.addEventListener('load', loadMobileCSS);
+    window.addEventListener('resize', loadMobileCSS);
     </script>
 </head>
 <body>
@@ -38,39 +89,11 @@
         <?php include '../sidebar.php'; ?>
 
         <!-- Contacts Section -->
-        <div class="contacts">
-            <!-- Add Back button for mobile, hidden on desktop -->
-             <div class="mobile-back-btn">
-                <button type="button" onclick="window.history.back()">← Back</button>
-            </div>
- 
-            <h3>Contacts</h3>
-            <ul id="contact-list">
-                <!-- Initially, this will be empty. JavaScript can be used to dynamically add contacts -->
-            </ul>
-            <!-- Add Contact Button -->
-            <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
-        </div>
+        <?php include 'contact.php'; ?>
 
         <!-- Chat Section -->
-        <div class="chat-interface">
-            <div class="chat-header">
-                <div class="mobile-back-btn">
-                    <button type="button" onclick="window.history.back()">← Back</button>
-                </div>
-                <h3 id="chat-header-text">Select a contact to start chatting</h3>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <!-- Chat messages will appear here dynamically -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="message-input" placeholder="Type a message" disabled>
-                <button class="attach-btn" onclick="attachFile()">
-                    <img src="../img/attachment.png" alt="Attach" class="attach-icon"> <!-- Add attachment icon -->
-                </button>
-                <button class="send-btn" onclick="sendMessage()" disabled>Send</button>
-            </div>
-        </div>
+        <?php include 'chat_interface.php'; ?>
+
     </div>
 </body>
 </html>

@@ -1,0 +1,168 @@
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+html, body {
+    height: 100%; /* Ensure the background covers the full viewport height */
+    margin: 0;
+    padding: 0;
+}
+
+/* Main container styling for consistency */
+.main-container {
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#homeButton{
+    width: 48px;
+}
+
+/* Form field labels */
+.headerLabel {
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Input and textarea fields */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+button, .button {
+    display: inline-block;
+    width: auto;
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    box-shadow: none; 
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007bff;
+    text-align: center;
+}
+
+.button:hover, button:hover {
+    background-color: #0056b3;
+}
+
+/* Specific button styles */
+#addItemButton {
+    background-color: #007bff;
+}
+
+#submitButton {
+    background-color: #28a745; 
+}
+
+/* Styling for View Invoices link to look like a button */
+#viewInvoicesLink {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Invoice item section for a coordinated appearance */
+fieldset.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+/* Input fields inside the invoice item section */
+.quantityInput, .priceInput {
+    width: 60px;
+    text-align: center;
+}
+
+.descriptionInput {
+    flex: 2; /* Takes up remaining space */
+    padding: 8px;
+}
+
+/* Delete button styling */
+.deleteItemButton {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;  
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 0;
+}
+
+#viewInvoicesLink {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-top: 30px; /* Increased margin for more space */
+    display: inline-block;
+    text-align: center;
+}
+
+/* Error message styling */
+.errorText {
+    color: #d9534f;
+    font-size: 14px;
+}
+
+.hide {
+    display: none;
+}
+#back{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+    display: inline;
+}
+
+#navWrap {
+    margin-top: 8px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}

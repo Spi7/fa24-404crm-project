@@ -1,0 +1,87 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f0f4ff, #e9effa);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#homeButton {
+    width: 48px;
+    margin-right: 8px;
+}
+
+/* Main container */
+#main-container {
+    width: 90%;
+    max-width: 800px;
+    background: #ffffff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Heading styles */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table styling */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.invoice-table th, .invoice-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.invoice-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.invoice-table tr:hover {
+    background-color: #e6f2ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    #main-container {
+        padding: 10px;
+    }
+    .invoice-table th, .invoice-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+#back{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+}
+#navWrap {
+    margin-top: 8px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}

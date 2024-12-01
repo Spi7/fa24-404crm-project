@@ -1,3 +1,8 @@
+<?php
+    include_once('db_connection.php');
+    connectDB();
+    fetchUserData();
+?>
 <!-- sidebar.php -->
 <link rel="stylesheet" href="../css/sidebar.css">
 <aside>
@@ -6,8 +11,8 @@
         <div class="profile">
             <a href = ../profile/userinfo.php>
                 <img src="../img/user profile icon.png" alt="User" class="profile-icon">
-                <p>User</p>
-                <p>user@example.com</p>
+                <p><?php echo $user["NICKNAME"]; ?></p> <!-- Display the user's nickname -->
+                <p><?php echo $user["EMAIL"]; ?></p>    <!-- Display the user's email -->
             </a>
         </div>
 

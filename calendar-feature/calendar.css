@@ -7,12 +7,6 @@ body {
     display: flex; 
 }
 
-.sidebar {
-    width: 250px; 
-    height: 100vh; 
-    background-color: #f4f4f4; 
-}
-
 .main-container {
     display: flex;
     flex-direction: column; 
@@ -39,6 +33,12 @@ header {
 
 .month {
     text-align: center;
+    font-size: 30px;
+}
+
+.current-date {
+    display: table-column;
+    font-size: 0.5em;
 }
 
 .calendar {
@@ -64,6 +64,47 @@ header {
     border-right: 1px solid #ccc;
 }
 
+.day-abbr {
+    display: none;
+}
+
+.mobile-home {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-color: white;
+    display: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.mobile-home:hover {
+    background-color: blue;
+}
+
+@media (max-width: 600px) {
+    .day-abbr {
+        display: block;
+        flex: 1; 
+        padding: 10px;
+        font-weight: bold;
+        border-right: 1px solid #ccc;
+    }
+    
+    .day {
+        display: none;
+    }
+
+    #sidebar {
+        display: none;
+    }
+
+    .mobile-home {
+        display: block;
+        border-radius: 5px;
+    }
+}
+
 .day:last-child {
     border-right: none; 
 }
@@ -86,4 +127,43 @@ header {
     font-size: 16px;
     font-weight: bold;
     color: #333;
+    flex-direction: column;
+}
+
+.event {
+    width: 100%;
+    height: 20%;
+    font-size: 14px;
+}
+
+#event-modal {
+    display: none;
+    position: fixed;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content{
+    border: 2px solid black;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

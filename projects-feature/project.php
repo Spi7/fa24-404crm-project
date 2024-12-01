@@ -5,231 +5,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Management</title>
     <link rel="stylesheet" href="project.css"> <!-- Link to the external CSS file -->
+    <script>
+        function loadMobileCSS() {
+            if (window.innerWidth <= 600) {
+                var mobileCss = document.createElement('link');
+                mobileCss.rel = 'stylesheet';
+                mobileCss.href = 'chat-mobile.css';
+                document.head.appendChild(mobileCss);
+
+                var sidebar = document.querySelector('.sidebar');
+                if (sidebar) {
+                    sidebar.style.display = 'none';
+                }
+            }
+        }
+        window.onload = loadMobileCSS;
+        window.onresize = loadMobileCSS;
+    </script>
 </head>
 <body>
-
+<a href="../home-page/home.php">
+        <img id="homeButton" src="../img/home.png" alt="Home">
+        <p>Home</p>
+    </a>
 <div class="container">
     <?php include '../sidebar.php'; ?> <!-- Including the sidebar.php file -->
-
     <div class="main-content">
         <div class="header">
-            <h1>Project #1 Overview</h1>
+            <h1 id="project-title">Project #1 Overview</h1>
+            <button class="top-right-button" onclick="location.href='project management.php'">Project management</button>
 
-            <!-- Progress Bar -->
             <div class="progress-bar-container">
-                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div> <!-- Progress Bar -->
+                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
             </div>
             <span id="progress-text">Progress: 0%</span>
-        </div>
 
-        <!-- Task List -->
-        <ul class="task-list">
-            <li data-task="1" data-done="false" onclick="showTask(1)">Task #1: Design UI</li>
-            <li data-task="2" data-done="false" onclick="showTask(2)">Task #2: Implement Frontend</li>
-            <li data-task="3" data-done="false" onclick="showTask(3)">Task #3: Backend Integration</li>
-            <li data-task="4" data-done="false" onclick="showTask(4)">Task #4: Testing & Debugging</li>
-            <li data-task="5" data-done="false" onclick="showTask(5)">Task #5: Final Deployment</li>
-        </ul>
-
-        <!-- Task 1 Details with Mini Progress Bar -->
-        <div id="task-details-1" class="task-details">
-            <h3>Task #1 Details</h3>
-            <p>Assigned To: Employee Name (employee@company.com)</p>
-            <p>Task Description: Create a responsive and user-friendly UI for the project management interface.</p>
-            <ul>
-                <li>1.Design the project layout.</li>
-                <li>2.Ensure mobile responsiveness.</li>
-                <li>3.Implement the sidebar and main content sections.</li>
-            </ul>
-
-            <!-- Mini Progress Bar for Task 1 -->
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-1"></div>
+            <div class="project-switcher">
+                <button onclick="switchProject(1)">Project #1</button>
+                <button onclick="switchProject(2)">Project #2</button>
+                <button onclick="switchProject(3)">Project #3</button>
             </div>
-            <span class="mini-progress-percentage" id="mini-progress-percent-1">Progress: 0%</span>
 
-            <!-- Subtask Buttons for Task 1 -->
-            <button class="subtask-button" id="subtask-1-1" data-completed="false" onclick="completeSubtask(1, 1)">Mark Subtask 1 as Done</button>
-            <button class="subtask-button" id="subtask-1-2" data-completed="false" onclick="completeSubtask(1, 2)">Mark Subtask 2 as Done</button>
-            <button class="subtask-button" id="subtask-1-3" data-completed="false" onclick="completeSubtask(1, 3)">Mark Subtask 3 as Done</button>
+            <button class="add-task-button" onclick="addTask()">Add Task</button>
         </div>
 
-        <!-- Task 2 Details with Mini Progress Bar -->
-        <div id="task-details-2" class="task-details">
-            <h3>Task #2 Details</h3>
-            <p>Assigned To: Employee Name (employee@company.com)</p>
-            <p>Task Description: Implement the front-end functionality and connect it to the backend API.</p>
-            <ul>
-                <li>1.Create forms for user inputs.</li>
-                <li>2.Ensure the layout matches the design mockups.</li>
-                <li>3.Connect the front-end to backend services.</li>
-            </ul>
-
-            <!-- Mini Progress Bar for Task 2 -->
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-2"></div>
-            </div>
-            <span class="mini-progress-percentage" id="mini-progress-percent-2">Progress: 0%</span>
-
-            <!-- Subtask Buttons for Task 2 -->
-            <button class="subtask-button" id="subtask-2-1" data-completed="false" onclick="completeSubtask(2, 1)">Mark Subtask 1 as Done</button>
-            <button class="subtask-button" id="subtask-2-2" data-completed="false" onclick="completeSubtask(2, 2)">Mark Subtask 2 as Done</button>
-            <button class="subtask-button" id="subtask-2-3" data-completed="false" onclick="completeSubtask(2, 3)">Mark Subtask 3 as Done</button>
-        </div>
-
-        <!-- Task 3 Details with Mini Progress Bar -->
-        <div id="task-details-3" class="task-details">
-            <h3>Task #3 Details</h3>
-            <p>Assigned To: Employee Name (employee@company.com)</p>
-            <p>Task Description: Build backend logic for the project management app.</p>
-            <ul>
-                <li>1.Develop APIs for data handling.</li>
-                <li>2.Set up database schema for tasks and projects.</li>
-                <li>3.Test backend endpoints.</li>
-            </ul>
-
-            <!-- Mini Progress Bar for Task 3 -->
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-3"></div>
-            </div>
-            <span class="mini-progress-percentage" id="mini-progress-percent-3">Progress: 0%</span>
-
-            <!-- Subtask Buttons for Task 3 -->
-            <button class="subtask-button" id="subtask-3-1" data-completed="false" onclick="completeSubtask(3, 1)">Mark Subtask 1 as Done</button>
-            <button class="subtask-button" id="subtask-3-2" data-completed="false" onclick="completeSubtask(3, 2)">Mark Subtask 2 as Done</button>
-            <button class="subtask-button" id="subtask-3-3" data-completed="false" onclick="completeSubtask(3, 3)">Mark Subtask 3 as Done</button>
-        </div>
-
-        <!-- Task 4 Details with Mini Progress Bar -->
-        <div id="task-details-4" class="task-details">
-            <h3>Task #4 Details</h3>
-            <p>Assigned To: Employee Name (employee@company.com)</p>
-            <p>Task Description: Conduct testing and debugging of the project management interface.</p>
-            <ul>
-                <li>1.Test each feature for bugs.</li>
-                <li>2.Conduct usability testing with a small group of users.</li>
-                <li>3.Document any issues found and fix them.</li>
-            </ul>
-
-            <!-- Mini Progress Bar for Task 4 -->
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-4"></div>
-            </div>
-            <span class="mini-progress-percentage" id="mini-progress-percent-4">Progress: 0%</span>
-
-            <!-- Subtask Buttons for Task 4 -->
-            <button class="subtask-button" id="subtask-4-1" data-completed="false" onclick="completeSubtask(4, 1)">Mark Subtask 1 as Done</button>
-            <button class="subtask-button" id="subtask-4-2" data-completed="false" onclick="completeSubtask(4, 2)">Mark Subtask 2 as Done</button>
-            <button class="subtask-button" id="subtask-4-3" data-completed="false" onclick="completeSubtask(4, 3)">Mark Subtask 3 as Done</button>
-        </div>
-
-        <!-- Task 5 Details with Mini Progress Bar -->
-        <div id="task-details-5" class="task-details">
-            <h3>Task #5 Details</h3>
-            <p>Assigned To: Employee Name (employee@company.com)</p>
-            <p>Task Description: Deploy the project and ensure it's fully functional.</p>
-            <ul>
-                <li>1.Set up the server for deployment.</li>
-                <li>2.Deploy the project to the production environment.</li>
-                <li>3.Ensure everything works as expected.</li>
-            </ul>
-
-            <!-- Mini Progress Bar for Task 5 -->
-            <div class="mini-progress-bar">
-                <div class="mini-progress" id="mini-progress-5"></div>
-            </div>
-            <span class="mini-progress-percentage" id="mini-progress-percent-5">Progress: 0%</span>
-
-            <!-- Subtask Buttons for Task 5 -->
-            <button class="subtask-button" id="subtask-5-1" data-completed="false" onclick="completeSubtask(5, 1)">Mark Subtask 1 as Done</button>
-            <button class="subtask-button" id="subtask-5-2" data-completed="false" onclick="completeSubtask(5, 2)">Mark Subtask 2 as Done</button>
-            <button class="subtask-button" id="subtask-5-3" data-completed="false" onclick="completeSubtask(5, 3)">Mark Subtask 3 as Done</button>
-        </div>
+        <ul class="task-list" id="task-list"></ul>
+        <div id="task-details-container"></div>
     </div>
 </div>
 
 <script>
-    // Function to show task details when a task is clicked
-    function showTask(taskNumber) {
-        const tasks = document.querySelectorAll('.task-details');
-        tasks.forEach(task => task.style.display = 'none');
+    let currentProject = 1;
 
-        const taskListItems = document.querySelectorAll('.task-list li');
-        taskListItems.forEach(item => item.classList.remove('active-task'));
-
-        const taskDetails = document.getElementById('task-details-' + taskNumber);
-        taskDetails.style.display = 'block';
-
-        taskListItems[taskNumber - 1].classList.add('active-task');
+    // Switch between projects and load project data
+    function switchProject(projectNumber) {
+        currentProject = projectNumber;
+        loadProjectData(projectNumber);
     }
 
-    // Function to complete a subtask and update mini progress bar
-    function completeSubtask(taskNumber, subtaskNumber) {
-        const subtaskButton = document.getElementById('subtask-' + taskNumber + '-' + subtaskNumber);
-        const isCompleted = subtaskButton.getAttribute('data-completed') === 'true';
-        const miniProgressBar = document.getElementById('mini-progress-' + taskNumber);
-        const miniProgressPercent = document.getElementById('mini-progress-percent-' + taskNumber);
-        let completedSubtasks = miniProgressBar.getAttribute('data-completed-subtasks') || 0;
-        completedSubtasks = parseInt(completedSubtasks);
-
-        if (!isCompleted && completedSubtasks < 3) {
-            completedSubtasks++;
-            subtaskButton.setAttribute('data-completed', 'true');
-            subtaskButton.textContent = `Subtask ${subtaskNumber} Completed`;
-            subtaskButton.classList.add('completed');
-        } else if (isCompleted && completedSubtasks > 0) {
-            completedSubtasks--;
-            subtaskButton.setAttribute('data-completed', 'false');
-            subtaskButton.textContent = `Mark Subtask ${subtaskNumber} as Done`;
-            subtaskButton.classList.remove('completed');
-        }
-
-        const progressPercent = (completedSubtasks / 3) * 100;
-        miniProgressBar.style.width = progressPercent + '%';
-        miniProgressBar.setAttribute('data-completed-subtasks', completedSubtasks);
-        miniProgressPercent.textContent = `Progress: ${Math.round(progressPercent)}%`;
-
-        // If all subtasks are done, mark task as done and update the total project progress
-        if (completedSubtasks === 3) {
-            markTaskAsDone(taskNumber);
-        } else if (completedSubtasks < 3) {
-            unmarkTaskAsDone(taskNumber);
-        }
-    }
-
-    // Function to mark a task as done and update the overall progress
-    function markTaskAsDone(taskNumber) {
-        const taskItem = document.querySelector(`[data-task="${taskNumber}"]`);
-        taskItem.setAttribute('data-done', 'true');
-        updateProgress();
-    }
-
-    // Function to unmark a task as done and update the overall progress
-    function unmarkTaskAsDone(taskNumber) {
-        const taskItem = document.querySelector(`[data-task="${taskNumber}"]`);
-        taskItem.setAttribute('data-done', 'false');
-        updateProgress();
-    }
-
-    // Function to update overall project progress
-    function updateProgress() {
-        const tasks = document.querySelectorAll('.task-list li');
-        let completedTasks = 0;
-
-        tasks.forEach(task => {
-            if (task.getAttribute('data-done') === 'true') {
-                completedTasks++;
+    // Load project data, including tasks and subtasks
+    function loadProjectData(projectId) {
+    fetch(`fetch_project_data.php?project_id=${projectId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Loaded Project Data:', data); // Debugging output
+            if (data.error) {
+                alert(data.error);
+                return;
             }
+
+            const { project, tasks } = data;
+            document.getElementById('project-title').textContent = project.TITLE;
+            document.getElementById('progress-bar').style.width = project.PROGRESS + '%';
+            document.getElementById('progress-text').textContent = `Progress: ${project.PROGRESS}%`;
+
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.textContent = `Task #${task.TASK_ID}: "${task.TITLE}"`;
+                taskItem.onclick = () => showTask(task);
+                taskList.appendChild(taskItem);
+            });
+        })
+        .catch(error => console.error('Error fetching project data:', error));
+}
+
+
+    // Show task details and display subtasks
+    function showTask(task) {
+    const taskDetailsContainer = document.getElementById('task-details-container');
+    taskDetailsContainer.innerHTML = '';
+
+    const taskDetails = document.createElement('div');
+    taskDetails.classList.add('task-details');
+    taskDetails.innerHTML = `
+        <h3>Task #${task.TASK_ID} Details</h3>
+        <p>Task Description: "${task.TITLE}"</p>
+        <div class="mini-progress-bar">
+            <div class="mini-progress" id="mini-progress-${task.TASK_ID}" style="width: ${task.PROGRESS}%"></div>
+        </div>
+        <span class="mini-progress-percentage" id="progress-text-${task.TASK_ID}">Progress: ${task.PROGRESS}%</span>
+    `;
+
+    if (task.subtasks && task.subtasks.length > 0) {
+        const subtaskList = document.createElement('ul');
+        subtaskList.classList.add('subtask-list');
+
+        task.subtasks.forEach((subtask, index) => {
+            const subtaskItem = document.createElement('li');
+            subtaskItem.classList.add('subtask-item');
+            subtaskItem.innerHTML = `
+                <span>${subtask.DESCRIPTION}</span>
+                <button id="subtask-${task.TASK_ID}-${subtask.SUBTASK_ID}" 
+                    class="subtask-button ${subtask.COMPLETED ? 'completed' : ''}" 
+                    onclick="completeSubtask(${task.TASK_ID}, ${subtask.SUBTASK_ID})">
+                    ${subtask.COMPLETED ? 'Subtask Completed' : 'Mark Subtask as Done'}
+                </button>
+            `;
+            subtaskList.appendChild(subtaskItem);
         });
 
-        const progressPercent = (completedTasks / tasks.length) * 100;
-        document.getElementById('progress-bar').style.width = progressPercent + '%';
-        document.getElementById('progress-text').textContent = 'Progress: ' + progressPercent + '%';
+        taskDetails.appendChild(subtaskList);
+    } else {
+        taskDetails.innerHTML += `<p>No subtasks available for this task.</p>`;
     }
 
-    // Initially show the first task's details
-    showTask(1);
+    taskDetails.innerHTML += `<button class="delete-task-button" onclick="deleteTask(${task.TASK_ID})">Delete Task</button>`;
+    taskDetailsContainer.appendChild(taskDetails);
+}
+
+function completeSubtask(taskId, subtaskId, completed) {
+    const subtaskButton = document.getElementById(`subtask-${taskId}-${subtaskId}`);
+    
+    // Toggle completion status based on button's current state
+    if (subtaskButton.classList.contains('completed')) {
+        completed = false; // Mark as not completed if it's currently completed
+    } else {
+        completed = true; // Otherwise, mark it as completed
+    }
+
+    // Fetch request to update the subtask progress
+    fetch('update_subtask_progress.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task_id: taskId, subtask_id: subtaskId, completed: completed ? 1 : 0 })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response and update UI accordingly
+        if (data.status === 'success') {
+            // Update the UI based on the new completion status
+            subtaskButton.classList.toggle('completed', completed);
+            subtaskButton.textContent = completed ? 'Subtask Completed' : 'Mark Subtask as Done';
+
+            // Update the mini progress bar for the specific task
+            updateProgress(taskId, data.task_progress);
+
+            // Update the total project progress after the mini progress is updated
+            updateTotalProjectProgress();
+        } else {
+            console.error('Error updating subtask:', data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function updateProgress(taskId, taskProgress) {
+    const miniProgressBar = document.getElementById(`mini-progress-${taskId}`);
+    const progressTextElement = document.getElementById(`progress-text-${taskId}`);
+    
+    if (miniProgressBar) {
+        miniProgressBar.style.width = `${taskProgress}%`;
+    }
+    
+    if (progressTextElement) {
+        progressTextElement.textContent = `Progress: ${taskProgress}%`;
+    }
+}
+
+function updateTotalProjectProgress() {
+    fetch(`calculate_project_progress.php?project_id=${currentProject}`)
+        .then(response => response.json())
+        .then(projectData => {
+            if (projectData.status === 'success') {
+                const totalProgressBar = document.getElementById('progress-bar');
+                const totalProgressText = document.getElementById('progress-text');
+
+                if (totalProgressBar && totalProgressText) {
+                    totalProgressBar.style.width = `${projectData.project_progress}%`;
+                    totalProgressText.textContent = `Progress: ${projectData.project_progress}%`;
+                }
+            } else {
+                console.error('Error updating project progress:', projectData.message);
+            }
+        })
+        .catch(error => console.error('Error fetching total project progress:', error));
+}
+
+    // Function to add a new task to the current project
+    function addTask() {
+        const taskTitle = prompt("Enter the task title:");
+        if (!taskTitle) return; // Exit if title is not provided
+
+        const taskDescription = prompt("Enter the task description:"); // New prompt for description
+        if (!taskDescription) return; // Exit if description is not provided
+
+        fetch('add_task.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `project_id=${currentProject}&title=${encodeURIComponent(taskTitle)}&description=${encodeURIComponent(taskDescription)}` // Include description
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                loadProjectData(currentProject); // Refresh to include the new task
+                updateTotalProjectProgress();
+            } else {
+                alert("Error adding task.");
+            }
+        })
+        .catch(error => console.error("Error adding task:", error));
+    }
+
+    // Function to delete a specific task from the current project
+    function deleteTask(taskId) {
+        if (confirm("Are you sure you want to delete this task?")) {
+            fetch('delete_task.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `task_id=${taskId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    loadProjectData(currentProject); // Refresh after deletion
+                    updateTotalProjectProgress();
+                } else {
+                    alert("Error deleting task: " + data.message);
+                }
+            })
+            .catch(error => console.error('Error deleting task:', error));
+        }
+    }
+    // Initially load the first project
+    switchProject(1);
 </script>
+
 
 </body>
 </html>

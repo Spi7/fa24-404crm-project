@@ -12,7 +12,10 @@
     $title = $_POST["event-title"];
     $description = $_POST["event-description"];
     $color = $_POST["color"];
-    $mysqli->query("INSERT INTO CALENDARS (USER_ID, EVENT_START, FREQUENCY, TITLE, EVENT_DESCRIPTION, EVENT_END, COLOR, ALL_DAY) VALUES ('$user_id', '$event_start', '$frequency', '$title', '$description', '$event_end', '$color', '$all_day')");
+    $query = "INSERT INTO CALENDARS (USER_ID, EVENT_START, FREQUENCY, TITLE, EVENT_DESCRIPTION, EVENT_END, COLOR, ALL_DAY) VALUES (?,?,?,?,?,?,?,?)";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("issssssi", $user_id, $event_start, $frequency, $title, $description, $event_end, $color, $all_day);
+    $stmt->execute();
     header('Location: calendar.php');
     exit();
 ?>

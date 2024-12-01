@@ -1,0 +1,127 @@
+.inbox-icon img {
+    width: 2vw;  /* Responsive width */
+    height: 2vw; /* Responsive height */
+    max-width: 50px;  
+    max-height: 50px;
+    cursor: pointer;
+}
+
+.notification-area {
+    display: none;
+}
+
+/* Modal background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.4); 
+    overflow: hidden; 
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    margin: auto; /* Centering modal horizontally */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; 
+    max-width: 600px; 
+    height: 70%; 
+    overflow-y: auto; /* Allows scrolling when content overflows */
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Notification list */
+#notificationsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#notificationsList li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#notificationsList li:last-child {
+    border-bottom: none;
+}
+
+/* Notification item content */
+#notificationsList li p {
+    margin: 5px 0;
+    padding-left: 10px;
+    flex-grow: 1;
+}
+
+/* Image styling to make it responsive */
+#notificationsList li img {
+    max-width: 50px; 
+    max-height: 50px; 
+    width: auto;
+    height: auto;
+}
+
+/* Message/Content container */
+.notification-content {
+    flex-grow: 1;
+    padding-left: 10px;
+}
+
+/* Date and Time */
+.notification-time {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.accept {
+    background-color: green;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    margin: 5px;
+}
+
+.reject {
+    background-color: red;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    margin: 5px;
+}

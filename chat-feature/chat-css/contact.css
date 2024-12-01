@@ -1,0 +1,170 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Contacts Section */
+.contacts {
+    height: 100vh;
+    width: 30%;
+    background-color: #fff;
+    padding: 8px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.contacts h3 {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+.contacts h3 input[type="text"], #addContactEmail { /* the search bar section */
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-left: auto;
+}
+
+#contact-container {
+    list-style: none;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+
+.search-results-list li, #contact-list li {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#contact-list li:hover {
+    background-color: #ddd;
+}
+
+.profile-pic {
+    width: 40px; /* Set desired width */
+    height: 40px; /* Set desired height */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.contact-nickname {
+    font-weight: bold; /* Make nickname bold */
+    margin-right: 5px; /* Space between nickname and email */
+}
+
+.contact-email {
+    font-size: .5em;
+    color: #666; /* Lighter color for email */
+}
+
+.add-contact-btn {
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.add-contact-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-contact-btn {
+    margin-left: auto; /* Push the button to the far right */
+    background: #f20;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    border-radius: 50%;
+    border: none; 
+    color: #fff;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.contacts h3 a {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Make the link color inherit from the parent */
+}
+
+.contacts h3 {
+    display: flex; /* Make the heading a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.attach-btn {
+    background: white; /* Remove button background */
+    border-radius: 5px; /* Remove border */
+    border: 0.5px solid #ccc;
+    cursor: pointer; /* Change cursor to pointer */
+    margin-right: 10px; /* Space between attachment icon and send button */
+}
+
+.attach-icon {
+    width: 40px; /* Set width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    vertical-align: middle; /* Align vertically */
+}
+
+@media (max-width: 800px) {
+    .chat-container {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .contacts {
+        width: 100%; /* This is fine */
+        border: none;
+        padding: 10px;
+        background-color: #fff;
+    }
+    
+    .add-contact-btn {
+        width: 100%; /* Ensure it fills the available space */
+        text-align: center;
+    }
+}
+
+#addContactInput.hidden{
+    display: none;
+}
+#cancelAddContact, .mobile-back-btn>button{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+}
+.hide{
+    display: none;
+}
+#addContactInput{
+    margin: 10px auto;
+}
+.searchResultImage{
+    min-width: 50%;
+    max-width: 90%;
+}

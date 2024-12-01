@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4e3fc, #ffefe5);
+}
+header{
+    text-align: center;
+}
+img{
+    width:25%
+}
+#faqContent{
+    text-align: left;
+    margin: 0 auto;
+    width: 50%;
+}
+ ul{
+    list-style-type: none 
+}
+.question::before{
+    content: "Question: ";
+}
+
+.answer{
+    border-bottom: 1px solid black;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+.answer::before{
+    content: "Answer: ";
+} 

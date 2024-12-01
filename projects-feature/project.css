@@ -1,0 +1,280 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 50%;
+    background-color: #4CAF50;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.active-task {
+    font-weight: bold;
+    color: #333;
+}
+
+.task-details {
+    display: none;
+    position: relative; /* Added for positioning the delete button */
+}
+
+.complete-button {
+    background-color: green;
+    color: white;
+} 
+
+.subtask-button {
+    background-color: green;
+    color: white;
+} 
+
+.delete-task-button {
+    background-color: green;
+    color: white;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.task-list li {
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.task-list li:hover {
+    background-color: #f1f1f1;
+}
+
+.task-details {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 16px;
+}
+
+.task-details h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.complete-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Add some margin at the top */
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.complete-button:hover {
+    background-color: #0056b3;
+}
+
+.complete-button.completed {
+    background-color: green; /* Green when task is marked as done */
+    color: white;
+}
+
+.task-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.task-details ul li {
+    margin-bottom: 10px;
+}
+
+.mini-progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+.mini-progress {
+    height: 100%;
+    background-color: green;
+    width: 0%;
+}
+
+.mini-progress-percentage {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.subtask-button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px; /* Reduced padding for a more compact look */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* Add space between buttons */
+    font-size: 14px; /* Slightly smaller font for compact size */
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Align buttons inline */
+    min-width: 120px; /* Limit the button width */
+    max-width: 150px; /* Set a maximum width */
+    text-align: center; /* Center the text */
+}
+
+.subtask-button.completed {
+    background-color: green; /* Green when task is marked as done */
+    color: white;
+}
+
+.subtask-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.subtask-button.completed:hover {
+    background-color: darkgreen; /* Darker green on hover for completed buttons */
+}
+
+/* Project Switcher */
+.project-switcher {
+    margin-bottom: 20px; /* Space between project buttons and Add Task button */
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Reduce gap between buttons */
+}
+
+.project-switcher button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.project-switcher button:hover {
+    background-color: #0056b3;
+}
+
+/* Add Task Button */
+.add-task-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Delete Task Button - Right corner and Red */
+.delete-task-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    position: absolute;
+    top: 10px; /* Align to the top right corner */
+    right: 10px; /* Position to the right */
+    transition: background-color 0.3s ease;
+}
+
+.delete-task-button:hover {
+    background-color: darkred; /* Darken on hover */
+}
+
+/* Default behavior: Sidebar is visible */
+.sidebar {
+    display: block;
+}
+
+/* Hide sidebar on devices with a max-width of 768px (commonly used for tablets and phones) */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0; /* Adjust margin to avoid empty space where the sidebar would be */
+    }
+}
+
+/* Hide the Home button on larger screens (desktop) */
+#homeButton, #homeButton + p {
+    display: none;
+}
+
+/* Show the Home button only on mobile screens */
+@media screen and (max-width: 768px) {
+    #homeButton, #homeButton + p {
+        display: block; /* Make sure the Home button is visible */
+        width: 48px; /* Ensure the correct width is applied */
+        margin: 10px 0; /* Optional: Add spacing around the button */
+        text-align: center; /* Optional: Center-align the text */
+    }
+}
+
+.top-right-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.top-right-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

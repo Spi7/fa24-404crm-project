@@ -1,73 +1,51 @@
 <?php
-include_once('../db_connection.php');
+include '../db_connection.php';
 connectDB();
+fetchUserData();
 
-// Fetch user data based on session token
-fetchUserData(); // This will set the $user variable
+$input = json_decode(file_get_contents('php://input'), true);
+$emailToDelete = $input['email'] ?? null;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($user)) { // Check if user data is set
-        $currentUserId = $user['USER_ID']; // Current user's ID
-        $currentUserNickname = $user['NICKNAME']; // Current user's nickname
-        $currentUserEmail = $user['EMAIL']; // Current user's email
-        $contactEmail = $_POST['email'];
+if ($emailToDelete) {
+    // Fetch the user ID using the session token
+    if (isset($user)) {
+        $currentUserId = $user['USER_ID'];
 
-        // Check if the other user exists by email
-        $query = "SELECT USER_ID, NICKNAME FROM ACCOUNTS WHERE EMAIL = ?";
+        //Trying to access other chat user's userid
+        $query = "SELECT USER_ID FROM ACCOUNTS WHERE EMAIL = ?";
         $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("s", $contactEmail);
+        $stmt->bind_param("s", $emailToDelete);
         $stmt->execute();
         $result = $stmt->get_result();
-
         if ($result->num_rows > 0) {
             $contactData = $result->fetch_assoc();
-            $contactUserId = $contactData['USER_ID']; // User being added
-            $contactNickname = $contactData['NICKNAME'];
+            $contactUserId = $contactData['USER_ID']; //the contact's userId
 
-            // Check if the user is trying to add themselves
-            if ($contactUserId == $currentUserId) {
-                echo json_encode(['status' => 'error', 'message' => 'You cannot add yourself as a contact.']);
-                exit;
-            }
-
-            // Check if the contact already exists in the user's contact list
-            $checkQuery = "SELECT * FROM CONTACTS WHERE CURRENT_USER_ID = ? AND CONTACT_USER_ID = ?";
-            $checkStmt = $mysqli->prepare($checkQuery);
-            $checkStmt->bind_param("ii", $currentUserId, $contactUserId);
-            $checkStmt->execute();
-            $checkResult = $checkStmt->get_result();
-
-            if ($checkResult->num_rows == 0) {
-                // Insert the contact into the CONTACTS table
-                $insertQuery = "INSERT INTO CONTACTS (CURRENT_USER_ID, CONTACT_USER_ID, CONTACT_NICKNAME, CONTACT_EMAIL, CREATED_AT, UPDATED_AT) VALUES (?, ?, ?, ?, NOW(), NOW())";
-                $insertStmt = $mysqli->prepare($insertQuery);
-
-                if (!$insertStmt) {
-                    echo json_encode(['status' => 'error', 'message' => 'Query preparation failed: ' . $mysqli->error]);
-                    exit;
-                }
-
-                $insertStmt->bind_param("iiss", $currentUserId, $contactUserId, $contactNickname, $contactEmail);
-
-                // This line $insertStmt adds the contacts in
-                if ($insertStmt->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Contact added successfully.', 'nickname' => $contactNickname]);
-                    $reverseInsertQuery = "INSERT INTO CONTACTS (CURRENT_USER_ID, CONTACT_USER_ID, CONTACT_NICKNAME, CONTACT_EMAIL, CREATED_AT, UPDATED_AT) VALUES (?, ?, ?, ?, NOW(), NOW())";
-                    $reverseInsertStmt = $mysqli->prepare($reverseInsertQuery);
-                    $reverseInsertStmt->bind_param("iiss", $contactUserId, $currentUserId, $currentUserNickname, $currentUserEmail);
-                    $reverseInsertStmt->execute();
+            $deleteQuery = "DELETE FROM CONTACTS WHERE CURRENT_USER_ID = ? AND CONTACT_USER_ID = ?";
+            $deleteStmt = $mysqli->prepare($deleteQuery);
+            $deleteStmt->bind_param("ii", $currentUserId, $contactUserId); //the current user deleted the other user
+            if ($deleteStmt->execute()) {
+                $reverseQuery = "DELETE FROM CONTACTS WHERE CURRENT_USER_ID = ? AND CONTACT_USER_ID = ?";
+                $reverseStmt = $mysqli->prepare($reverseQuery);
+                $reverseStmt->bind_param("ii", $contactUserId, $currentUserId); //the other user will also passively delete the current user
+                if ($reverseStmt->execute()) {
+                    echo json_encode(['success' => true]);
                 } else {
-                    echo json_encode(['status' => 'error', 'message' => 'Failed to insert contact: ' . $insertStmt->error]);
+                    echo json_encode(['success' => false, 'message' => 'The other use failed to passively delete you']);
                 }
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Contact already exists in your contact list.']);
             }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'The email provided does not correspond to any user.']);
+            else {
+                echo json_encode(['success' => false, 'message' => 'Current login user fail to delete the other user']);
+            }
         }
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid session.']);
+        else {
+            echo json_encode(['success' => false, 'message' => 'Fail to find the current login user']);
+        }
+    }
+    else {
+        echo json_encode(['success' => false, 'message' => 'Invalid session.']);
     }
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+    echo json_encode(['success' => false, 'message' => 'No email provided.']);
 }
+?>

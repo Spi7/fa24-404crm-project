@@ -7,20 +7,43 @@
         Contacts
         <input type="text" placeholder="Search" id="searchInput">
     </h3>
+    <div id="contact-container">
     <ul id="contact-list">
         <?php if (isset($contacts) && $contacts->num_rows > 0): ?>
             <?php while ($contact = $contacts->fetch_assoc()): ?>
-                <li class="contact-item" onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>')">
+            <!-- Pass in both the coontact's nickname and email for display and chat history -->
+            <li class="contact-item" onclick="openChat('<?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?>', '<?= htmlspecialchars($contact['CONTACT_USER_ID']) ?>','<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">
                     <img src="../img/user profile icon.png" alt="other user profile" class="profile-pic" />
-                    <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span>
+                    <div>
+                    <span class="contact-nickname"><?= htmlspecialchars($contact['CONTACT_NICKNAME']) ?></span><br>
                     <span class="contact-email"><?= htmlspecialchars($contact['CONTACT_EMAIL']) ?></span>
-                    <button class="delete-contact-btn" onclick="deleteContact('<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">X</button>
-                </li>
+                    </div>
+                    <button class="delete-contact-btn" onclick="deleteContact(event,'<?= htmlspecialchars($contact['CONTACT_EMAIL']) ?>')">X</button>
+            </li>
             <?php endwhile; ?>
         <?php else: ?>
             <li id="no-contacts-message">No contacts found.</li>
         <?php endif; ?>
     </ul>
+    <div id="contact-search-results" class="hide">
+        <h3>Contacts</h3>
+        <ul class="search-results-list" id="search-results-contacts-list">
+
+        </ul>
+        <h3>Messages</h3>
+        <ul class="search-results-list" id="search-results-messages-list">
+
+        </ul>
+        <h3>Files</h3>
+        <ul class="search-results-list" id="search-results-files-list">
+
+        </ul>
+    </div>
+    </div>
+    <div id="addContactInput" class="hide">
+        <input id="addContactEmail" type="email" placeholder="enter contact email">
+        <button id="cancelAddContact" onclick="cancelAddNewContactInput()">cancel</button>
+    </div>
     <button class="add-contact-btn" onclick="addNewContact()">+ Add Contact</button>
 
 </div>

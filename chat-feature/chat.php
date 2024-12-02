@@ -18,7 +18,7 @@ if ($sessionToken) {
         $userId = $userData['USER_ID'];
 
         // Fetch contacts for the logged-in user
-        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL 
+        $contactQuery = "SELECT CONTACTS.CONTACT_NICKNAME, CONTACTS.CONTACT_EMAIL, CONTACTS.CONTACT_USER_ID 
                          FROM CONTACTS 
                          WHERE CONTACTS.CURRENT_USER_ID = ?";
         $contactStmt = $mysqli->prepare($contactQuery);
@@ -41,24 +41,28 @@ if ($sessionToken) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Server</title>
-    <link rel="stylesheet" href="chat.css">
-    <script src="addContact.js" defer></script> <!-- Include the addContact.js file -->
-    <script src="deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
-    <script src="searchContact.js" defer></script> <!-- Include the search js file -->
+    <link rel="stylesheet" href="chat-css/contact.css">
+    <link rel="stylesheet" href="chat-css/message.css">
+    <script src="chat-js/addContact.js" defer></script> <!-- Include the addContact.js file -->
+    <script src="chat-js/deleteContact.js" defer></script> <!-- Include the deleteContact.js file -->
+    <script src="chat-js/searchContact.js" defer></script> <!-- Include the search js file -->
+    <script src="chat-js/message.js" defer></script> <!-- Include the search js file -->
     <script>
+        var openChatEmail=""
         // Function to load the mobile CSS and hide the sidebar if the screen width is mobile-sized
-        function loadMobileCSS() {
+        function loadMobileCSS(load) {
         var sidebar = document.querySelector('.sidebar');
         var chatInterface = document.querySelector('.chat-interface');
         var cList = document.querySelector('.contacts');
         
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 800) {
             // Hide the sidebar and chat interface for mobile screens
             if (sidebar) {
                 sidebar.style.display = 'none';
             }
-            if (chatInterface) {
+            if(chatInterface.style.display!='none' && cList.style.display!='none'){
                 chatInterface.style.display = 'none';
+
             }
         } else {
             // Show the sidebar and chat interface for larger screens
@@ -88,24 +92,8 @@ if ($sessionToken) {
         <?php include 'contact.php'; ?>
 
         <!-- Chat Section -->
-        <div class="chat-interface">
-            <div class="chat-header">
-                <div class="mobile-back-btn">
-                    <button type="button" onclick="goBack()">← Back</button>
-                </div>
-                <h3 id="chat-header-text">Select a contact to start chatting</h3>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <!-- Chat messages will appear here dynamically -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="message-input" placeholder="Type a message" disabled>
-                <button class="attach-btn" onclick="attachFile()">
-                    <img src="../img/attachment.png" alt="Attach" class="attach-icon"> <!-- Add attachment icon -->
-                </button>
-                <button class="send-btn" onclick="sendMessage()" disabled>Send</button>
-            </div>
-        </div>
+        <?php include 'chat_interface.php'; ?>
+
     </div>
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-// Connect to the database
 include('../db_connection.php');
 include('../notifications.php'); // Include notifications logic
 connectDB();
@@ -21,6 +20,25 @@ if (isset($_COOKIE['SESSION_TOKEN'])) {
         if (isset($_POST["project"]) && isset($_POST["team-member"])) {
             $project_id = $_POST["project"];        // Project selected from the form
             $team_member_id = $_POST["team-member"]; // Team member selected from the form
+
+            // Check if the team member is already assigned to the project
+            $query = "SELECT * FROM PROJECTS_USERS WHERE PROJECT_ID = ? AND USER_ID = ?";
+            $stmt = $mysqli->prepare($query);
+            if (!$stmt) {
+                die("Error preparing SELECT query: " . $mysqli->error);
+            }
+            $stmt->bind_param('ii', $project_id, $team_member_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // If the user is already assigned, display an alert and redirect
+                echo "<script>
+                        alert('User is already assigned to this project.');
+                        window.location.href = 'project.php';
+                      </script>";
+                exit();
+            }
 
             // Insert the team member into the PROJECTS_USERS table
             $query = "INSERT INTO PROJECTS_USERS (PROJECT_ID, USER_ID) VALUES (?, ?)";
@@ -47,3 +65,4 @@ if (isset($_COOKIE['SESSION_TOKEN'])) {
     echo "Error: No session token found.";
 }
 ?>
+

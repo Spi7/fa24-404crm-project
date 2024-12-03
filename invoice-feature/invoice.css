@@ -152,4 +152,17 @@ fieldset.item {
 .hide {
     display: none;
 }
+#back{
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    padding: 8px;
+    display: inline;
+}
 
+#navWrap {
+    margin-top: 8px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}

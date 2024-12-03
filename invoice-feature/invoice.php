@@ -5,6 +5,7 @@ set_error_handler("var_dump");
 if (count($_POST) > 0) {
     header(header: 'Content-Type: application/json; charset=utf-8');
     include "../db_connection.php";
+    include "../notifications.php";
     connectDB();
     $quantities = $_POST["quantity"];
     $destEmail = strtolower($_POST["email"]);
@@ -25,12 +26,23 @@ if (count($_POST) > 0) {
     //get dest id - already checked there is a row before
     $destUserId = $userEmailQuery->fetch_assoc()["USER_ID"];
     $mysqli->query(query: "INSERT INTO INVOICES VALUES ('$invoiceID','$senderID','$destUserId',now(),'$_POST[invoiceDueDate]','$_POST[invoiceName]','$_POST[invoiceBA]')");
+    createNotification($senderID, $destUserId, 'INVOICES', $invoiceID);
     for ($i = 0; $i < count(value: $quantities); $i++) {
         $invoiceItemID = (int) $mysqli->query("SELECT MAX(ITEM_ID) as max FROM INVOICE_ITEMS")->fetch_assoc()["max"] + 1;
         $mysqli->query("INSERT INTO INVOICE_ITEMS VALUES ('$invoiceItemID','$invoiceID','$quantities[$i]','$prices[$i]','$descriptions[$i]')");
-    }
+    } 
     echo json_encode(array("success" => "true"));
     exit();//if post dont respond with page
+}
+$emailOfClient=false;//we check ==false later on in the html and initialize with false bc get_results will be false on failure
+if(isset($_GET["clientId"])){
+    include "../db_connection.php";
+    connectDB();
+    $query = "SELECT EMAIL FROM ACCOUNTS WHERE USER_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $_GET["clientId"]);
+    $stmt->execute();
+    $emailOfClient = $stmt->get_result()->fetch_column(0);
 }
 ?>
 <!DOCTYPE html>
@@ -47,16 +59,20 @@ if (count($_POST) > 0) {
 </head>
 
 <body>
-    <a href="../home-page/home.php">
-        <img id="homeButton" src="../img/home.png" alt="Home">
-    </a>
+    <div id="navWrap">
+        <button type="button" id="back" onclick="window.history.back()">← Back</button>
+        <a href="../home-page/home.php">
+            <img id="homeButton" src="../img/home.png" alt="Home">
+        </a>
+    </div>
     <div id="centerWrapper">
     <div class="main-container">
         <form action="invoice.php" method="post">
             <h1>Create a New Invoice</h1>
             <label class="headerLabel">
                 Invoice Email Address<br>
-                <input name="email" type="email" placeholder="recipient@client.org">
+                <!-- php statement -> if email was fetched set it as the value and make the feild readonly -->
+                <input name="email" type="email" placeholder="recipient@client.org" <?php echo ($emailOfClient!=false) ? 'value="'.$emailOfClient.'" readonly' : "" ?>>
                 <br>
                 <span id="userNotFoundErr" class="errorText hide">user not found<br></span>
 

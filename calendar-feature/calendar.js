@@ -179,10 +179,10 @@ function nextMonth() {
 function selectDate() {
 
     let dateInput = document.getElementById('select-date').value;
-    let dateEntered = new Date(dateInput);
+    let datearray = dateInput.split('-').map(Number);
 
-    let month = dateEntered.getMonth();
-    let year = dateEntered.getFullYear();
+    let month = datearray[1]-1;
+    let year = datearray[0];
     let prevMonthIndex = month;
 
 
@@ -386,10 +386,9 @@ function populateEvents(){
             let eventDay = eventDate.getDate();
 
             let firstDateOfMonth = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
-            let numPaddingDays = firstDateOfMonth.getDay() - 1;
+            let numPaddingDays = firstDateOfMonth.getDay();
 
-            let iterations = 0;
-
+            let iterations = 1;
             // assume not on current month from start
             let onCurrentMonth = false;
 
@@ -406,9 +405,15 @@ function populateEvents(){
 
                     let bothDigitsMatch = Number(daybox.textContent.slice(0,2).trim()) == eventDay;
                     let firstDigitMatch = Number(daybox.textContent.slice(0,1)) == eventDay;
-                    let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1;
 
-                    if(((bothDigitsMatch) || (firstDigitMatch && isSingleDigit)) && onCurrentMonth){
+                    // this is a bit of a hack
+                    // the left half of the OR only works if there is no event in the daybox
+                    // once an event is added, i.e. an event titled "test event" on december 1st
+                    // the first two characters of daybox.textContent will be "1t" because it is the 1st of the month and the title begins with 't'
+                    // so the right half of the OR also checks if it is the first of the month by checking if the first two characters is NaN
+                    let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1 || isNaN(daybox.textContent.slice(0,2).trim());
+
+                    if(iterations - numPaddingDays == eventDay && onCurrentMonth){
                         let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;

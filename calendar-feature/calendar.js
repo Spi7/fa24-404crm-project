@@ -179,10 +179,10 @@ function nextMonth() {
 function selectDate() {
 
     let dateInput = document.getElementById('select-date').value;
-    let dateEntered = new Date(dateInput);
+    let datearray = dateInput.split('-').map(Number);
 
-    let month = dateEntered.getMonth();
-    let year = dateEntered.getFullYear();
+    let month = datearray[1]-1;
+    let year = datearray[0];
     let prevMonthIndex = month;
 
 

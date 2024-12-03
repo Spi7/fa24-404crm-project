@@ -386,10 +386,9 @@ function populateEvents(){
             let eventDay = eventDate.getDate();
 
             let firstDateOfMonth = new Date(eventDate.getFullYear(), eventDate.getMonth(), 1);
-            let numPaddingDays = firstDateOfMonth.getDay() - 1;
+            let numPaddingDays = firstDateOfMonth.getDay();
 
-            let iterations = 0;
-
+            let iterations = 1;
             // assume not on current month from start
             let onCurrentMonth = false;
 
@@ -414,7 +413,7 @@ function populateEvents(){
                     // so the right half of the OR also checks if it is the first of the month by checking if the first two characters is NaN
                     let isSingleDigit = daybox.textContent.slice(0,2).trim().length == 1 || isNaN(daybox.textContent.slice(0,2).trim());
 
-                    if(((bothDigitsMatch) || (firstDigitMatch && isSingleDigit)) && onCurrentMonth){
+                    if(iterations - numPaddingDays == eventDay && onCurrentMonth){
                         let eventDiv = document.createElement('a');
                         eventDiv.className = 'event';
                         eventDiv.style.backgroundColor = event.COLOR;
